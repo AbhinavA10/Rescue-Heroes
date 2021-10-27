@@ -1,0 +1,1 @@
+These zip files are some kicad libraries downloaded off the internet of the NUCLEO-64 F401RE. Not sure if we will need these.
