@@ -1,15 +1,26 @@
-Software Design
--	State machine
--	TaskScheduler library or FreeRTOS
--	PlatformIO
-o	
-We’ll be using the STM32 Nucleo-F401RE board. This can be programmed via the Arduino IDE, or STM32Cube. Another alternative is PlatformIO
-PlatformIO
--	Extension for VSCode that allows programming and debugging of many uC.
--	Manages libraries and code better than the Arduino IDE
--	Syntax highlighting and autocomplete etc. ArduinoIDE is bad. PlatformIO is much better
--	Works with our Nucleo board – can use the Arduino framework, or STM32Cube framework (HAL)
-Most likely, we’ll be using PlatformIO with the Arduino framework.
 
--	State Machine Ideas:
-o	Knowing when we're in a hole, so we don't speed into a wall.
+## Tool Description
+-	Arduino Library
+-	TaskScheduler library
+-	PlatformIO
+
+We’ll be using the STM32 Nucleo-F401RE board. We will use PlatformIO with Arduino libraries
+
+## PlatformIO
+We're using PlatformIO to manage our code and board dependancies. Here's the getting started guide: https://docs.platformio.org/en/latest/ide/vscode.html#installation
+It:
+-	is an extension for VSCode that allows programming and debugging of many uC.
+-	Manages libraries and code better than the Arduino IDE
+-	Syntax highlighting and autocomplete etc. Has a debugger.
+-   allows use of Arduino framework and libraries with our board.
+
+The PlatformIO ide provides the build, flash, and serial monitor in the bottom toolbar. The board settings are in the `platformio.ini` file.
+
+## Tasks
+
+Elements of the robot's functionality will be broken down into tasks which are run using a cooperative, non-preemptive scheduler (https://github.com/arkhipenko/TaskScheduler).
+
+Interrupts will be avoided except for setting flags. Exception is motor encoder interrupts.
+
+## Utilities/Logging Tools
+  - Serial.println() on STM32 board will send a message up to PC. Can view this with the Arduino IDE serial plotter
