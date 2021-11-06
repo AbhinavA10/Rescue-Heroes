@@ -4,36 +4,17 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title ""
-Date ""
-Rev ""
-Comp ""
+Title "Level Shifter Test - PWM Signals"
+Date "2021-11-01"
+Rev "1"
+Comp "Team 6 - Rescue Heroes"
 Comment1 ""
 Comment2 ""
 Comment3 ""
-Comment4 ""
+Comment4 "By: Abhinav Agrahari"
 $EndDescr
-$Comp
-L AA_Custom_Components:SN74HCT245N IC?
-U 1 1 617F17F2
-P 4350 2950
-F 0 "IC?" H 4850 3215 50  0000 C CNN
-F 1 "SN74HCT245N" H 4850 3124 50  0000 C CNN
-F 2 "DIP794W53P254L2692H508Q20N" H 5200 3050 50  0001 L CNN
-F 3 "http://www.ti.com/lit/gpn/sn74hct245" H 5200 2950 50  0001 L CNN
-F 4 "Octal Bus Transceivers With 3-State Outputs" H 5200 2850 50  0001 L CNN "Description"
-F 5 "5.08" H 5200 2750 50  0001 L CNN "Height"
-F 6 "Texas Instruments" H 5200 2650 50  0001 L CNN "Manufacturer_Name"
-F 7 "SN74HCT245N" H 5200 2550 50  0001 L CNN "Manufacturer_Part_Number"
-F 8 "595-SN74HCT245N" H 5200 2450 50  0001 L CNN "Mouser Part Number"
-F 9 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/SN74HCT245N?qs=8Pd2FuFSoMHJnLBOn%252BIc0A%3D%3D" H 5200 2350 50  0001 L CNN "Mouser Price/Stock"
-F 10 "SN74HCT245N" H 5200 2250 50  0001 L CNN "Arrow Part Number"
-F 11 "https://www.arrow.com/en/products/sn74hct245n/texas-instruments?region=nac" H 5200 2150 50  0001 L CNN "Arrow Price/Stock"
-	1    4350 2950
-	1    0    0    -1  
-$EndComp
 $Bitmap
-Pos 6750 2750
+Pos -1100 2600
 Scale 1.000000
 Data
 89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 01 3F 00 00 01 4F 08 03 00 00 00 0C 5A 39 
@@ -410,155 +391,174 @@ $EndBitmap
 $Comp
 L power:+5V #PWR?
 U 1 1 617F34A3
-P 4250 2750
-F 0 "#PWR?" H 4250 2600 50  0001 C CNN
-F 1 "+5V" H 4265 2923 50  0000 C CNN
-F 2 "" H 4250 2750 50  0001 C CNN
-F 3 "" H 4250 2750 50  0001 C CNN
-	1    4250 2750
+P 8400 4700
+F 0 "#PWR?" H 8400 4550 50  0001 C CNN
+F 1 "+5V" H 8415 4873 50  0000 C CNN
+F 2 "" H 8400 4700 50  0001 C CNN
+F 3 "" H 8400 4700 50  0001 C CNN
+	1    8400 4700
 	1    0    0    -1  
 $EndComp
 $Comp
 L power:+5V #PWR?
 U 1 1 617F49E7
-P 5550 2750
-F 0 "#PWR?" H 5550 2600 50  0001 C CNN
-F 1 "+5V" H 5565 2923 50  0000 C CNN
-F 2 "" H 5550 2750 50  0001 C CNN
-F 3 "" H 5550 2750 50  0001 C CNN
-	1    5550 2750
+P 9700 4700
+F 0 "#PWR?" H 9700 4550 50  0001 C CNN
+F 1 "+5V" H 9715 4873 50  0000 C CNN
+F 2 "" H 9700 4700 50  0001 C CNN
+F 3 "" H 9700 4700 50  0001 C CNN
+	1    9700 4700
 	1    0    0    -1  
 $EndComp
 $Comp
 L SparkFun-PowerSymbols:GND2 #GND?
 U 1 1 617F5B68
-P 5800 3050
-F 0 "#GND?" H 5850 3000 45  0001 L BNN
-F 1 "GND2" H 5800 2820 45  0000 C CNN
-F 2 "" H 5800 2725 60  0000 C CNN
-F 3 "" H 5800 2950 60  0001 C CNN
-	1    5800 3050
+P 9950 5000
+F 0 "#GND?" H 10000 4950 45  0001 L BNN
+F 1 "GND2" H 9950 4770 45  0000 C CNN
+F 2 "" H 9950 4675 60  0000 C CNN
+F 3 "" H 9950 4900 60  0001 C CNN
+	1    9950 5000
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5550 2750 5550 2950
+	9700 4700 9700 4900
 Wire Wire Line
-	5550 2950 5350 2950
+	9700 4900 9500 4900
 Wire Wire Line
-	4250 2750 4250 2950
+	8400 4700 8400 4900
 Wire Wire Line
-	4250 2950 4350 2950
+	8400 4900 8500 4900
 $Comp
 L SparkFun-PowerSymbols:GND2 #GND?
 U 1 1 617F848D
-P 4200 3900
-F 0 "#GND?" H 4250 3850 45  0001 L BNN
-F 1 "GND2" H 4200 3670 45  0000 C CNN
-F 2 "" H 4200 3575 60  0000 C CNN
-F 3 "" H 4200 3800 60  0001 C CNN
-	1    4200 3900
+P 8350 5850
+F 0 "#GND?" H 8400 5800 45  0001 L BNN
+F 1 "GND2" H 8350 5620 45  0000 C CNN
+F 2 "" H 8350 5525 60  0000 C CNN
+F 3 "" H 8350 5750 60  0001 C CNN
+	1    8350 5850
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4200 3900 4200 3850
+	8350 5850 8350 5800
 Wire Wire Line
-	4200 3850 4350 3850
+	8350 5800 8500 5800
 Wire Wire Line
-	4350 3750 4200 3750
+	8500 5700 8350 5700
 Wire Wire Line
-	4200 3750 4200 3850
-Connection ~ 4200 3850
+	8350 5700 8350 5800
+Connection ~ 8350 5800
 Wire Wire Line
-	4350 3650 4200 3650
+	8500 5600 8350 5600
 Wire Wire Line
-	4200 3650 4200 3750
-Connection ~ 4200 3750
+	8350 5600 8350 5700
+Connection ~ 8350 5700
 Wire Wire Line
-	4350 3550 4200 3550
+	8500 5500 8350 5500
 Wire Wire Line
-	4200 3550 4200 3650
-Connection ~ 4200 3650
+	8350 5500 8350 5600
+Connection ~ 8350 5600
 Wire Wire Line
-	4350 3450 4200 3450
+	8500 5400 8350 5400
 Wire Wire Line
-	4200 3450 4200 3550
-Connection ~ 4200 3550
+	8350 5400 8350 5500
+Connection ~ 8350 5500
 Wire Wire Line
-	4350 3350 4200 3350
+	8500 5300 8350 5300
 Wire Wire Line
-	4200 3350 4200 3450
-Connection ~ 4200 3450
+	8350 5300 8350 5400
+Connection ~ 8350 5400
 Wire Wire Line
-	4350 3250 4200 3250
+	8500 5200 8350 5200
 Wire Wire Line
-	4200 3250 4200 3350
-Connection ~ 4200 3350
+	8350 5200 8350 5300
+Connection ~ 8350 5300
 Wire Wire Line
-	5350 3350 5450 3350
+	9500 5300 9600 5300
 Wire Wire Line
-	5350 3450 5450 3450
+	9500 5400 9600 5400
 Wire Wire Line
-	5450 3450 5450 3350
+	9600 5400 9600 5300
 Wire Wire Line
-	5350 3550 5450 3550
+	9500 5500 9600 5500
 Wire Wire Line
-	5450 3550 5450 3450
-Connection ~ 5450 3450
+	9600 5500 9600 5400
+Connection ~ 9600 5400
 Wire Wire Line
-	5350 3650 5450 3650
+	9500 5600 9600 5600
 Wire Wire Line
-	5450 3650 5450 3550
-Connection ~ 5450 3550
+	9600 5600 9600 5500
+Connection ~ 9600 5500
 Wire Wire Line
-	5350 3750 5450 3750
+	9500 5700 9600 5700
 Wire Wire Line
-	5450 3750 5450 3650
-Connection ~ 5450 3650
+	9600 5700 9600 5600
+Connection ~ 9600 5600
 Wire Wire Line
-	5350 3850 5450 3850
+	9500 5800 9600 5800
 Wire Wire Line
-	5450 3850 5450 3750
-Connection ~ 5450 3750
+	9600 5800 9600 5700
+Connection ~ 9600 5700
 Wire Wire Line
-	5350 3050 5800 3050
+	9500 5000 9950 5000
 $Comp
 L SparkFun-PowerSymbols:GND2 #GND?
 U 1 1 617FDB32
-P 5450 3900
-F 0 "#GND?" H 5500 3850 45  0001 L BNN
-F 1 "GND2" H 5450 3670 45  0000 C CNN
-F 2 "" H 5450 3575 60  0000 C CNN
-F 3 "" H 5450 3800 60  0001 C CNN
-	1    5450 3900
+P 9600 5850
+F 0 "#GND?" H 9650 5800 45  0001 L BNN
+F 1 "GND2" H 9600 5620 45  0000 C CNN
+F 2 "" H 9600 5525 60  0000 C CNN
+F 3 "" H 9600 5750 60  0001 C CNN
+	1    9600 5850
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5450 3850 5450 3900
-Connection ~ 5450 3850
-Text Notes 4500 4400 0    50   ~ 0
+	9600 5800 9600 5850
+Connection ~ 9600 5800
+Text Notes 8650 6350 0    50   ~ 0
 Note: Unused Inputs and outputs connected to GND
-Text GLabel 5850 3450 2    50   Input ~ 0
+Text GLabel 10000 5400 2    50   Input ~ 0
 Scope1
-Text GLabel 5850 3600 2    50   Input ~ 0
+Text GLabel 10000 5550 2    50   Input ~ 0
 Scope2
 Wire Wire Line
-	5350 3150 5650 3150
+	9500 5100 9800 5100
 Wire Wire Line
-	5650 3150 5650 3450
+	9800 5100 9800 5400
 Wire Wire Line
-	5650 3450 5850 3450
+	9800 5400 10000 5400
 Wire Wire Line
-	5350 3250 5600 3250
+	9500 5200 9750 5200
 Wire Wire Line
-	5600 3250 5600 3600
+	9750 5200 9750 5550
 Wire Wire Line
-	5600 3600 5850 3600
-Text GLabel 3950 3050 0    50   Input ~ 0
+	9750 5550 10000 5550
+Text GLabel 8100 5000 0    50   Input ~ 0
 PA6-PWM3-1
-Text GLabel 3950 3150 0    50   Input ~ 0
+Text GLabel 8100 5100 0    50   Input ~ 0
 PB6-PWM4_1
 Wire Wire Line
-	3950 3050 4350 3050
+	8100 5000 8500 5000
 Wire Wire Line
-	3950 3150 4350 3150
+	8100 5100 8500 5100
+$Comp
+L AA_Custom_Components:SN74HCT245N IC?
+U 1 1 617F17F2
+P 8500 4900
+F 0 "IC?" H 9000 5165 50  0000 C CNN
+F 1 "SN74HCT245N" H 9000 5074 50  0000 C CNN
+F 2 "DIP794W53P254L2692H508Q20N" H 9350 5000 50  0001 L CNN
+F 3 "http://www.ti.com/lit/gpn/sn74hct245" H 9350 4900 50  0001 L CNN
+F 4 "Octal Bus Transceivers With 3-State Outputs" H 9350 4800 50  0001 L CNN "Description"
+F 5 "5.08" H 9350 4700 50  0001 L CNN "Height"
+F 6 "Texas Instruments" H 9350 4600 50  0001 L CNN "Manufacturer_Name"
+F 7 "SN74HCT245N" H 9350 4500 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "595-SN74HCT245N" H 9350 4400 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/SN74HCT245N?qs=8Pd2FuFSoMHJnLBOn%252BIc0A%3D%3D" H 9350 4300 50  0001 L CNN "Mouser Price/Stock"
+F 10 "SN74HCT245N" H 9350 4200 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/sn74hct245n/texas-instruments?region=nac" H 9350 4100 50  0001 L CNN "Arrow Price/Stock"
+	1    8500 4900
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
