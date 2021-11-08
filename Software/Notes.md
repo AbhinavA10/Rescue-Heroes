@@ -12,7 +12,7 @@ It:
 -	is an extension for VSCode that allows programming and debugging of many uC.
 -	Manages libraries and code better than the Arduino IDE
 -	Syntax highlighting and autocomplete etc. Has a debugger.
--   allows use of Arduino framework and libraries with our board.
+- allows use of Arduino framework and libraries with our board.
 
 The PlatformIO ide provides the build, flash, and serial monitor in the bottom toolbar. The board settings are in the `platformio.ini` file.
 
@@ -20,7 +20,10 @@ The PlatformIO ide provides the build, flash, and serial monitor in the bottom t
 
 Elements of the robot's functionality will be broken down into tasks which are run using a cooperative, non-preemptive scheduler (https://github.com/arkhipenko/TaskScheduler).
 
+Tasks are setup in `main.cpp`, and each task has it's own files in the `src/task` folder.
+
 Interrupts will be avoided except for setting flags. Exception is motor encoder interrupts.
 
 ## Utilities/Logging Tools
   - Serial.println() on STM32 board will send a message up to PC. Can view this with the Arduino IDE serial plotter
+  - PRINT_DEBUG()
