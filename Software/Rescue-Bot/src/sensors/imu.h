@@ -1,7 +1,8 @@
 #ifndef IMU_H
 #define IMU_H
 
-#include <MPU6050_6Axis_MotionApps20.h>
+#include "I2Cdev.h"
+#include "MPU6050_6Axis_MotionApps20.h"
 #include "config.h"
 
 #define IMU_INTERRUPT_PIN 3
@@ -41,8 +42,7 @@ public:
 
 private:
     uint16_t yaw_offset_;
-
-    // class default I2C address is 0x68
+    
     MPU6050 mpu_;
     uint16_t imu_packetsize_;
 
