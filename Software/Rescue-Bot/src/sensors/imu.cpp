@@ -44,7 +44,6 @@ void IMU::zero_yaw()
 Orientation IMU::getYPR()
 {
     return Orientation{
-        yaw_.last(),
-        pitch_.last(),
-        roll_.last()};
+        0, 0, 0};
+    //TODO: return real YPR
 }

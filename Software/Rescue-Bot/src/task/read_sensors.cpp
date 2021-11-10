@@ -24,7 +24,7 @@ void read_sensors()
         imu->readData();
     }
     //TODO: set bus using Mux for each color sensor
-    detectColor();
+    //detectColor();
 
     // update encoder distance if needed
     motors.left->readDistance();

@@ -18,7 +18,7 @@ The PlatformIO ide provides the build, flash, and serial monitor in the bottom t
 
 ## Tasks
 
-Elements of the robot's functionality will be broken down into tasks which are run using a cooperative, non-preemptive scheduler (https://github.com/arkhipenko/TaskScheduler).
+Elements of the robot's functionality are broken down into tasks which are run using a cooperative, non-preemptive scheduler (https://github.com/arkhipenko/TaskScheduler).
 
 Tasks are setup in `main.cpp`, and each task has it's own files in the `src/task` folder.
 
