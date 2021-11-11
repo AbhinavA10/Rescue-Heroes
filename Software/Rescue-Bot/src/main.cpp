@@ -9,28 +9,16 @@
 // Task t_navigation
 // Task t_motorControl
 
-#include "pitches.h"
-#include "pin_assignment.h"
+#include "task/motor_control.h"
 
-void playStartupSound(){
-  pinMode(BUZZER,OUTPUT);
-  int dur = 1000/8;
-  float dur_between = dur * 1.3;
-  tone(BUZZER, NOTE_C5, dur);
-  delay(dur_between);
-  noTone(BUZZER);
-  tone(BUZZER, NOTE_E5, dur);
-  delay(dur_between);
-  noTone(BUZZER);
-  tone(BUZZER, NOTE_F5, dur);
-  delay(dur_between);
-  noTone(BUZZER);
-}
+#include "pin_assignment.h"
+#include "buzzer.h"
 
 void setup()
 {
   playStartupSound();
   Serial.begin(115200);
+  MotorControl::init_motor_control(); // for testing
 }
 
 void loop()
