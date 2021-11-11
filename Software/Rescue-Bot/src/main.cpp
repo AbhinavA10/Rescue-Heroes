@@ -10,15 +10,17 @@
 // Task t_motorControl
 
 #include "task/motor_control.h"
+#include "task/display.h"
 
 #include "pin_assignment.h"
 #include "buzzer.h"
-
 void setup()
 {
   playStartupSound();
   Serial.begin(115200);
-  MotorControl::init_motor_control(); // for testing
+  // for testing:
+  // MotorControl::init_motor_control();
+  Display::test_display();
 }
 
 void loop()
