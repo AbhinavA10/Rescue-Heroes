@@ -28,7 +28,7 @@ void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t se
 {
     pwm_pin_ = pwm_pin;
     dir_pin_1_ = in_pin_1;
-    dir_pin_1_ = in_pin_2;
+    dir_pin_2_ = in_pin_2;
     sensor1_pin_ = sensor1_pin;
     sensor2_pin_ = sensor2_pin;
     ticks_ = 0;
@@ -36,7 +36,12 @@ void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t se
     speed = 0;
     speed_setpoint = 0;
     speed_command = 0;
+    
+    pinMode(pwm_pin_, OUTPUT);
+    pinMode(dir_pin_1_, OUTPUT);
+    pinMode(dir_pin_2_, OUTPUT);
 
+/*
     pinMode(sensor2_pin, INPUT);
     if (sensor1_pin == LEFT_MOTOR_SENSOR_A_PIN)
     {
@@ -46,5 +51,5 @@ void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t se
     {
         attachInterrupt(digitalPinToInterrupt(sensor1_pin), Motors::rightMotorInterrupt, RISING);
     }
-    pinMode(pwm_pin_, OUTPUT);
+    */
 }

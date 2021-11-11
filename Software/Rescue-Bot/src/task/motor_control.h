@@ -46,6 +46,8 @@ namespace MotorControl
     extern Command current_command;
 
     void stopMotors();
+    void runMotors();
+    void test_motors();
 
     void setCorrection(int16_t);
 
