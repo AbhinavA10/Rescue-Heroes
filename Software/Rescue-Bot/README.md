@@ -27,3 +27,6 @@ Interrupts will be avoided except for setting flags. Exception is motor encoder 
 ## Utilities/Logging Tools
   - Serial.println() on STM32 board will send a message up to PC. Can view this with the Arduino IDE serial plotter
   - PRINT_DEBUG()
+
+## Arduino Function Reference
+- https://www.arduino.cc/reference/en/
