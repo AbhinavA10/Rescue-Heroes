@@ -26,21 +26,44 @@ void motorCallback();
 
 Task t_readSensors(1000, 5, &sensorCallback);
 Task t_navigation(1000, 5, &navigationCallback);
-Task t_motorControl(1000, 5, &motorCallback);
+Task t_motorControl(1000, 0, &motorCallback);
 
+Scheduler runner;
+
+void sensorCallback()
+{
+  //sensor task stuff
+}
+
+void navigationCallback()
+{
+  //Nav task stuff
+}
+
+void motorCallback()
+{
+  //motor task stuff
+  MotorControl::test_motors();
+}
 
 void setup()
 {
   playStartupSound();
   Serial.begin(115200);
   // for testing:
-  // MotorControl::init_motor_control();
+  MotorControl::init_motor_control();
   // Display::test_display();
-  init_sensors();
+  //init_sensors();
+  runner.init();
+
+  runner.addTask(t_motorControl);
+  delay(10000);
+  t_motorControl.enable();
 }
 
 void loop()
 {
   //TODO: Run Task Scheduler
-  read_sensors(); // read color sensors
+  //runner.execute();
+  //read_sensors(); // read color sensors
 }
