@@ -5,11 +5,10 @@
 #include "MPU6050_6Axis_MotionApps20.h"
 #include "config.h"
 
-#define IMU_INTERRUPT_PIN 3
 // This way we can refer to `imu` in our application code
 #define imu IMU_Wrapper::primary
 
-// Normalized, filtered orientation in degrees
+// Normalized, (filtered?) orientation in degrees
 struct Orientation
 {
     int16_t yaw;
@@ -32,8 +31,9 @@ public:
     void run();
 
     void readData();
+    int milestone4();
 
-    Orientation orientation;
+    Orientation orientation; // make volatile to stop optimizing out
 
     Orientation getYPR();
 

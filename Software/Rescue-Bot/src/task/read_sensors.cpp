@@ -1,5 +1,5 @@
 #include <Wire.h>
-//#include <I2Cdev.h>
+#include "config.h"
 
 #include "read_sensors.h"
 
@@ -9,8 +9,10 @@ void init_sensors()
 {
     // Start I2C bus
     Wire.begin();
-    // imu->init();
-    // imu->run();
+#ifdef USE_IMU
+    imu->init();
+    imu->run();
+#endif
     // read_sensors();
     // The next runs of this task will use the read_sensors callback
     // t_readSensors.setCallback(&read_sensors);
@@ -43,7 +45,7 @@ void setup_colors()
         }
     }
     delay(2000);
-    Serial.println("start");
+    PRINT_DEBUG("start");
 }
 void read_sensors()
 {
@@ -131,7 +133,7 @@ bool read_red()
             continue;
         }
     }
-    delay(60); // takes 50ms to read
+    delay(50); // takes 50ms to read
     return false;
 
     // update encoder distance if needed

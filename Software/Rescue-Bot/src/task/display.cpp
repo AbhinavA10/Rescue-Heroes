@@ -47,10 +47,8 @@ namespace Display
         display.display();
         delay(2000);
     }
-
-    void test_display()
+    void init_display()
     {
-
         // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
         if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS))
         {
@@ -58,14 +56,23 @@ namespace Display
             for (;;)
                 ; // Don't proceed, loop forever
         }
-
         // Show initial display buffer contents on the screen --
         // the library initializes this with an Adafruit splash screen.
         display.display();
-        delay(500); // Pause for 2 seconds
+    }
 
-        testdrawchar(); // Draw characters of the default font
-
+    void test_display()
+    {
+        testdrawchar();   // Draw characters of the default font
         testdrawstyles(); // Draw 'stylized' characters
+    }
+    void display_text(String text)
+    {
+        display.clearDisplay();
+        display.setTextSize(2);              // Normal 1:1 pixel scale
+        display.setTextColor(SSD1306_WHITE); // Draw white text
+        display.setCursor(0, 0);             // Start at top-left corner
+        display.println(text);
+        display.display();
     }
 };
