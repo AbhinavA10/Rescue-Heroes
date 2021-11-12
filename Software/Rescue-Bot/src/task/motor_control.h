@@ -48,6 +48,7 @@ namespace MotorControl
     void stopMotors();
     void runMotors();
     void test_motors();
+    void drive_fwd();
 
     void setCorrection(int16_t);
 

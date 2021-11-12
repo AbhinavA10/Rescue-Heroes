@@ -26,5 +26,6 @@ extern Task t_readSensors;
 void init_sensors();
 void read_sensors();
 void setup_colors();
+bool read_red();
 
 #endif

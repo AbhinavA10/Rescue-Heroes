@@ -21,8 +21,11 @@
 
 #define SERVO_PWM   D6
 
+// Motor B (front right)
 #define ENC1_A      D5
 #define ENC1_B      D4
+
+// Motor A (front left)
 #define ENC2_A      D3
 #define ENC2_B      D2
 #define IMU_INT     A0
