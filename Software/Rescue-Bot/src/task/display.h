@@ -18,6 +18,11 @@ namespace Display
     static Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
     void test_display();
+    void testdrawchar();
+    void testdrawstyles();
+    void init_display();
+    void display_text(String text);
+    
 };
 
 #endif
