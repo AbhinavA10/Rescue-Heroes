@@ -20,14 +20,27 @@ void setup()
 {
   playStartupSound();
   Serial.begin(115200);
-  // for testing:
-  // MotorControl::init_motor_control();
-  // Display::test_display();
   init_sensors();
+  // Test if display works
+  // Display::test_display();
+
+  MotorControl::init_motor_control();
+  // test basic movement
+  // MotorControl::test_motors();  
+
+  // Driving till red:
+  bool foundRed=false;
+  while(!foundRed){
+    MotorControl::drive_fwd();
+    foundRed = read_red(); // read color sensors
+  }
+
+  
+  playShutdownSound();
 }
 
 void loop()
 {
   //TODO: Run Task Scheduler
-  read_sensors(); // read color sensors
+  // read_sensors(); // read color sensors
 }

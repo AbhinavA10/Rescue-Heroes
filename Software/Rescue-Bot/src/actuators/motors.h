@@ -77,8 +77,8 @@ private:
     uint8_t pwm_pin_;
     uint8_t dir_pin_1_;
     uint8_t dir_pin_2_;
-    uint8_t sensor1_pin_;
-    uint8_t sensor2_pin_;
+    uint8_t enc1_pin_;
+    uint8_t enc2_pin_;
 };
 
 // Pair of Drive Motors
@@ -91,6 +91,7 @@ public:
 
     static void leftMotorInterrupt();
     static void rightMotorInterrupt();
+    void checkMotors();
 
     static void setSpeed(int8_t, int8_t);
     static void stop();

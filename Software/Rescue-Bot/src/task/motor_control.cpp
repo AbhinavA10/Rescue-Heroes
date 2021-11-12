@@ -13,9 +13,8 @@ namespace MotorControl
     {
         // current_command.type = Command_t::NONE;
 
-        motors.left->init(ENA_PWM, IN1, IN2, LEFT_MOTOR_SENSOR_A_PIN, LEFT_MOTOR_SENSOR_B_PIN);
-        motors.right->init(ENB_PWM, IN3, IN4, RIGHT_MOTOR_SENSOR_A_PIN, RIGHT_MOTOR_SENSOR_B_PIN);
-        test_motors();
+        motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
+        motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
         // t_motorControl.setCallback(&motor_control);
     }
 
@@ -147,15 +146,20 @@ namespace MotorControl
     }
     void test_motors()
     {
-        MoveForward(215, 4000); // Ex: Forward at 140 speed for 4000 ms
-        delay(1000);            // Wait one second
-        MoveReverse(215, 4000); // Ex: Forward at 140 speed for 4000 ms
-        delay(1000);            // Wait one second
-        SpinRight(140, 4000);
-        delay(1000); // Wait one second
-        SpinLeft(200, 4000);
-        delay(1000); // Wait one second
-        MoveForward(190, 2000);
+        // motors.checkMotors(); // TODO integrate Motor encoders
+        MoveForward(215, 1000); // Ex: Forward at 140 speed for 1000 ms
+        delay(500);            // Wait one second
+        MoveReverse(215, 1000); // Ex: Forward at 140 speed for 1000 ms
+        delay(500);            // Wait one second
+        SpinRight(140, 1000);
+        delay(500); // Wait one second
+        SpinLeft(200, 1000);
+        delay(500); // Wait one second
+    }
+    
+    void drive_fwd()
+    {
+        MoveForward(190, 150); // Ex: Forward at 215 speed for 20 
     }
     void motor_control()
     {

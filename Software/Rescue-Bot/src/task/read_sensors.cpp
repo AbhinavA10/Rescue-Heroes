@@ -79,3 +79,62 @@ void read_sensors()
     // motors.left->readDistance();
     // motors.right->readDistance();
 }
+#define NO_COLOR 0
+#define RED 1
+#define GREEN 2
+#define BLUE 3
+
+int findColor(float R_New, float G_New, float B_New)
+{
+    float RedDist = sqrt(pow(R_New - COLOR_RED_R_ADAFRUIT, 2) + pow(G_New - COLOR_RED_G_ADAFRUIT, 2) + pow(B_New - COLOR_RED_B_ADAFRUIT, 2));
+    float GreenDist = sqrt(pow(R_New - COLOR_GREEN_R_ADAFRUIT, 2) + pow(G_New - COLOR_GREEN_G_ADAFRUIT, 2) + pow(B_New - COLOR_GREEN_B_ADAFRUIT, 2));
+    float BlueDist = sqrt(pow(R_New - COLOR_BLUE_R_ADAFRUIT, 2) + pow(G_New - COLOR_BLUE_G_ADAFRUIT, 2) + pow(B_New - COLOR_BLUE_B_ADAFRUIT, 2));
+    if (RedDist < COLOR_RED_MAX_DISTANCE_ADAFRUIT)
+    {
+        return RED;
+    }
+    else if (GreenDist < COLOR_GREEN_MAX_DISTANCE_ADAFRUIT)
+    {
+        return GREEN;
+    }
+    else if (BlueDist < COLOR_BLUE_MAX_DISTANCE_ADAFRUIT)
+    {
+        return BLUE;
+    }
+    else
+    {
+        return NO_COLOR;
+    }
+}
+
+bool read_red()
+{
+    // if (MotorControl::current_command.type == Command_t::TURN)
+    // {
+    // TODO: only run if we're still turning?
+    // imu->readData();
+    // }
+    //TODO: set bus using Mux for each color sensor
+    //detectColor();
+    for (int i = 0; i < numberOfSensors; i++)
+    {
+        chooseBus(i);
+        float red, green, blue;
+        tcs[i].getRGB(&red, &green, &blue);
+
+        if (findColor(red, green, blue) == RED)
+        {
+            return true;
+        }
+        else
+        {
+            continue;
+        }
+    }
+    delay(60); // takes 50ms to read
+    return false;
+
+    // update encoder distance if needed
+    // motors.left->readDistance();
+    // motors.right->readDistance();
+}
