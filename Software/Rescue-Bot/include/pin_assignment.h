@@ -30,5 +30,6 @@
 #define ENC2_B      D2
 #define IMU_INT     A0
 #define BUZZER      A1
+#define TOGGLE_PIN  A2 // general pin that can be used for toggling
 
 #endif

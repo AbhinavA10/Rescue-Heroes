@@ -1,20 +1,21 @@
 #include "actuators/servos.h"
+#include <Servo.h>
+#include "pin_assignment.h"
 
 Servo scoopServo;
 
 void initScoopServo()
 {
-    scoopServo.attach(SERVO_SCOOP_PIN);
+    scoopServo.attach(SERVO_PWM);
 }
 
 void lowerScoopServo()
 {
-    scoopServo.attach(SERVO_SCOOP_PIN);
-    scoopServo.write(SCOOP_CLOSED_POSITION);
+    scoopServo.writeMicroseconds(SCOOP_CLOSED_POSITION);
 }
 
 void raiseScoopServo()
 {
-    scoopServo.attach(SERVO_SCOOP_PIN);
-    scoopServo.write(SCOOP_OPEN_POSITION);
+    scoopServo.writeMicroseconds(SCOOP_OPEN_POSITION);
+    //delay(15); // wait for servo to get there
 }
