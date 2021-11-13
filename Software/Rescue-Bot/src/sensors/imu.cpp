@@ -1,6 +1,7 @@
 #include "imu.h"
 #include "pin_assignment.h"
 #include "config.h"
+#include "task/display.h"
 
 // The "static" IMU object that our ISR will access
 IMU *IMU_Wrapper::primary = new IMU;
@@ -45,6 +46,7 @@ void IMU::run()
     Serial.println(F("Testing device connections..."));
     bool conn = mpu_.testConnection();
     Serial.println(conn ? F("MPU6050 connection successful") : F("MPU6050 connection failed"));
+    Display::text[IMU_SENSOR_STATUS_INDEX] = (conn) ? F("IMU Y") : F("IMU N");
 
     // load and configure the DMP
     Serial.println(F("Initializing DMP..."));
@@ -75,6 +77,7 @@ void IMU::run()
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
         Serial.println(F("DMP ready! Waiting for first interrupt..."));
+        Display::text[IMU_SENSOR_STATUS_INDEX] += F("; DMP Y");
         dmpReady = true;
         // get expected DMP packet size for later comparison
         packetSize = mpu_.dmpGetFIFOPacketSize();
@@ -88,6 +91,7 @@ void IMU::run()
         Serial.print(F("DMP Initialization failed (code "));
         Serial.print(devStatus);
         Serial.println(F(")"));
+        Display::text[IMU_SENSOR_STATUS_INDEX] += F("; DMP N");
     }
 }
 

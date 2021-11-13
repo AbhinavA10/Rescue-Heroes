@@ -2,6 +2,7 @@
 #include "config.h"
 
 #include "read_sensors.h"
+#include "task/display.h"
 
 // current task = t_readSensors
 
@@ -17,6 +18,7 @@ void init_sensors()
     // The next runs of this task will use the read_sensors callback
     // t_readSensors.setCallback(&read_sensors);
     setup_colors();
+    Display::refresh_display(); // TODO: move to its own task
 }
 
 void chooseBus(uint8_t bus)
@@ -28,24 +30,28 @@ void chooseBus(uint8_t bus)
 
 void setup_colors()
 {
+    bool found[numberOfSensors] = {false, false, false, false};
     for (int i = 0; i < numberOfSensors; i++)
     {
-        Serial.println(i);
         chooseBus(i);
         if (tcs[i].begin())
         {
             Serial.print("Found sensor ");
             Serial.println(i + 1);
+            found[i] = true;
         }
         else
         {
             Serial.println("No Sensor Found");
-            while (true)
-                ;
+            // TODO: error handling
         }
     }
-    delay(2000);
-    PRINT_DEBUG("start");
+    Display::text[COLOR_SENSOR_STATUS_INDEX] = "ColorSensors ";
+    for (int i = 0; i < numberOfSensors; i++)
+    {
+        Display::text[COLOR_SENSOR_STATUS_INDEX] += String(i);
+        Display::text[COLOR_SENSOR_STATUS_INDEX] += (found[i]) ? F("Y") : F("N");
+    }
 }
 void read_sensors()
 {
