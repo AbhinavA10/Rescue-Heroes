@@ -64,6 +64,6 @@ void setup()
 void loop()
 {
   //TODO: Run Task Scheduler
-  //runner.execute();
+  runner.execute();
   //read_sensors(); // read color sensors
 }
