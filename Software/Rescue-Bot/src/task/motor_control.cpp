@@ -147,35 +147,20 @@ namespace MotorControl
     void test_motors()
     {
         // motors.checkMotors(); // TODO integrate Motor encoders
-        MoveForward(215, 1000); // Ex: Forward at 140 speed for 1000 ms
-        delay(500);             // Wait one second
-        MoveReverse(215, 1000); // Ex: Forward at 140 speed for 1000 ms
-        delay(500);             // Wait one second
+        MoveForward(215, 1000); // Ex: Forward at 215 speed for 1000 ms
+        delay(500);
+        MoveReverse(215, 1000); // Ex: Forward at 215 speed for 1000 ms
+        delay(500);
         SpinRight(140, 1000);
-        delay(500); // Wait one second
+        delay(500);
         SpinLeft(200, 1000);
-        delay(500); // Wait one second
+        delay(500);
     }
 
     void drive_fwd()
     {
         // milestone4
-        MoveForward(190, 150); // Ex: Forward at 215 speed for 20
-    }
-    void set_fwd()
-    {
-        // milestone4
-        
-        // Set Motor A forward
-        digitalWrite(IN1, HIGH);
-        digitalWrite(IN2, LOW);
-
-        // Set Motor B forward
-        digitalWrite(IN3, HIGH);
-        digitalWrite(IN4, LOW);
-
-        analogWrite(ENA_PWM, 215);
-        analogWrite(ENB_PWM, 215);
+        MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
     }
 
     void spin_right()

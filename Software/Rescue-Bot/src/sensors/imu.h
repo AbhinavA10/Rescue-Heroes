@@ -33,7 +33,7 @@ public:
     void readData();
     int milestone4();
 
-    Orientation orientation; // make volatile to stop optimizing out
+    Orientation orientation;
 
     Orientation getYPR();
 
