@@ -133,7 +133,7 @@ bool read_red()
             continue;
         }
     }
-    delay(50); // takes 50ms to read
+    delay(60); // takes 50ms to read + some margin?
     return false;
 
     // update encoder distance if needed

@@ -15,7 +15,6 @@
 #include "task/motor_control.h"
 #include "task/display.h"
 #include "task/read_sensors.h"
-#include <string>
 
 void setup()
 {
