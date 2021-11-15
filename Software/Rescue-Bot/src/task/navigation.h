@@ -24,9 +24,9 @@ namespace Navigation
     
     enum class State_t: uint8_t {
         NONE = 0,
-        FOLLOW_RED_LINE = 1,
-        FOUND_BULLSEYE,
-        DROP_LEGO_MAN,
+        FINDING_LEGO_MAN = 1,
+        FOUND_LEGO_MAN,
+        FINDING_SAFE_ZONE,
         FOUND_SAFE_ZONE,
         RETURN_TO_START,
         TEST_MOVE,
@@ -39,6 +39,10 @@ namespace Navigation
     void run();
 
     void do_follow_red_line();
+    void do_find_lego_man();
+    void do_finding_safe_zone();
+    void do_pick_up_lego_man();  
+    void do_dropoff_lego_man();
     void do_test_move();
 };
 #endif
