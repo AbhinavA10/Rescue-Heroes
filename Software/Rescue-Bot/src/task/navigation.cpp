@@ -16,7 +16,19 @@ namespace Navigation
     {
         switch (state)
         {
-        case State_t::FOLLOW_RED_LINE:
+        case State_t::FINDING_LEGO_MAN:
+            do_find_lego_man();
+            break;
+        case State_t::FOUND_LEGO_MAN:
+            do_pick_up_lego_man();   
+            break;
+        case State_t::FINDING_SAFE_ZONE:
+            do_finding_safe_zone();
+            break;
+        case State_t::FOUND_SAFE_ZONE:
+            do_dropoff_lego_man();
+            break;
+        case State_t::RETURN_TO_START:
             do_follow_red_line();
             break;
         case State_t::TEST_MOVE:
@@ -27,6 +39,28 @@ namespace Navigation
         };
     }
     void do_follow_red_line()
+    {
+        //TODO
+    }
+
+    void do_find_lego_man()
+    {
+        do_follow_red_line();
+        //TODO
+    }
+
+    void do_finding_safe_zone()
+    {
+        do_follow_red_line();
+        //TODO
+    }
+
+    void do_pick_up_lego_man()
+    {
+        //TODO
+    }
+
+    void do_dropoff_lego_man()
     {
         //TODO
     }
