@@ -7,6 +7,7 @@ Servo scoopServo;
 void initScoopServo()
 {
     scoopServo.attach(SERVO_PWM);
+    raiseScoopServo();
 }
 
 void lowerScoopServo()

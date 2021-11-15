@@ -12,8 +12,7 @@
 #define NUM_COLOR_SENSORS 4
 
 extern ColorSensor color_sensors[4];
-
-// No need to include IMU here since it is static
+extern IMU imu;
 extern Motors motors;
 
 extern Task t_readSensors;

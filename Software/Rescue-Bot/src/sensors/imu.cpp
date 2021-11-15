@@ -3,8 +3,7 @@
 #include "config.h"
 #include "task/display.h"
 
-// The "static" IMU object that our ISR will access
-IMU *IMU_Wrapper::primary = new IMU;
+IMU::IMU() {}
 
 // Set up and initialize the IMU
 bool IMU::init()
@@ -19,15 +18,14 @@ bool IMU::init()
     return true;
 }
 
-// yaw/
-// pitch/roll angles (in degrees) calculated from the quaternions coming
+// yaw/pitch/roll angles (in degrees) calculated from the quaternions coming
 // from the FIFO. Note this also requires gravity vector calculations.
 
 volatile bool mpuInterrupt = false; // indicates whether MPU interrupt pin has gone high
 
 // MPU control/status vars
-bool dmpReady = false;  // set true if DMP init was successful
-uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
+bool dmpReady = false; // set true if DMP init was successful
+// uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
 uint8_t devStatus;      // return status after each device operation (0 = success, !0 = error)
 uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
 uint8_t fifoBuffer[64]; // FIFO storage buffer
@@ -37,10 +35,10 @@ Quaternion q;        // [w, x, y, z]         quaternion container
 VectorFloat gravity; // [x, y, z]            gravity vector
 float ypr[3];        // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
+// Initialize IMU Hardware
 void IMU::run()
 {
 
-    // From example:
     // verify connection
     Serial.println(F("Testing device connections..."));
     bool conn = mpu_.testConnection();
@@ -66,16 +64,16 @@ void IMU::run()
         // turn on the DMP, now that it's ready
         Serial.println(F("Enabling DMP..."));
         mpu_.setDMPEnabled(true);
-        pinMode(IMU_INT, INPUT);
+        pinMode(IMU_INT, INPUT); // IMU Interrupt is not used.
         // enable Arduino interrupt detection
-        Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
-        Serial.print(digitalPinToInterrupt(IMU_INT));
-        Serial.println(F(")..."));
-        attachInterrupt(digitalPinToInterrupt(IMU_INT), IMU_Wrapper::onDataReady, RISING);
-        mpuIntStatus = mpu_.getIntStatus();
+        // Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
+        // Serial.print(digitalPinToInterrupt(IMU_INT));
+        // Serial.println(F(")..."));
+        // attachInterrupt(digitalPinToInterrupt(IMU_INT), IMU::onDataReady, RISING);
+        // mpuIntStatus = mpu_.getIntStatus();
 
         // set our DMP Ready flag so the main loop() function knows it's okay to use it
-        Serial.println(F("DMP ready! Waiting for first interrupt..."));
+        Serial.println(F("DMP ready!"));
         Display::text[IMU_SENSOR_STATUS_INDEX] += F("; DMP Y");
         dmpReady = true;
         // get expected DMP packet size for later comparison
@@ -96,16 +94,14 @@ void IMU::run()
 
 // Interrupt that tells us the IMU has new data
 // Note: interrupt is not actually used...
-void IMU_Wrapper::onDataReady()
+void IMU::onDataReady()
 {
     mpuInterrupt = true;
-    imu->data_ready_ = true;
 }
 
-// ISR that is run every time the IMU has a new reading
+// Get latest data from IMU
 void IMU::readData()
 {
-
     // if programming failed, don't try to do anything
     if (!dmpReady)
         return;
@@ -118,43 +114,33 @@ void IMU::readData()
         orientation.yaw = ypr[0] * 180 / PI;
         orientation.pitch = ypr[1] * 180 / PI;
         orientation.roll = ypr[2] * 180 / PI;
-        Serial.print("ypr\t");
-        Serial.print(orientation.yaw);
-        Serial.print("\t");
-        Serial.print(orientation.pitch);
-        Serial.print("\t");
-        Serial.println(orientation.roll);
+        // Serial.print("ypr\t");
+        // Serial.print(orientation.yaw);
+        // Serial.print("\t");
+        // Serial.print(orientation.pitch);
+        // Serial.print("\t");
+        // Serial.println(orientation.roll);
+        yaw_ = round(ypr[0] * 180 / PI);
         mpu_.resetFIFO();
     }
     // Try exponential filter to reduce noise if needed, see https://en.wikipedia.org/wiki/Exponential_smoothing
 }
 
-int IMU::milestone4()
-{
-    // if programming failed, don't try to do anything
-    if (!dmpReady)
-        return INT16_MIN; // return impossible value
-    // read a packet from FIFO
-    if (mpu_.dmpGetCurrentFIFOPacket(fifoBuffer))
-    { // Get the Latest packet
-        mpu_.dmpGetQuaternion(&q, fifoBuffer);
-        mpu_.dmpGetGravity(&gravity, &q);
-        mpu_.dmpGetYawPitchRoll(ypr, &q, &gravity);
-        int yaw = round(ypr[0] * 180 / PI);
-        PRINT_DEBUG(yaw)
-        mpu_.resetFIFO();
-        return yaw;
-    }
-}
-
 // Set yaw value to 0
 void IMU::zero_yaw()
 {
-    yaw_offset_ = orientation.yaw;
+    yaw_offset_ = yaw_;
 }
 
 // Return Yaw, Pitch, Roll of IMU
 Orientation IMU::getYPR()
 {
+    //TODO: filter
     return orientation;
+}
+
+// Return Yaw
+int IMU::getYaw()
+{
+    return yaw_;
 }
