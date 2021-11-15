@@ -11,8 +11,8 @@ void init_sensors()
     // Start I2C bus
     Wire.begin();
 #ifdef USE_IMU
-    imu->init();
-    imu->run();
+    imu.init();
+    imu.run();
 #endif
     // read_sensors();
     // The next runs of this task will use the read_sensors callback
@@ -60,7 +60,7 @@ void read_sensors()
     // if (MotorControl::current_command.type == Command_t::TURN)
     // {
     // TODO: only run if we're still turning?
-    // imu->readData();
+    // imu.readData();
     // }
     for (int i = 0; i < NUM_COLOR_SENSORS; i++)
     {

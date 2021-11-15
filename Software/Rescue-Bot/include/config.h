@@ -5,7 +5,7 @@
     Flags
 */
 #define USE_LOGGING
-// #define USE_IMU
+#define USE_IMU
 #define USE_COLOR_SENSORS
 
 /*
