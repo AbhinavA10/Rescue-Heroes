@@ -4,6 +4,7 @@
 ColorSensor::ColorSensor(ColorSensorType type) : type_(type)
 {
     sensor_ = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
+    // Init constants for this specific sensor
     switch (type)
     {
     case ColorSensorType::ADAFRUIT:
@@ -44,8 +45,6 @@ bool ColorSensor::init()
     return sensor_.begin();
 }
 
-void ColorSensor::run() {}
-
 // Read new value from color sensor.
 void ColorSensor::readColor()
 {
@@ -59,6 +58,7 @@ void ColorSensor::readColor()
     // Serial.print("\n");
     classifyColor();
 }
+
 // Classify latest sensor reading and store result
 void ColorSensor::classifyColor()
 {
@@ -70,18 +70,24 @@ void ColorSensor::classifyColor()
     // Compare Euclidean distance to max threshold of each color group
     if (RedDist < RED_MAX_DIST)
     {
-        currentColor = ColorClass::RED;
+        currentColor_ = ColorClass::RED;
     }
     else if (GreenDist < GREEN_MAX_DIST)
     {
-        currentColor = ColorClass::GREEN;
+        currentColor_ = ColorClass::GREEN;
     }
     else if (BlueDist < BLUE_MAX_DIST)
     {
-        currentColor = ColorClass::BLUE;
+        currentColor_ = ColorClass::BLUE;
     }
     else
     {
-        currentColor = ColorClass::NO_COLOR;
+        currentColor_ = ColorClass::NO_COLOR;
     }
+}
+
+// Get most recently sensed color
+ColorClass ColorSensor::getCurrentColor()
+{
+    return currentColor_;
 }

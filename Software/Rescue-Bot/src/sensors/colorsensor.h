@@ -57,11 +57,10 @@ class ColorSensor
 public:
     ColorSensor(ColorSensorType type);
     bool init();
-    void run();
 
     void readColor();
     void classifyColor();
-    ColorClass currentColor; // most recently sensed color
+    ColorClass getCurrentColor();
 
 private:
     // Adafruit library object
@@ -70,6 +69,7 @@ private:
     float red_;                  // temp variable
     float green_;                // temp variable
     float blue_;                 // temp variable
+    ColorClass currentColor_;    // most recently sensed color
 
     // Color Average constants for specific type of sensor
     float RED_AVG[3] = {0}; // index is R,G,B
