@@ -5,16 +5,14 @@
 #include <TaskSchedulerDeclarations.h>
 
 #include "config.h"
-
 #include "motor_control.h"
 
+#include "sensors/imu.h"
 #include "sensors/colorsensor.h"
-
 #include "actuators/servos.h"
 
-#include "motor_control.h"
-
-// extern ColorSensor colorsensor;
+extern ColorSensor color_sensors[4];
+extern IMU imu;
 
 extern Task t_navigation;
 

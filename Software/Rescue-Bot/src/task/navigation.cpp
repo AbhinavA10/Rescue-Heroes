@@ -1,4 +1,5 @@
 #include "navigation.h"
+#include "pin_assignment.h" // Color Sensor indicies
 
 namespace Navigation
 {
@@ -40,6 +41,14 @@ namespace Navigation
             MotorControl::set_command(Command_t::TURN, 90);
             MotorControl::set_command(Command_t::DRIVE, 90);
             done_init = true;
+        }
+
+        // E.g. Reading IMU Sensor data:
+        int yaw = imu.getYaw();
+        // E.g. Reading color sensor data:
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+        {
+            // both front sensors see red
         }
     }
 };

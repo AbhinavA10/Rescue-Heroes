@@ -42,7 +42,7 @@ void setup()
   {
     MotorControl::drive_fwd();
     read_sensors();
-    if (color_sensors[COLORSENSOR_FL].currentColor == ColorClass::RED || color_sensors[COLORSENSOR_FR].currentColor == ColorClass::RED)
+    if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
     {
       foundRed = true;
       // PRINT_DEBUG(i);
