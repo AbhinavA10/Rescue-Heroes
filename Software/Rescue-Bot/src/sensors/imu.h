@@ -47,7 +47,6 @@ private:
     uint16_t imu_packetsize_;
 
     volatile bool data_ready_;
-    uint16_t error_count = 0;
 };
 
 class IMU_Wrapper

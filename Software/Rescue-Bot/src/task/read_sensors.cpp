@@ -17,24 +17,26 @@ void init_sensors()
     // read_sensors();
     // The next runs of this task will use the read_sensors callback
     // t_readSensors.setCallback(&read_sensors);
-    setup_colors();
+    setupColorSensors();
     Display::refresh_display(); // TODO: move to its own task
 }
 
+// set mux bus
 void chooseBus(uint8_t bus)
 {
     Wire.beginTransmission(0x70);
-    Wire.write(1 << (bus + 2)); // will be using 2-3 instead of 0-1 SDA/SCL pins because of convience (placed better on the breadboard)
+    Wire.write(1 << (bus + 2)); // will be using Mux busses 2,3,4,5.
     Wire.endTransmission();
 }
 
-void setup_colors()
+// Initialize color sensors
+void setupColorSensors()
 {
-    bool found[numberOfSensors] = {false, false, false, false};
-    for (int i = 0; i < numberOfSensors; i++)
+    bool found[NUM_COLOR_SENSORS] = {false, false, false, false};
+    for (int i = 0; i < NUM_COLOR_SENSORS; i++)
     {
         chooseBus(i);
-        if (tcs[i].begin())
+        if (color_sensors[i].init())
         {
             Serial.print("Found sensor ");
             Serial.println(i + 1);
@@ -43,16 +45,16 @@ void setup_colors()
         else
         {
             Serial.println("No Sensor Found");
-            // TODO: error handling
         }
     }
     Display::text[COLOR_SENSOR_STATUS_INDEX] = "ColorSensors ";
-    for (int i = 0; i < numberOfSensors; i++)
+    for (int i = 0; i < NUM_COLOR_SENSORS; i++)
     {
         Display::text[COLOR_SENSOR_STATUS_INDEX] += String(i);
         Display::text[COLOR_SENSOR_STATUS_INDEX] += (found[i]) ? F("Y") : F("N");
     }
 }
+
 void read_sensors()
 {
     // if (MotorControl::current_command.type == Command_t::TURN)
@@ -60,87 +62,14 @@ void read_sensors()
     // TODO: only run if we're still turning?
     // imu->readData();
     // }
-    //TODO: set bus using Mux for each color sensor
-    //detectColor();
-    for (int i = 0; i < numberOfSensors; i++)
+    for (int i = 0; i < NUM_COLOR_SENSORS; i++)
     {
         chooseBus(i);
-        float red, green, blue;
-        tcs[i].getRGB(&red, &green, &blue);
-
-        // Comment out this section below if wanting to use with colorviewCollectorPDE!
-        Serial.print("Sensor: ");
-        Serial.print(i);
-        Serial.print("\t");
-
-        Serial.print("R:\t");
-        Serial.print(int(red));
-        Serial.print("\tG:\t");
-        Serial.print(int(green));
-        Serial.print("\tB:\t");
-        Serial.print(int(blue));
-        Serial.print("\n");
+        // Serial.print("Sensor: ");
+        // Serial.print(i);
+        color_sensors[i].readColor();
     }
-    delay(60); // takes 50ms to read
-
-    // update encoder distance if needed
-    // motors.left->readDistance();
-    // motors.right->readDistance();
-}
-#define NO_COLOR 0
-#define RED 1
-#define GREEN 2
-#define BLUE 3
-
-int findColor(float R_New, float G_New, float B_New)
-{
-    float RedDist = sqrt(pow(R_New - COLOR_RED_R_ADAFRUIT, 2) + pow(G_New - COLOR_RED_G_ADAFRUIT, 2) + pow(B_New - COLOR_RED_B_ADAFRUIT, 2));
-    float GreenDist = sqrt(pow(R_New - COLOR_GREEN_R_ADAFRUIT, 2) + pow(G_New - COLOR_GREEN_G_ADAFRUIT, 2) + pow(B_New - COLOR_GREEN_B_ADAFRUIT, 2));
-    float BlueDist = sqrt(pow(R_New - COLOR_BLUE_R_ADAFRUIT, 2) + pow(G_New - COLOR_BLUE_G_ADAFRUIT, 2) + pow(B_New - COLOR_BLUE_B_ADAFRUIT, 2));
-    if (RedDist < COLOR_RED_MAX_DISTANCE_ADAFRUIT)
-    {
-        return RED;
-    }
-    else if (GreenDist < COLOR_GREEN_MAX_DISTANCE_ADAFRUIT)
-    {
-        return GREEN;
-    }
-    else if (BlueDist < COLOR_BLUE_MAX_DISTANCE_ADAFRUIT)
-    {
-        return BLUE;
-    }
-    else
-    {
-        return NO_COLOR;
-    }
-}
-
-bool read_red()
-{
-    // if (MotorControl::current_command.type == Command_t::TURN)
-    // {
-    // TODO: only run if we're still turning?
-    // imu->readData();
-    // }
-    //TODO: set bus using Mux for each color sensor
-    //detectColor();
-    for (int i = 0; i < numberOfSensors; i++)
-    {
-        chooseBus(i);
-        float red, green, blue;
-        tcs[i].getRGB(&red, &green, &blue);
-
-        if (findColor(red, green, blue) == RED)
-        {
-            return true;
-        }
-        else
-        {
-            continue;
-        }
-    }
-    delay(60); // takes 50ms to read + some margin?
-    return false;
+    delay(60); // takes 50ms to read + some margin
 
     // update encoder distance if needed
     // motors.left->readDistance();

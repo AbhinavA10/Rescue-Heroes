@@ -32,4 +32,10 @@
 #define BUZZER      A1
 #define TOGGLE_PIN  A2 // general pin that can be used for toggling
 
+// Indicies in ColorSensors array
+#define COLORSENSOR_FL 0
+#define COLORSENSOR_FR 1
+#define COLORSENSOR_L 2
+#define COLORSENSOR_R 3
+
 #endif

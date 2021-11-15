@@ -14,7 +14,7 @@
 
 #include "motor_control.h"
 
-extern ColorSensor colorsensor;
+// extern ColorSensor colorsensor;
 
 extern Task t_navigation;
 

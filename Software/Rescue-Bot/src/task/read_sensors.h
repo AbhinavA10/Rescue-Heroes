@@ -8,15 +8,10 @@
 
 #include "sensors/imu.h"
 #include "sensors/colorsensor.h"
-#include "Adafruit_TCS34725.h"
 
-#define numberOfSensors 4 // Put the number of color sensors you have here!
+#define NUM_COLOR_SENSORS 4
 
-static Adafruit_TCS34725 tcs[] = {Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X),
-                           Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X),
-                           Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X),
-                           Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X)};
-
+extern ColorSensor color_sensors[4];
 
 // No need to include IMU here since it is static
 extern Motors motors;
@@ -25,7 +20,7 @@ extern Task t_readSensors;
 
 void init_sensors();
 void read_sensors();
-void setup_colors();
+void setupColorSensors();
 bool read_red();
 
 #endif

@@ -11,7 +11,6 @@ bool IMU::init()
 {
     yaw_offset_ = 0;
     data_ready_ = false;
-    error_count = 0;
 
     orientation = Orientation{};
     mpu_ = MPU6050();
