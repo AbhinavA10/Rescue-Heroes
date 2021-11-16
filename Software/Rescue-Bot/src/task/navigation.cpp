@@ -97,7 +97,20 @@ namespace Navigation
 
     void do_pick_up_lego_man()
     {
-        //TODO
+        //Drive forward measured time/ distance (PID here?)
+        MotorControl::stopMotors();
+        //Servo movement to pick up lego guy
+        //Motors going backwards measured time/ distance (PID here?)
+        int old_yaw = imu.getYaw();
+        if(imu.getYaw() == old_yaw+90)
+        {
+            MotorControl::drive_fwd();
+            state = State_t::FINDING_SAFE_ZONE;
+        }
+        else
+        {
+            MotorControl::spin_right();
+        }
     }
 
     void do_dropoff_lego_man()
