@@ -102,7 +102,56 @@ namespace Navigation
 
     void do_dropoff_lego_man()
     {
-        //TODO
+        //May need to drive forward a bit before starting
+        int old_yaw = imu.getYaw();
+
+        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
+        {
+            if(imu.getYaw() == old_yaw-90)
+            {
+                //May need to drive forward a bit?
+                MotorControl::stopMotors();
+                //control the servo
+                //If we drive forward we will need to drive backwards same amount
+                if(imu.getYaw() == old_yaw)
+                {
+                    MotorControl::drive_fwd();
+                    state = State_t::RETURN_TO_START;
+                }
+                else
+                {
+                    MotorControl::spin_right();
+                }
+            }
+            else
+            {
+                MotorControl::spin_left();
+            }
+        }
+        else
+        {
+            if(imu.getYaw() == old_yaw+90)
+            {
+                //May need to drive forward
+                MotorControl::stopMotors();
+                //Control Servo
+                //If we drive forward will need to drive backward same amount
+                if(imu.getYaw() == old_yaw)
+                {
+                    MotorControl::drive_fwd();
+                    state = State_t::RETURN_TO_START;
+                }
+                else
+                {
+                    MotorControl::spin_left();
+                }
+            }
+            else
+            {
+                MotorControl::spin_right();
+            }
+        }
+
     }
 
     void do_test_move()
