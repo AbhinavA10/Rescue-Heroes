@@ -29,8 +29,7 @@ namespace Navigation
             do_dropoff_lego_man();
             break;
         case State_t::RETURN_TO_START:
-            // do_follow_red_line();
-            do_return_to_start();
+            do_follow_red_line();
             break;
         case State_t::TEST_MOVE:
             do_test_move();
@@ -40,118 +39,50 @@ namespace Navigation
         };
     }
 
-    // void do_follow_red_line()
-    // {
-
-    // }
+    void do_follow_red_line()
+    {
+        while (state == State_t::FINDING_LEGO_MAN || state == State_t::FINDING_SAFE_ZONE || state == State_t::RETURN_TO_START)
+        {
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() != ColorClass::NO_COLOR)
+            {
+                MotorControl::drive_fwd();
+            }
+            else
+            {
+                if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
+                {
+                    do
+                    {
+                        // TODO: increase RIGHT motor speed
+                    } while (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED);
+                }
+                else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+                {
+                    do
+                    {
+                        // TODO: increase LEFT motor speed
+                    } while (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED);
+                }
+            }
+        }
+    }
 
     void do_find_lego_man()
     {
-        // do_follow_red_line(); // commenting out for now. can implement if needed.
-
-        while (state == State_t::FINDING_LEGO_MAN)
+        while (color_sensors[COLORSENSOR_FL].getCurrentColor() != ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() != ColorClass::BLUE)
         {
-            // read_sensors();
-            // if (!read_red()) // the sensor does not read red, drive forward
-            // {
-            //     MotorControl::drive_fwd();
-            // }
-            // else if (read_red()) // sees red
-            // {
-            //     if (left_sensor_red())
-            //     {
-            //         while (left_sensor_red)
-            //         {
-            //             // MotorControl::spin_right();
-            //             // increase right motor speed
-            //         }
-            //     }
-            //     else if (right_sensor_red())
-            //     {
-            //         while (right_sernsor_red())
-            //         {
-            //             // MotorControl::spin_left();
-            //             // increase left motor speed
-            //         }
-            //     }
-            // }
-            // else if (read_blue()) // sees blue
-            // {
-            //     state = State_t::FOUND_LEGO_MAN;
-            // }
+            do_follow_red_line();
         }
+        state = State_t::FOUND_LEGO_MAN;
     }
 
     void do_finding_safe_zone()
     {
-        // do_follow_red_line();
-        while (state == State_t::FINDING_SAFE_ZONE)
+        while (color_sensors[COLORSENSOR_L].getCurrentColor() != ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() != ColorClass::GREEN)
         {
-            // read_sensors();
-            // if (!read_red()) // the sensor does not read red, drive forward
-            // {
-            //     MotorControl::drive_fwd();
-            // }
-            // else if (read_red()) // sees red
-            // {
-            //     if (left_sensor_red())
-            //     {
-            //         while (left_sensor_red)
-            //         {
-            //             // MotorControl::spin_right();
-            //             // increase right motor speed
-            //         }
-            //     }
-            //     else if (right_sensor_red())
-            //     {
-            //         while (right_sernsor_red())
-            //         {
-            //             // MotorControl::spin_left();
-            //             // increase left motor speed
-            //         }
-            //     }
-            // }
-            // else if (read_green()) // sees blue
-            // {
-            //     state = State_t::FOUND_SAFE_ZONE;
-            // }
+            do_follow_red_line();
         }
-    }
-
-    void do_return_to_start()
-    {
-        // do_follow_red_line();
-        while (state == State_t::RETURN_TO_START)
-        {
-            // read_sensors();
-            // if (!read_red()) // the sensor does not read red, drive forward
-            // {
-            //     MotorControl::drive_fwd();
-            // }
-            // else if (read_red()) // sees red
-            // {
-            //     if (left_sensor_red())
-            //     {
-            //         while (left_sensor_red)
-            //         {
-            //             // MotorControl::spin_right();
-            //             // increase right motor speed
-            //         }
-            //     }
-            //     else if (right_sensor_red())
-            //     {
-            //         while (right_sernsor_red())
-            //         {
-            //             // MotorControl::spin_left();
-            //             // increase left motor speed
-            //         }
-            //     }
-            // }
-            // else if (read_green()) // sees blue
-            // {
-            //     state = NULL;
-            // }
-        }
+        state = State_t::FOUND_SAFE_ZONE;
     }
 
     void do_pick_up_lego_man()
