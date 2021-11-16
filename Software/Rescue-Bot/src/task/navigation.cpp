@@ -102,7 +102,7 @@ namespace Navigation
         //Servo movement to pick up lego guy
         //Motors going backwards measured time/ distance (PID here?)
         int old_yaw = imu.getYaw();
-        if(imu.getYaw() == old_yaw+90)
+        if(imu.getYaw() == old_yaw+180)
         {
             MotorControl::drive_fwd();
             state = State_t::FINDING_SAFE_ZONE;
