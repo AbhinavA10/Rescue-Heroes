@@ -41,48 +41,58 @@ namespace Navigation
 
     void do_follow_red_line()
     {
-        while (state == State_t::FINDING_LEGO_MAN || state == State_t::FINDING_SAFE_ZONE || state == State_t::RETURN_TO_START)
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
         {
-            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
+            MotorControl::drive_fwd();
+        }
+        else
+        {
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
-                MotorControl::drive_fwd();
+                do
+                {
+                    // TODO: increase RIGHT motor speed
+                } while (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED);
+            }
+            else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+            {
+                do
+                {
+                    // TODO: increase RIGHT motor speed
+                } while (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED);
             }
             else
             {
-                if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
-                {
-                    do
-                    {
-                        // TODO: increase RIGHT motor speed
-                    } while (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED);
-                }
-                else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
-                {
-                    do
-                    {
-                        // TODO: increase LEFT motor speed
-                    } while (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED);
-                }
+                MotorControl::drive_fwd();
             }
         }
+        return;
     }
 
     void do_find_lego_man()
     {
-        while (color_sensors[COLORSENSOR_FL].getCurrentColor() != ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() != ColorClass::BLUE)
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::BLUE)
+        {
+            state = State_t::FOUND_LEGO_MAN;
+            return;
+        }
+        else
         {
             do_follow_red_line();
         }
-        state = State_t::FOUND_LEGO_MAN;
     }
 
     void do_finding_safe_zone()
     {
-        while (color_sensors[COLORSENSOR_L].getCurrentColor() != ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() != ColorClass::GREEN)
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::GREEN)
+        {
+            state = State_t::FOUND_SAFE_ZONE;
+            return;
+        }
+        else
         {
             do_follow_red_line();
         }
-        state = State_t::FOUND_SAFE_ZONE;
     }
 
     void do_pick_up_lego_man()
