@@ -49,21 +49,18 @@ namespace Navigation
         {
             if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
-                do
-                {
-                    // TODO: increase RIGHT motor speed
-                } while (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED);
+                MotorControl::spin_right();
+                return;
             }
             else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
             {
-                do
-                {
-                    // TODO: increase RIGHT motor speed
-                } while (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED);
+                MotorControl::spin_left();
+                return;
             }
             else
             {
                 MotorControl::drive_fwd();
+                return;
             }
         }
         return;
@@ -84,7 +81,7 @@ namespace Navigation
 
     void do_finding_safe_zone()
     {
-        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::GREEN)
+        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
         {
             state = State_t::FOUND_SAFE_ZONE;
             return;
@@ -102,7 +99,7 @@ namespace Navigation
         //Servo movement to pick up lego guy
         //Motors going backwards measured time/ distance (PID here?)
         int old_yaw = imu.getYaw();
-        if(imu.getYaw() == old_yaw+180)
+        if (imu.getYaw() == old_yaw + 180)
         {
             MotorControl::drive_fwd();
             state = State_t::FINDING_SAFE_ZONE;
@@ -120,13 +117,13 @@ namespace Navigation
 
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
         {
-            if(imu.getYaw() == old_yaw-90)
+            if (imu.getYaw() == old_yaw - 90)
             {
                 //May need to drive forward a bit?
                 MotorControl::stopMotors();
                 //control the servo
                 //If we drive forward we will need to drive backwards same amount
-                if(imu.getYaw() == old_yaw)
+                if (imu.getYaw() == old_yaw)
                 {
                     MotorControl::drive_fwd();
                     state = State_t::RETURN_TO_START;
@@ -143,13 +140,13 @@ namespace Navigation
         }
         else
         {
-            if(imu.getYaw() == old_yaw+90)
+            if (imu.getYaw() == old_yaw + 90)
             {
                 //May need to drive forward
                 MotorControl::stopMotors();
                 //Control Servo
                 //If we drive forward will need to drive backward same amount
-                if(imu.getYaw() == old_yaw)
+                if (imu.getYaw() == old_yaw)
                 {
                     MotorControl::drive_fwd();
                     state = State_t::RETURN_TO_START;
@@ -164,7 +161,6 @@ namespace Navigation
                 MotorControl::spin_right();
             }
         }
-
     }
 
     void do_test_move()
