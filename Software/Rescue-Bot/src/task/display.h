@@ -27,6 +27,7 @@ namespace Display
 
     void init_display();
     void refresh_display();
+    void refresh_display_big(int val);
     void test_display();
     void testdrawchar();
     void testdrawstyles();

@@ -69,9 +69,18 @@ namespace Display
         }
         display.display();
     }
+    void refresh_display_big(int val)
+    {
+        display.clearDisplay();
+        display.setTextSize(4);
+        display.setTextColor(SSD1306_WHITE); // Draw white text
+        display.setCursor(0, 0);             // Start at top-left corner
+        display.println(val);
+        display.display();
+    }
     void test_display()
     {
-        testdrawchar(); // Draw characters of the default font
+        testdrawchar();   // Draw characters of the default font
         testdrawstyles(); // Draw 'stylized' characters
     }
 };
