@@ -43,7 +43,7 @@ namespace Navigation
     {
         while (state == State_t::FINDING_LEGO_MAN || state == State_t::FINDING_SAFE_ZONE || state == State_t::RETURN_TO_START)
         {
-            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() != ColorClass::NO_COLOR)
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
             {
                 MotorControl::drive_fwd();
             }
