@@ -26,8 +26,8 @@ IMU imu = IMU();
 // TaskInterval in milliseconds
 // ColorSensors Minimum read time: Integration time
 Task t_readSensors(3UL, TASK_FOREVER, &init_sensors, &runner, true);
-// Task t_navigation(50UL, TASK_FOREVER, &Navigation::init, &runner, true);
-// Task t_motorControl(10UL, TASK_FOREVER, &MotorControl::init_motor_control, &runner, true);
+// Task t_navigation(20UL, TASK_FOREVER, &Navigation::init, &runner, true);
+Task t_motorControl(15UL, TASK_FOREVER, &MotorControl::init_motor_control, &runner, true);
 // Through the above constructor and parameters, the tasks are created and scheduled & enabled to run
 // at the next runner.execute();
 // We are using this approach:
@@ -41,7 +41,6 @@ void setup()
   Serial.begin(115200);
   Display::init_display(); // Note: not making Display into a task until needed.
   initScoopServo();
-  MotorControl::init_motor_control();
   // Test if display works
   // Display::test_display();
 

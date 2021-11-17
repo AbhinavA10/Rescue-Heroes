@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <math.h>
-
+#include "config.h"
 #include "actuators/motors.h"
 #include "pin_assignment.h"
 
@@ -44,6 +44,7 @@ void Motors::leftMotorInterrupt()
     {
         count1--;
     }
+    // Note: don't put serial print statements in interrupts
     // left->update();
 }
 
@@ -70,11 +71,12 @@ void Motors::stop()
     Motors::right->stop();
 }
 
-void Motors::checkMotors(){
-  Serial.print(count1);
-  Serial.print(" ");
-  Serial.print(count2);
-  Serial.print("\r\n");
+void Motors::checkMotors()
+{
+    Serial.print(count1);
+    Serial.print(" ");
+    Serial.print(count2);
+    Serial.print("\r\n");
 }
 
 // Initializes motor with pins and sets up interrupts
