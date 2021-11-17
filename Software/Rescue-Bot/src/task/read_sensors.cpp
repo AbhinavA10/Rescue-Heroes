@@ -69,7 +69,7 @@ void read_sensors()
         // Serial.print(i);
         color_sensors[i].readColor();
     }
-    delay(60); // takes 50ms to read + some margin
+    delay(3); // takes 50ms to read + some margin
 
     // update encoder distance if needed
     // motors.left->readDistance();

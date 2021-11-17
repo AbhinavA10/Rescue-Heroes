@@ -3,7 +3,7 @@
 
 ColorSensor::ColorSensor(ColorSensorType type) : type_(type)
 {
-    sensor_ = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
+    sensor_ = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_2_4MS, TCS34725_GAIN_4X);
     // Init constants for this specific sensor
     switch (type)
     {

@@ -211,7 +211,9 @@ void Adafruit_TCS34725::getRawData(uint16_t *r, uint16_t *g, uint16_t *b,
 
   /* Set a delay for the integration time */
   /* 12/5 = 2.4, add 1 to account for integer truncation */
-  delay((256 - _tcs34725IntegrationTime) * 12 / 5 + 1);
+  // Assume delay is handled in the calling Function!
+  // This way, there is no delay between different color sensors.
+  // delay((256 - _tcs34725IntegrationTime) * 12 / 5 + 1);
 }
 
 /*!
