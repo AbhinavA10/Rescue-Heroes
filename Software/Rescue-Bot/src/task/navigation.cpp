@@ -36,10 +36,21 @@ namespace Navigation
     {
         //TODO
     }
-
+    
+    // Milestone4: Driving till red:
     void do_milestone4_move_till_red()
     {
-
+        static bool foundRed = false;
+        if (!foundRed)
+        {
+            MotorControl::drive_fwd();
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+            {
+                analogWrite(ENA_PWM, 0);
+                analogWrite(ENB_PWM, 0);
+                foundRed = true;
+            }
+        }
     }
 
     void do_test_move()

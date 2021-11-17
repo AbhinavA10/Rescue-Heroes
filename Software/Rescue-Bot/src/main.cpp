@@ -70,19 +70,11 @@ void setup()
   */
 }
 
-bool foundRed = false;
 void loop()
 {
-  // Milestone4: Driving till red:
+
   read_sensors();
-  if (!foundRed)
-  {
-    MotorControl::drive_fwd();
-    if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
-    {
-      analogWrite(ENA_PWM, 0);
-      analogWrite(ENB_PWM, 0);
-      foundRed = true;
-    }
-  }
+  Navigation::run();
+  MotorControl::motor_control();
+  delay(3); // integration time of color sensors
 }

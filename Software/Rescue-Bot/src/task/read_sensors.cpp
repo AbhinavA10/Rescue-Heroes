@@ -4,17 +4,26 @@
 #include "read_sensors.h"
 #include "task/display.h"
 
-
+static bool all_sensors_init = true;
 // Setup sensors
 void init_sensors()
 {
     // Start I2C bus
     Wire.begin();
+    setupColorSensors();
+    Display::refresh_display();
 #ifdef USE_IMU
     imu.init();
     imu.run();
 #endif
-    setupColorSensors();
+    if (all_sensors_init)
+    {
+        PRINT_DEBUG("Found all Sensors")
+    }
+    else
+    {
+        PRINT_DEBUG("Missing some Sensors!!")
+    }
     Display::refresh_display();
     read_sensors(); // get initial sensor values
 }
@@ -43,6 +52,7 @@ void setupColorSensors()
         else
         {
             Serial.println("No Sensor Found");
+            all_sensors_init = false;
         }
     }
     Display::text[COLOR_SENSOR_STATUS_INDEX] = "ColorSensors ";
@@ -68,8 +78,6 @@ void read_sensors()
         // Serial.print(i);
         color_sensors[i].readColor();
     }
-    delay(3); // integration time of color sensors
-
     // update encoder distance if needed
     // motors.left->readDistance();
     // motors.right->readDistance();
