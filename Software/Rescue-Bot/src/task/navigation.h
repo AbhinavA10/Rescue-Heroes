@@ -28,6 +28,8 @@ namespace Navigation
         FOUND_SAFE_ZONE,
         RETURN_TO_START,
         TEST_MOVE,
+
+        MILESTONE4_MOVE_TILL_RED,
         // TODO: add proper states
     };
 
@@ -38,5 +40,6 @@ namespace Navigation
 
     void do_follow_red_line();
     void do_test_move();
+    void do_milestone4_move_till_red();
 };
 #endif

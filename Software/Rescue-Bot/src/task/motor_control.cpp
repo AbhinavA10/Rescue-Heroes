@@ -15,7 +15,7 @@ namespace MotorControl
 
         motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
-        // t_motorControl.setCallback(&motor_control);
+        t_motorControl.setCallback(&motor_control);
     }
 
     void stopMotors()
@@ -189,9 +189,11 @@ namespace MotorControl
     }
     void motor_control()
     {
+        /*
         run_command();
         motors.left->adjustSpeed();
         motors.right->adjustSpeed();
+        */
     }
 
     void set_command(Command_t type, int16_t value)

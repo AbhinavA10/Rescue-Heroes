@@ -25,6 +25,9 @@ namespace Navigation
         case State_t::TEST_MOVE:
             do_test_move();
             break;
+        case State_t::MILESTONE4_MOVE_TILL_RED:
+            do_milestone4_move_till_red();
+            break;
         default:
             break;
         };
@@ -32,6 +35,11 @@ namespace Navigation
     void do_follow_red_line()
     {
         //TODO
+    }
+
+    void do_milestone4_move_till_red()
+    {
+
     }
 
     void do_test_move()
