@@ -44,6 +44,7 @@ namespace Navigation
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
         {
             MotorControl::drive_fwd();
+            return;
         }
         else
         {
