@@ -36,19 +36,19 @@ namespace Navigation
     {
         //TODO
     }
-    
+
     // Milestone4: Driving till red:
     void do_milestone4_move_till_red()
     {
-        static bool foundRed = false;
-        if (!foundRed)
+        static bool done_test = false;
+        if (!done_test)
         {
             MotorControl::drive_fwd();
-            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+            if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
             {
                 analogWrite(ENA_PWM, 0);
                 analogWrite(ENB_PWM, 0);
-                foundRed = true;
+                done_test = true;
             }
         }
     }
@@ -63,14 +63,6 @@ namespace Navigation
             MotorControl::set_command(Command_t::TURN, 90);
             MotorControl::set_command(Command_t::DRIVE, 90);
             done_init = true;
-        }
-
-        // E.g. Reading IMU Sensor data:
-        int yaw = imu.getYaw();
-        // E.g. Reading color sensor data:
-        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
-        {
-            // both front sensors see red
         }
     }
 };
