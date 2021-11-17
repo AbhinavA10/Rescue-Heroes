@@ -2,11 +2,6 @@
 #include <Wire.h> // I2C
 #include <SPI.h>  // Required for Color Sensor library to compile
 
-// Library's TaskScheduler.h was renamed to be a .cpp
-#include "TaskSchedulerDeclarations.h"
-
-Scheduler runner; // constructor calls runner.init()
-
 #include "pin_assignment.h"
 #include "buzzer.h"
 #include "config.h"
@@ -22,25 +17,19 @@ ColorSensor color_sensors[4] = {ColorSensor(ColorSensorType::ADAFRUIT), // Front
                                 ColorSensor(ColorSensorType::EBAY)};    // Right
 IMU imu = IMU();
 
-// (Task interval, num iterations, callback, scheduler reference, enabled?)
-// TaskInterval in milliseconds
-// ColorSensors Minimum read time: Integration time
-Task t_readSensors(3UL, TASK_FOREVER, &init_sensors, &runner, true);
-Task t_navigation(15UL, TASK_FOREVER, &Navigation::init, &runner, true);
-Task t_motorControl(10UL, TASK_FOREVER, &MotorControl::init_motor_control, &runner, true);
-// Through the above constructor and parameters, the tasks are created and scheduled & enabled to run
-// at the next runner.execute();
-// We are using this approach:
-// https://github.com/arkhipenko/TaskScheduler/wiki/Full-Document#3-multiple-possible-callbacks-for-task
-// The task will initialize during first execution pass and switch to "regular" callback  execution starting with second pass.
-// There is a delay between first and second passes of the task (scheduling period, if defined).
-bool foundRed = false;
+// Each "Task" is a non-blocking grouping of functionality
+// Each functionality's init() is called, then its main function called sequentially, directly
+// which gives the same behaviour
+
 void setup()
 {
   playStartupSound();
   Serial.begin(115200);
-  Display::init_display(); // Note: not making Display into a task until needed.
+  Display::init_display();
   initScoopServo();
+  init_sensors();
+  MotorControl::init_motor_control();
+  Navigation::init();
   // Test if display works
   // Display::test_display();
 
@@ -79,17 +68,13 @@ void setup()
 
   playShutdownSound();
   */
-  runner.startNow(); // Use when there is long running functions in setup()
-  // Sets ALL active tasks in the execution chain to start execution immediately.
-  // Should be placed at the end of setup() method to prevent task execution race
-  // due to long running setup tasks (hardware initialization, etc.)
-  // following task activation
 }
 
+bool foundRed = false;
 void loop()
 {
-  runner.execute();
   // Milestone4: Driving till red:
+  read_sensors();
   if (!foundRed)
   {
     MotorControl::drive_fwd();
@@ -98,7 +83,6 @@ void loop()
       analogWrite(ENA_PWM, 0);
       analogWrite(ENB_PWM, 0);
       foundRed = true;
-      exit(0);
     }
   }
 }

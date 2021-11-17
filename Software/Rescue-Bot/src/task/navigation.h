@@ -2,7 +2,6 @@
 #define NAVIGATION_H
 
 #include <Arduino.h>
-#include "TaskSchedulerDeclarations.h"
 
 #include "config.h"
 #include "motor_control.h"
@@ -13,8 +12,6 @@
 
 extern ColorSensor color_sensors[4];
 extern IMU imu;
-
-extern Task t_navigation;
 
 namespace Navigation
 {

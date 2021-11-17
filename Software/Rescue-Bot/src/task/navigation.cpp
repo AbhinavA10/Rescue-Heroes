@@ -11,10 +11,10 @@ namespace Navigation
     void init()
     {
         // The next runs of this task will use the run callback
-        t_navigation.setCallback(&run);
+        // t_navigation.setCallback(&run);
     }
 
-    // Runs everytime the t_navigation task is run.
+    // Runs everytime the navigation task is run.
     void run()
     {
         switch (state)
