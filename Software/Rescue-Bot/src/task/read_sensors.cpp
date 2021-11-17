@@ -6,6 +6,7 @@
 
 // current task = t_readSensors
 
+// Setup sensors
 void init_sensors()
 {
     // Start I2C bus
@@ -15,10 +16,10 @@ void init_sensors()
     imu.run();
 #endif
     setupColorSensors();
-    Display::refresh_display(); // TODO: move to its own task?
-    // read_sensors();
+    Display::refresh_display();
+    read_sensors();
     // The next runs of this task will use the read_sensors callback
-    // t_readSensors.setCallback(&read_sensors);
+    t_readSensors.setCallback(&read_sensors);
 }
 
 // set mux bus
@@ -55,6 +56,7 @@ void setupColorSensors()
     }
 }
 
+// Runs everytime the t_readSensors task is run.
 void read_sensors()
 {
     // if (MotorControl::current_command.type == Command_t::TURN)
@@ -69,7 +71,6 @@ void read_sensors()
         // Serial.print(i);
         color_sensors[i].readColor();
     }
-    delay(3); // takes 50ms to read + some margin
 
     // update encoder distance if needed
     // motors.left->readDistance();
