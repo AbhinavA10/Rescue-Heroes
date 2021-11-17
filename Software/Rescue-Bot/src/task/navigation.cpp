@@ -44,26 +44,24 @@ namespace Navigation
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
         {
             MotorControl::drive_fwd();
+            return;
         }
         else
         {
             if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
-                do
-                {
-                    // TODO: increase RIGHT motor speed
-                } while (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED);
+                MotorControl::spin_right();
+                return;
             }
             else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
             {
-                do
-                {
-                    // TODO: increase RIGHT motor speed
-                } while (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED);
+                MotorControl::spin_left();
+                return;
             }
             else
             {
                 MotorControl::drive_fwd();
+                return;
             }
         }
         return;
@@ -84,7 +82,7 @@ namespace Navigation
 
     void do_finding_safe_zone()
     {
-        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::GREEN)
+        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
         {
             state = State_t::FOUND_SAFE_ZONE;
             return;
@@ -164,7 +162,6 @@ namespace Navigation
                 MotorControl::spin_right();
             }
         }
-
     }
 
     void do_test_move()
