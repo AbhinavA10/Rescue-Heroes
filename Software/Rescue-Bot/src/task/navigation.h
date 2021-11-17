@@ -2,7 +2,6 @@
 #define NAVIGATION_H
 
 #include <Arduino.h>
-#include <TaskSchedulerDeclarations.h>
 
 #include "config.h"
 #include "motor_control.h"
@@ -13,8 +12,6 @@
 
 extern ColorSensor color_sensors[4];
 extern IMU imu;
-
-extern Task t_navigation;
 
 namespace Navigation
 {
@@ -28,6 +25,8 @@ namespace Navigation
         FOUND_SAFE_ZONE,
         RETURN_TO_START,
         TEST_MOVE,
+
+        MILESTONE4_MOVE_TILL_RED,
         // TODO: add proper states
     };
 
@@ -38,5 +37,6 @@ namespace Navigation
 
     void do_follow_red_line();
     void do_test_move();
+    void do_milestone4_move_till_red();
 };
 #endif

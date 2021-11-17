@@ -1,7 +1,6 @@
 #include "motor_control.h"
 #include "pin_assignment.h"
 
-// this task = t_motorControl
 namespace MotorControl
 {
 
@@ -15,7 +14,6 @@ namespace MotorControl
 
         motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
-        // t_motorControl.setCallback(&motor_control);
     }
 
     void stopMotors()
@@ -58,6 +56,20 @@ namespace MotorControl
 
         // Run the motors at the specified speed, and amount of time
         runMotors(mspeed, delayAmount);
+    }
+    // Function to Move Forward
+    void MoveForward_NoDelay(int mspeed)
+    {
+        // Set Motor A forward
+        digitalWrite(IN1, HIGH);
+        digitalWrite(IN2, LOW);
+
+        // Set Motor B forward
+        digitalWrite(IN3, HIGH);
+        digitalWrite(IN4, LOW);
+        
+        analogWrite(ENA_PWM, mspeed);
+        analogWrite(ENB_PWM, mspeed);
     }
     // Function to Move Reverse
     void MoveReverse(int mspeed, float delayAmount)
@@ -160,7 +172,8 @@ namespace MotorControl
     void drive_fwd()
     {
         // milestone4
-        MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
+        // MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
+        MoveForward_NoDelay(190);
     }
 
     void spin_right()
@@ -174,9 +187,11 @@ namespace MotorControl
     }
     void motor_control()
     {
+        /*
         run_command();
         motors.left->adjustSpeed();
         motors.right->adjustSpeed();
+        */
     }
 
     void set_command(Command_t type, int16_t value)

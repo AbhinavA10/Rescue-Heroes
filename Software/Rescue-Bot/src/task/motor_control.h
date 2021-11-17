@@ -2,7 +2,6 @@
 #define MOTOR_CONTROL_H
 
 #include <Arduino.h>
-#include <TaskSchedulerDeclarations.h>
 
 #include "actuators/motors.h"
 
@@ -13,7 +12,6 @@
 #define MOTOR_I_CONTSTANT 2 // TBD
 #define MOTOR_D_CONTSTANT 2 // TBD
 
-extern Task t_motorControl;
 extern Motors motors;
 
 extern uint16_t correction;

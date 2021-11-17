@@ -1,6 +1,5 @@
 #include "display.h"
 
-// this task = t_display
 namespace Display
 {
     Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);

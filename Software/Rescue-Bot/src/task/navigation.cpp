@@ -7,11 +7,14 @@ namespace Navigation
     State_t state = STARTING_STATE;
     int8_t orientation = 0;
 
+    // Setup Navigation
     void init()
     {
-        t_navigation.setCallback(&run);
+        // The next runs of this task will use the run callback
+        // t_navigation.setCallback(&run);
     }
 
+    // Runs everytime the navigation task is run.
     void run()
     {
         switch (state)
@@ -22,6 +25,9 @@ namespace Navigation
         case State_t::TEST_MOVE:
             do_test_move();
             break;
+        case State_t::MILESTONE4_MOVE_TILL_RED:
+            do_milestone4_move_till_red();
+            break;
         default:
             break;
         };
@@ -29,6 +35,22 @@ namespace Navigation
     void do_follow_red_line()
     {
         //TODO
+    }
+    
+    // Milestone4: Driving till red:
+    void do_milestone4_move_till_red()
+    {
+        static bool foundRed = false;
+        if (!foundRed)
+        {
+            MotorControl::drive_fwd();
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+            {
+                analogWrite(ENA_PWM, 0);
+                analogWrite(ENB_PWM, 0);
+                foundRed = true;
+            }
+        }
     }
 
     void do_test_move()
