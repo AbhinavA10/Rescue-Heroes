@@ -99,9 +99,9 @@ namespace Navigation
     {
         //Drive forward measured time/ distance (PID here?)
         MotorControl::stopMotors();
-        //Servo movement to pick up lego guy
+        lowerScoopServo();
         //Motors going backwards measured time/ distance (PID here?)
-        int old_yaw = imu.getYaw();
+        static int old_yaw = imu.getYaw();
         if(imu.getYaw() == old_yaw+180)
         {
             MotorControl::drive_fwd();
@@ -116,17 +116,17 @@ namespace Navigation
     void do_dropoff_lego_man()
     {
         //May need to drive forward a bit before starting
-        int old_yaw = imu.getYaw();
+        static int curr_yaw = imu.getYaw();
 
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
         {
-            if(imu.getYaw() == old_yaw-90)
+            if(imu.getYaw() == curr_yaw-90)
             {
                 //May need to drive forward a bit?
                 MotorControl::stopMotors();
-                //control the servo
+                raiseScoopServo();
                 //If we drive forward we will need to drive backwards same amount
-                if(imu.getYaw() == old_yaw)
+                if(imu.getYaw() == curr_yaw)
                 {
                     MotorControl::drive_fwd();
                     state = State_t::RETURN_TO_START;
@@ -143,13 +143,13 @@ namespace Navigation
         }
         else
         {
-            if(imu.getYaw() == old_yaw+90)
+            if(imu.getYaw() == curr_yaw+90)
             {
                 //May need to drive forward
                 MotorControl::stopMotors();
-                //Control Servo
+                raiseScoopServo();
                 //If we drive forward will need to drive backward same amount
-                if(imu.getYaw() == old_yaw)
+                if(imu.getYaw() == curr_yaw)
                 {
                     MotorControl::drive_fwd();
                     state = State_t::RETURN_TO_START;
