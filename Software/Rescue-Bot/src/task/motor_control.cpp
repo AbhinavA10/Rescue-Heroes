@@ -59,6 +59,20 @@ namespace MotorControl
         // Run the motors at the specified speed, and amount of time
         runMotors(mspeed, delayAmount);
     }
+    // Function to Move Forward
+    void MoveForward_NoDelay(int mspeed)
+    {
+        // Set Motor A forward
+        digitalWrite(IN1, HIGH);
+        digitalWrite(IN2, LOW);
+
+        // Set Motor B forward
+        digitalWrite(IN3, HIGH);
+        digitalWrite(IN4, LOW);
+        
+        analogWrite(ENA_PWM, mspeed);
+        analogWrite(ENB_PWM, mspeed);
+    }
     // Function to Move Reverse
     void MoveReverse(int mspeed, float delayAmount)
     {
@@ -160,7 +174,8 @@ namespace MotorControl
     void drive_fwd()
     {
         // milestone4
-        MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
+        // MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
+        MoveForward_NoDelay(190);
     }
 
     void spin_right()

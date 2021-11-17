@@ -2,7 +2,7 @@
 #define NAVIGATION_H
 
 #include <Arduino.h>
-#include <TaskSchedulerDeclarations.h>
+#include "TaskSchedulerDeclarations.h"
 
 #include "config.h"
 #include "motor_control.h"

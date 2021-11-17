@@ -2,6 +2,8 @@
 #include <Wire.h> // I2C
 #include <SPI.h>  // Required for Color Sensor library to compile
 
+// Library's TaskScheduler.h was renamed to be a .cpp
+#include "TaskSchedulerDeclarations.h"
 // TODO: Include task header files
 // TODO: Create global sensor/actuator objects
 // TODO: Create Tasks and setup TaskScheduler

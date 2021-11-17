@@ -14,11 +14,11 @@ void init_sensors()
     imu.init();
     imu.run();
 #endif
+    setupColorSensors();
+    Display::refresh_display(); // TODO: move to its own task?
     // read_sensors();
     // The next runs of this task will use the read_sensors callback
     // t_readSensors.setCallback(&read_sensors);
-    setupColorSensors();
-    Display::refresh_display(); // TODO: move to its own task
 }
 
 // set mux bus

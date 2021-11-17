@@ -2,7 +2,7 @@
 #define MOTOR_CONTROL_H
 
 #include <Arduino.h>
-#include <TaskSchedulerDeclarations.h>
+#include "TaskSchedulerDeclarations.h"
 
 #include "actuators/motors.h"
 
