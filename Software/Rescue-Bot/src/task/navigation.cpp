@@ -28,7 +28,11 @@ namespace Navigation
         case State_t::MILESTONE4_MOVE_TILL_RED:
             do_milestone4_move_till_red();
             break;
+        case State_t::MILESTONE5_FOLLOW_RED:
+            do_milestone5_follow_red();
+            break;
         default:
+            PRINT_DEBUG("UNKNOWN STATE!")
             break;
         };
     }
@@ -50,6 +54,37 @@ namespace Navigation
                 analogWrite(ENB_PWM, 0);
                 done_test = true;
             }
+        }
+    }
+
+    // Milestone5: Follow red line:
+    void do_milestone5_follow_red()
+    {
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
+        {
+            // turn left
+            analogWrite(ENA_PWM, 215);
+            analogWrite(ENB_PWM, 215);
+            digitalWrite(IN1, HIGH);
+            digitalWrite(IN2, LOW);
+            digitalWrite(IN3, LOW);
+            digitalWrite(IN4, HIGH);
+            Serial.println("Left");
+        }
+        else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+        {
+            // turn right
+            analogWrite(ENA_PWM, 215);
+            analogWrite(ENB_PWM, 215);
+            digitalWrite(IN1, LOW);
+            digitalWrite(IN2, HIGH);
+            digitalWrite(IN3, HIGH);
+            digitalWrite(IN4, LOW);
+            Serial.println("Right");
+        }
+        else
+        {
+            MotorControl::drive_fwd();
         }
     }
 

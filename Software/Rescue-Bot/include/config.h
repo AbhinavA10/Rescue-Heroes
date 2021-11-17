@@ -11,7 +11,7 @@
 /*
     Configuration Values
 */
-#define STARTING_STATE State_t::MILESTONE4_MOVE_TILL_RED
+#define STARTING_STATE State_t::MILESTONE5_FOLLOW_RED
 
 /*
     Macros

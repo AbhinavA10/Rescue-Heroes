@@ -173,7 +173,7 @@ namespace MotorControl
     {
         // milestone4
         // MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
-        MoveForward_NoDelay(190);
+        MoveForward_NoDelay(170);
     }
 
     void spin_right()

@@ -53,6 +53,7 @@ namespace Display
         // Show initial display buffer contents on the screen --
         // the library initializes this with an Adafruit splash screen.
         display.display();
+        delay(100); // show splashscreen for a bit, to show I2C interface works
     }
 
     // Redraw display with data from array
