@@ -86,6 +86,15 @@ namespace Navigation
 
         if (!done_init)
         {
+            MotorControl::MoveForward();
+            delay(500);
+            MotorControl::MoveReverse();
+            delay(500);
+            MotorControl::SpinLeft();
+            delay(1000);
+            MotorControl::SpinRight();
+            delay(1000);
+            MotorControl::StopMotors();
             done_init = true;
         }
     }
@@ -97,7 +106,7 @@ namespace Navigation
         {
             MotorControl::MoveForward_Distance(20);
             delay(1000);
-            // MotorControl::MoveReverse_Distance(10);
+            MotorControl::MoveReverse_Distance(20);
             done_test_move_dist = true;
         }
     }

@@ -53,8 +53,7 @@ namespace MotorControl
     {
         int ticks_setpoint = Motors::cmToTicks(cm);
         reset_ticks(); // Reset all tick counters
-        // move forward till both motors reach setpoint
-
+        // move forward till one of motors reach setpoint
         while (ticks_setpoint > abs(motors.left->ticks_) && ticks_setpoint > abs(motors.right->ticks_))
         {
             if (ticks_setpoint > abs(motors.left->ticks_))

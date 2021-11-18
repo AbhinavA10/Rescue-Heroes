@@ -13,7 +13,7 @@ public:
     double pos_current;  // Current distance motor has travelled
     double pos_setpoint; // setpoint distance
 
-    volatile int32_t ticks_;
+    volatile int ticks_;
     volatile int b_temp; // temp value used in interrupts
 
 private:
