@@ -37,6 +37,7 @@ namespace Navigation
         case State_t::RETURN_TO_START:
             do_follow_red_line();
             break;
+        // states for testing functionality
         case State_t::TEST_MOVE:
             do_test_move();
             break;
@@ -77,24 +78,24 @@ namespace Navigation
     {
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
         {
-            MotorControl::drive_fwd();
+            MotorControl::MoveForward();
             return;
         }
         else
         {
             if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
-                MotorControl::spin_right();
+                MotorControl::SpinRight();
                 return;
             }
             else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
             {
-                MotorControl::spin_left();
+                MotorControl::SpinLeft();
                 return;
             }
             else
             {
-                MotorControl::drive_fwd();
+                MotorControl::MoveForward();
                 return;
             }
         }
@@ -130,18 +131,18 @@ namespace Navigation
     void do_pick_up_lego_man()
     {
         //Drive forward measured time/ distance (PID here?)
-        MotorControl::stopMotors();
+        MotorControl::StopMotors();
         lowerScoopServo();
         //Motors going backwards measured time/ distance (PID here?)
         static int old_yaw = imu.getYaw();
         if(imu.getYaw() == old_yaw+180)
         {
-            MotorControl::drive_fwd();
+            MotorControl::MoveForward();
             state = State_t::FINDING_SAFE_ZONE;
         }
         else
         {
-            MotorControl::spin_right();
+            MotorControl::SpinRight();
         }
     }
 
@@ -155,22 +156,22 @@ namespace Navigation
             if(imu.getYaw() == curr_yaw-90)
             {
                 //May need to drive forward a bit?
-                MotorControl::stopMotors();
+                MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward we will need to drive backwards same amount
                 if(imu.getYaw() == curr_yaw)
                 {
-                    MotorControl::drive_fwd();
+                    MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
                 }
                 else
                 {
-                    MotorControl::spin_right();
+                    MotorControl::SpinRight();
                 }
             }
             else
             {
-                MotorControl::spin_left();
+                MotorControl::SpinLeft();
             }
         }
         else
@@ -178,22 +179,22 @@ namespace Navigation
             if(imu.getYaw() == curr_yaw+90)
             {
                 //May need to drive forward
-                MotorControl::stopMotors();
+                MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward will need to drive backward same amount
                 if(imu.getYaw() == curr_yaw)
                 {
-                    MotorControl::drive_fwd();
+                    MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
                 }
                 else
                 {
-                    MotorControl::spin_left();
+                    MotorControl::SpinLeft();
                 }
             }
             else
             {
-                MotorControl::spin_right();
+                MotorControl::SpinRight();
             }
         }
     }
