@@ -74,7 +74,6 @@ namespace Sensors
             // Serial.print(i);
             color_sensors[i].readColor();
         }
-        //TODO: only read from IMU if we need it?
         imu.readData();
     }
 }

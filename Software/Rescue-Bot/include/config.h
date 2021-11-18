@@ -10,7 +10,7 @@
 /*
     Configuration Values
 */
-#define STARTING_STATE State_t::TEST_IMU_PT1
+#define STARTING_STATE State_t::TEST_FOLLOW_RED
 
 /*
     Macros

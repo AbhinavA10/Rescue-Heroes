@@ -37,6 +37,8 @@ void loop()
   Sensors::read_sensors();
   Navigation::run();
   // MotorControl::run();
-  delay(3); // integration time of color sensors
-  //TODO: see if delay can be removed, using logic analyzer
+  // delay(1); 
+  // From Logic analyzer, reading of 3 color sensors
+  // takes ~6ms > 3ms integration time of sensor
+  // we need minimal delay above
 }
