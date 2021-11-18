@@ -1,5 +1,6 @@
 #include "motor_control.h"
 #include "pin_assignment.h"
+#include "actuators/servos.h"
 
 namespace MotorControl
 {
@@ -10,6 +11,7 @@ namespace MotorControl
     {
         motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
+        initScoopServo();
     }
 
     //Resets both tick counters to 0.

@@ -6,7 +6,6 @@
 #include "buzzer.h"
 #include "config.h"
 
-#include "actuators/servos.h"
 #include "task/motor_control.h"
 #include "task/display.h"
 #include "task/read_sensors.h"
@@ -26,15 +25,11 @@ void setup()
   playStartupSound();
   Serial.begin(115200);
   Display::init_display();
-  initScoopServo();
-  // init_sensors();
+  Sensors::init_sensors();
   MotorControl::init();
   Navigation::init();
   // Test if display works
   // Display::test_display();
-
-  // Test basic movement
-  // MotorControl::test_motors();
 
   /*
   // Milestone4: IMU: Manually rotate robot, then let robot rotate back to start position
@@ -72,9 +67,9 @@ void setup()
 
 void loop()
 {
-
-  // read_sensors();
+  Sensors::read_sensors();
   Navigation::run();
   // MotorControl::run();
   delay(3); // integration time of color sensors
+  //TODO: see if delay can be removed, using logic analyzer
 }

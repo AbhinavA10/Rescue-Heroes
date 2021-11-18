@@ -30,7 +30,6 @@ namespace Navigation
         MILESTONE4_MOVE_TILL_GREEN,
         MILESTONE5_FOLLOW_RED,
         TEST_MOVE_DIST,
-        // TODO: add proper states
     };
 
     extern State_t state;

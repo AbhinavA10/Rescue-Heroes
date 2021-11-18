@@ -13,9 +13,12 @@ extern ColorSensor color_sensors[4];
 extern IMU imu;
 extern Motors motors;
 
-void init_sensors();
-void read_sensors();
-void setupColorSensors();
-bool read_red();
+// State management and control flow
+namespace Sensors
+{
+    void init_sensors();
+    void read_sensors();
+    void setupColorSensors();
+}
 
 #endif
