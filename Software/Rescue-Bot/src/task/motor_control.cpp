@@ -13,25 +13,11 @@ namespace MotorControl
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
     }
 
-    void StopMotors()
+    void run_motors_for_duration(int mspeed, float delayAmount)
     {
-        write_speed(0, 0);
-    }
-
-    void run_for_duration(int mspeed, float delayAmount)
-    {
-        /*
-    255 is the max speed a motor can handle
-    Blue motors can run at max 9V. 
-    Battery pack I am using is a 8 pack AA pack, meaning it gives 12V (1.5V x 8), 
-    Motor driver takes 1.4V about, meaning 10.6V is left for the motors.
-    So 9/10.6 = x/255, therefore x = 215
-    Therefore speeds that these blue motors can run at: Min = 140, Max = 215, (140-215)
-        */
-        // Run all the motors for a certain amount of time
+        // Run motors for a certain amount of time
         write_speed(mspeed, mspeed);
         delay(delayAmount);
-
         // Stop when done
         write_speed(0, 0);
     }
@@ -40,6 +26,14 @@ namespace MotorControl
     // parameters: left_speed, right_speed
     void write_speed(int left, int right)
     {
+        /*
+        255 is the max speed a motor can normally handle
+        Blue motors can run at max 9V. Battery pack we're 8xAA ==> gives 12V (1.5V x 8), 
+        L298N Motor driver takes 1.4V about, meaning 10.6V is left for the motors.
+        So 9/10.6 = x/255 ==> x = 215 = max speed of blue motors
+        */
+        left = constrain(left, 0, MAX_SPEED);
+        right = constrain(right, 0, MAX_SPEED);
         analogWrite(ENA_PWM, left);
         analogWrite(ENB_PWM, right);
     }
@@ -56,7 +50,8 @@ namespace MotorControl
 
         write_speed(FWD_SPEED, FWD_SPEED);
     }
-    // Function to Move Reverse
+
+    // Move backwards
     void MoveReverse()
     {
         // Set Motor A reverse
@@ -68,10 +63,10 @@ namespace MotorControl
 
         write_speed(FWD_SPEED, FWD_SPEED);
         // Run the motors at the specified speed, and amount of time
-        // e.g.: run_for_duration(FWD_SPEED, delayAmount);
+        // e.g.: run_motors_for_duration(FWD_SPEED, delayAmount);
     }
 
-    // Function to Spin Right
+    // Spin Right
     void SpinRight()
     {
         // Set Motor A reverse
@@ -84,7 +79,7 @@ namespace MotorControl
         write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
-    // Function to Spin Left
+    // Spin Left
     void SpinLeft()
     {
         // Set Motor A forward
@@ -97,4 +92,14 @@ namespace MotorControl
         write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
+    // Stop both motors
+    void StopMotors()
+    {
+        write_speed(0, 0);
+    }
+
+    void run()
+    {
+        Motors::printTicks();
+    }
 };

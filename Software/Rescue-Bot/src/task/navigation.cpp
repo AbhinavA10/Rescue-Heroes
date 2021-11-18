@@ -9,7 +9,7 @@ namespace Navigation
     // Setup Navigation
     void init()
     {
-       // put any navigation setup here
+        // put any navigation setup here
     }
 
     // Runs everytime the navigation task is run.
@@ -23,8 +23,8 @@ namespace Navigation
         case State_t::TEST_MOVE:
             do_test_move();
             break;
-        case State_t::MILESTONE4_MOVE_TILL_RED:
-            do_milestone4_move_till_red();
+        case State_t::MILESTONE4_MOVE_TILL_GREEN:
+            do_milestone4_move_till_green();
             break;
         case State_t::MILESTONE5_FOLLOW_RED:
             do_milestone5_follow_red();
@@ -39,8 +39,8 @@ namespace Navigation
         //TODO
     }
 
-    // Milestone4: Driving till red:
-    void do_milestone4_move_till_red()
+    // Milestone4: Driving till green:
+    void do_milestone4_move_till_green()
     {
         static bool done_test = false;
         if (!done_test)
@@ -54,10 +54,14 @@ namespace Navigation
         }
     }
 
-    // Milestone5: Follow red line:
+    // Milestone5: Follow red line till blue
     void do_milestone5_follow_red()
     {
-        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE)
+        {
+            MotorControl::StopMotors();
+        }
+        else if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
         {
             MotorControl::SpinLeft();
             Serial.println("Left");

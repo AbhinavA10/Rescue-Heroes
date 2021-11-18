@@ -27,19 +27,14 @@ void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t se
     pinMode(enc2_pin_, INPUT);
 
     // Attach the interrupt pin to the function whenever there is a rising edge in the signal
-    if (enc1_pin_ == ENC1_A)
+    if (enc1_pin_ == ENC2_A)
     {
         attachInterrupt(digitalPinToInterrupt(enc1_pin_), Motors::leftMotorInterrupt, RISING);
     }
-    else if (enc1_pin_ == ENC2_A)
+    else if (enc1_pin_ == ENC1_A)
     {
-        attachInterrupt(digitalPinToInterrupt(enc2_pin_), Motors::rightMotorInterrupt, RISING);
+        attachInterrupt(digitalPinToInterrupt(enc1_pin_), Motors::rightMotorInterrupt, RISING);
     }
-}
-
-void Motor::stop()
-{
-    analogWrite(pwm_pin_, 0);
 }
 
 // Function to convert from centimeters to encoder ticks
@@ -59,7 +54,7 @@ int CMtoSteps(float cm)
 void Motors::leftMotorInterrupt()
 {
     // Read data from other encoder pin
-    left->b_temp = digitalRead(ENC1_B);
+    left->b_temp = digitalRead(ENC2_B);
     // Depending on which way you are rotating the wheels, it increases or decreases the count
     if (left->b_temp > 0)
     {
@@ -74,7 +69,7 @@ void Motors::leftMotorInterrupt()
 void Motors::rightMotorInterrupt()
 {
     // see leftMotorInterrupt() for comments
-    right->b_temp = digitalRead(ENC2_B);
+    right->b_temp = digitalRead(ENC1_B);
     if (right->b_temp > 0)
     {
         right->ticks_++;
@@ -85,8 +80,10 @@ void Motors::rightMotorInterrupt()
     }
 }
 
-void Motors::stop()
+void Motors::printTicks()
 {
-    Motors::left->stop();
-    Motors::right->stop();
+    Serial.print(left->ticks_);
+    Serial.print(" ");
+    Serial.print(right->ticks_);
+    Serial.print("\r\n");
 }

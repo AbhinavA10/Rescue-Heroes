@@ -4,7 +4,7 @@
 #define MIN_SPEED 155
 #define MAX_SPEED 215
 
-#define FWD_SPEED 170
+#define FWD_SPEED 160
 #define TURNING_SPEED 215
 
 #include <Arduino.h>
@@ -42,15 +42,15 @@ namespace MotorControl
 
     // extern Command current_command;
     void init();
+    void run();
 
-    void runMotors();
-    void run_for_duration(int mspeed, float delayAmount);
+    void run_motors_for_duration(int mspeed, float delayAmount);
     void write_speed(int left, int right);
     void MoveForward(); // public interface
     void MoveReverse(); // public interface
     void SpinRight();   // public interface
     void SpinLeft();    // public interface
-    void StopMotors(); // public interface
+    void StopMotors();  // public interface
 };
 
 #endif
