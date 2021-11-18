@@ -22,7 +22,19 @@ namespace Navigation
         case State_t::NONE:
             // do nothing
             break;
-        case State_t::FOLLOW_RED_LINE:
+        case State_t::FINDING_LEGO_MAN:
+            do_find_lego_man();
+            break;
+        case State_t::FOUND_LEGO_MAN:
+            do_pick_up_lego_man();
+            break;
+        case State_t::FINDING_SAFE_ZONE:
+            do_finding_safe_zone();
+            break;
+        case State_t::FOUND_SAFE_ZONE:
+            do_dropoff_lego_man();
+            break;
+        case State_t::RETURN_TO_START:
             do_follow_red_line();
             break;
         case State_t::TEST_MOVE:
@@ -60,9 +72,130 @@ namespace Navigation
             break;
         };
     }
+
     void do_follow_red_line()
     {
-        //TODO
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
+        {
+            MotorControl::drive_fwd();
+            return;
+        }
+        else
+        {
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
+            {
+                MotorControl::spin_right();
+                return;
+            }
+            else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+            {
+                MotorControl::spin_left();
+                return;
+            }
+            else
+            {
+                MotorControl::drive_fwd();
+                return;
+            }
+        }
+        return;
+    }
+
+    void do_find_lego_man()
+    {
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::BLUE)
+        {
+            state = State_t::FOUND_LEGO_MAN;
+            return;
+        }
+        else
+        {
+            do_follow_red_line();
+        }
+    }
+
+    void do_finding_safe_zone()
+    {
+        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
+        {
+            state = State_t::FOUND_SAFE_ZONE;
+            return;
+        }
+        else
+        {
+            do_follow_red_line();
+        }
+    }
+
+    void do_pick_up_lego_man()
+    {
+        //Drive forward measured time/ distance (PID here?)
+        MotorControl::stopMotors();
+        lowerScoopServo();
+        //Motors going backwards measured time/ distance (PID here?)
+        static int old_yaw = imu.getYaw();
+        if(imu.getYaw() == old_yaw+180)
+        {
+            MotorControl::drive_fwd();
+            state = State_t::FINDING_SAFE_ZONE;
+        }
+        else
+        {
+            MotorControl::spin_right();
+        }
+    }
+
+    void do_dropoff_lego_man()
+    {
+        //May need to drive forward a bit before starting
+        static int curr_yaw = imu.getYaw();
+
+        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
+        {
+            if(imu.getYaw() == curr_yaw-90)
+            {
+                //May need to drive forward a bit?
+                MotorControl::stopMotors();
+                raiseScoopServo();
+                //If we drive forward we will need to drive backwards same amount
+                if(imu.getYaw() == curr_yaw)
+                {
+                    MotorControl::drive_fwd();
+                    state = State_t::RETURN_TO_START;
+                }
+                else
+                {
+                    MotorControl::spin_right();
+                }
+            }
+            else
+            {
+                MotorControl::spin_left();
+            }
+        }
+        else
+        {
+            if(imu.getYaw() == curr_yaw+90)
+            {
+                //May need to drive forward
+                MotorControl::stopMotors();
+                raiseScoopServo();
+                //If we drive forward will need to drive backward same amount
+                if(imu.getYaw() == curr_yaw)
+                {
+                    MotorControl::drive_fwd();
+                    state = State_t::RETURN_TO_START;
+                }
+                else
+                {
+                    MotorControl::spin_left();
+                }
+            }
+            else
+            {
+                MotorControl::spin_right();
+            }
+        }
     }
 
     // Milestone4: Driving till green:
