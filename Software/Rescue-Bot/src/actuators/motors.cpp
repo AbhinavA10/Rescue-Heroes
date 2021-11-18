@@ -8,7 +8,6 @@ Motor *Motors::left = new Motor;
 Motor *Motors::right = new Motor;
 
 // Initializes motor with pins and sets up interrupts
-// Must be run before motor.setSpeed() can be used
 void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t sensor1_pin, uint8_t sensor2_pin)
 {
     pwm_pin_ = pwm_pin;
@@ -38,7 +37,7 @@ void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t se
 }
 
 // Function to convert from centimeters to encoder ticks
-int CMtoSteps(float cm)
+int Motors::cmToTicks(float cm)
 {
     int result;                                         // Final calculation result
     float circumference = (WHEEL_DIAMETER * PI) / 10;   // Calculate wheel circumference in cm

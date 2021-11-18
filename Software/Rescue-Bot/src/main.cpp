@@ -75,6 +75,6 @@ void loop()
 
   read_sensors();
   Navigation::run();
-  // MotorControl::run();
+  MotorControl::run();
   delay(3); // integration time of color sensors
 }

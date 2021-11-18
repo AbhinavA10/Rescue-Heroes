@@ -13,15 +13,6 @@ namespace MotorControl
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
     }
 
-    void run_motors_for_duration(int mspeed, float delayAmount)
-    {
-        // Run motors for a certain amount of time
-        write_speed(mspeed, mspeed);
-        delay(delayAmount);
-        // Stop when done
-        write_speed(0, 0);
-    }
-
     // Set Motor speed
     // parameters: left_speed, right_speed
     void write_speed(int left, int right)
@@ -79,6 +70,15 @@ namespace MotorControl
         write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
+    // Spin Right for a fixed amount of time in ms.
+    // Note: is blocking.
+    void SpinRight_Timed(int amt)
+    {
+        SpinRight();
+        delay(amt);   // Run motors for a set time
+        StopMotors(); // stop when done
+    }
+
     // Spin Left
     void SpinLeft()
     {
@@ -92,6 +92,15 @@ namespace MotorControl
         write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
+    // Spin Left for a fixed amount of time in ms.
+    // Note: is blocking.
+    void SpinLeft_Timed(int amt)
+    {
+        SpinLeft();
+        delay(amt);   // Run motors for a set time
+        StopMotors(); // stop when done
+    }
+
     // Stop both motors
     void StopMotors()
     {
@@ -100,6 +109,6 @@ namespace MotorControl
 
     void run()
     {
-        Motors::printTicks();
+        // Motors::printTicks();
     }
 };

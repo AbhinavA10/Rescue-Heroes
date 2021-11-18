@@ -8,7 +8,6 @@
 */
 // #define SCL         D15 // already defined in Arduino.h
 // #define SDA         D14 // already defined in Arduino.h
-//TODO: find left vs right motor. 
 
 // Motor A (left)
 #define ENA_PWM     D12
@@ -31,7 +30,7 @@
 
 #define IMU_INT     A0
 #define BUZZER      A1
-#define TOGGLE_PIN  A2 // general pin that can be used for toggling
+#define TOGGLE_PIN  A2 // general pin that can be used for toggling/debugging
 
 // Indicies in ColorSensors array
 #define COLORSENSOR_FL 0

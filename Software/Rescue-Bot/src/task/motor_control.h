@@ -44,13 +44,14 @@ namespace MotorControl
     void init();
     void run();
 
-    void run_motors_for_duration(int mspeed, float delayAmount);
-    void write_speed(int left, int right);
-    void MoveForward(); // public interface
-    void MoveReverse(); // public interface
-    void SpinRight();   // public interface
-    void SpinLeft();    // public interface
-    void StopMotors();  // public interface
+    void write_speed(int left, int right); // private
+    void MoveForward();                    // public interface
+    void MoveReverse();                    // public interface
+    void SpinRight();                      // public interface
+    void SpinRight_Timed(int amt);         // public interface
+    void SpinLeft();                       // public interface
+    void SpinLeft_Timed(int amt);          // public interface
+    void StopMotors();                     // public interface
 };
 
 #endif

@@ -1,22 +1,17 @@
 #ifndef MOTORS_H
 #define MOTORS_H
 
-#define MAX_MOTOR_SPEED 215    // PWM width
 #define TICKS_PER_ROTATION 135 // counts per wheel rotation
 #define WHEEL_DIAMETER 66.1    // Wheel diameter in millimeters
 
 // A single motor
 class Motor
 {
-    /*
-    motor->init() must be called first for each motor before setSpeed is used
-    */
 public:
     void init(uint8_t, uint8_t, uint8_t, uint8_t, uint8_t);
 
     double pos_current;  // Current distance motor has travelled
     double pos_setpoint; // setpoint distance
-
 
     volatile int32_t ticks_;
     volatile int b_temp; // temp value used in interrupts
@@ -40,6 +35,7 @@ public:
     static void leftMotorInterrupt();
     static void rightMotorInterrupt();
     static void printTicks(); // debugging
+    static int cmToTicks(float cm);
 };
 
 #endif
