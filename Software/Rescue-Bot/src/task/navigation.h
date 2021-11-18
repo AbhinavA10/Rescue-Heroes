@@ -15,7 +15,6 @@ extern IMU imu;
 
 namespace Navigation
 {
-    extern int8_t orientation;
     
     enum class State_t: uint8_t {
         NONE = 0,

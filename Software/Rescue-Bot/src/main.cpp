@@ -28,7 +28,7 @@ void setup()
   Display::init_display();
   initScoopServo();
   init_sensors();
-  MotorControl::init_motor_control();
+  MotorControl::init();
   Navigation::init();
   // Test if display works
   // Display::test_display();
@@ -75,6 +75,6 @@ void loop()
 
   read_sensors();
   Navigation::run();
-  MotorControl::motor_control();
+  // MotorControl::run();
   delay(3); // integration time of color sensors
 }

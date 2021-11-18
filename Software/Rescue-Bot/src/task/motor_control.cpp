@@ -4,27 +4,22 @@
 namespace MotorControl
 {
 
-    Command current_command;
-
     static bool done = false;
 
-    void init_motor_control()
+    void init()
     {
         // current_command.type = Command_t::NONE;
-
         motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
     }
 
-    void stopMotors()
+    void StopMotors()
     {
-        current_command.type = Command_t::STOP;
-        done = false;
+        write_speed(0, 0);
     }
 
-    void runMotors(int mspeed, float delayAmount)
+    void run_for_duration(int mspeed, float delayAmount)
     {
-        // ****Motor Movement****
         /*
     255 is the max speed a motor can handle
     Blue motors can run at max 9V. 
@@ -34,170 +29,72 @@ namespace MotorControl
     Therefore speeds that these blue motors can run at: Min = 140, Max = 215, (140-215)
         */
         // Run all the motors for a certain amount of time
-        analogWrite(ENA_PWM, mspeed);
-        analogWrite(ENB_PWM, mspeed);
+        write_speed(mspeed, mspeed);
         delay(delayAmount);
 
         // Stop when done
-        analogWrite(ENA_PWM, 0);
-        analogWrite(ENB_PWM, 0);
+        write_speed(0, 0);
+    }
+
+    // Set Motor speed
+    // parameters: left_speed, right_speed
+    void write_speed(int left, int right)
+    {
+        analogWrite(ENA_PWM, left);
+        analogWrite(ENB_PWM, right);
     }
 
     // Function to Move Forward
-    void MoveForward(int mspeed, float delayAmount)
+    void MoveForward()
     {
         // Set Motor A forward
         digitalWrite(IN1, HIGH);
         digitalWrite(IN2, LOW);
-
         // Set Motor B forward
         digitalWrite(IN3, HIGH);
         digitalWrite(IN4, LOW);
 
-        // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
-    }
-    // Function to Move Forward
-    void MoveForward_NoDelay(int mspeed)
-    {
-        // Set Motor A forward
-        digitalWrite(IN1, HIGH);
-        digitalWrite(IN2, LOW);
-
-        // Set Motor B forward
-        digitalWrite(IN3, HIGH);
-        digitalWrite(IN4, LOW);
-        
-        analogWrite(ENA_PWM, mspeed);
-        analogWrite(ENB_PWM, mspeed);
+        write_speed(FWD_SPEED, FWD_SPEED);
     }
     // Function to Move Reverse
-    void MoveReverse(int mspeed, float delayAmount)
+    void MoveReverse()
     {
         // Set Motor A reverse
         digitalWrite(IN1, LOW);
         digitalWrite(IN2, HIGH);
-
         // Set Motor B reverse
         digitalWrite(IN3, LOW);
         digitalWrite(IN4, HIGH);
 
+        write_speed(FWD_SPEED, FWD_SPEED);
         // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
+        // e.g.: run_for_duration(FWD_SPEED, delayAmount);
     }
 
     // Function to Spin Right
-    void SpinRight(int mspeed, float delayAmount)
+    void SpinRight()
     {
         // Set Motor A reverse
         digitalWrite(IN1, LOW);
         digitalWrite(IN2, HIGH);
-
         // Set Motor B forward
         digitalWrite(IN3, HIGH);
         digitalWrite(IN4, LOW);
 
-        // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
+        write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
     // Function to Spin Left
-    void SpinLeft(int mspeed, float delayAmount)
+    void SpinLeft()
     {
         // Set Motor A forward
         digitalWrite(IN1, HIGH);
         digitalWrite(IN2, LOW);
-
         // Set Motor B reverse
         digitalWrite(IN3, LOW);
         digitalWrite(IN4, HIGH);
 
-        // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
-    }
-    void setCorrection()
-    {
-        //use PID for correction?
-    }
-
-    void run_drive_command()
-    {
-        // TODO
-        motors.setSpeed(0, 0);
-    }
-
-    void run_turn_command()
-    {
-        //TODO
-    }
-
-    void run_stop_command()
-    {
-        motors.stop();
-        // motors.left->resetDistance();
-        // motors.right->resetDistance();
-        done = true;
-    }
-
-    void run_command()
-    {
-        switch (current_command.type)
-        {
-        case Command_t::DRIVE:
-            run_drive_command();
-            break;
-        case Command_t::TURN:
-            run_turn_command();
-            break;
-        case Command_t::STOP:
-            run_stop_command();
-            break;
-        default:
-            break;
-        };
-    }
-    void test_motors()
-    {
-        // motors.checkMotors(); // TODO integrate Motor encoders
-        MoveForward(215, 1000); // Ex: Forward at 215 speed for 1000 ms
-        delay(500);
-        MoveReverse(215, 1000); // Ex: Forward at 215 speed for 1000 ms
-        delay(500);
-        SpinRight(140, 1000);
-        delay(500);
-        SpinLeft(200, 1000);
-        delay(500);
-    }
-
-    void drive_fwd()
-    {
-        // milestone4
-        // MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
-        MoveForward_NoDelay(170);
-    }
-
-    void spin_right()
-    { // milestone4 imu
-        SpinRight(215, 100);
-    }
-
-    void spin_left()
-    { // milestone4 imu
-        SpinLeft(215, 100);
-    }
-    void motor_control()
-    {
-        /*
-        run_command();
-        motors.left->adjustSpeed();
-        motors.right->adjustSpeed();
-        */
-    }
-
-    void set_command(Command_t type, int16_t value)
-    {
-        done = false; // we have a new command to do
-        current_command = Command{type, value};
+        write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
 };

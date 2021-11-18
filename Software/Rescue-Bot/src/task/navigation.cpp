@@ -5,13 +5,11 @@ namespace Navigation
 {
 
     State_t state = STARTING_STATE;
-    int8_t orientation = 0;
 
     // Setup Navigation
     void init()
     {
-        // The next runs of this task will use the run callback
-        // t_navigation.setCallback(&run);
+       // put any navigation setup here
     }
 
     // Runs everytime the navigation task is run.
@@ -47,11 +45,10 @@ namespace Navigation
         static bool done_test = false;
         if (!done_test)
         {
-            MotorControl::drive_fwd();
+            MotorControl::MoveForward();
             if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
             {
-                analogWrite(ENA_PWM, 0);
-                analogWrite(ENB_PWM, 0);
+                MotorControl::StopMotors();
                 done_test = true;
             }
         }
@@ -62,29 +59,17 @@ namespace Navigation
     {
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
         {
-            // turn left
-            analogWrite(ENA_PWM, 215);
-            analogWrite(ENB_PWM, 215);
-            digitalWrite(IN1, HIGH);
-            digitalWrite(IN2, LOW);
-            digitalWrite(IN3, LOW);
-            digitalWrite(IN4, HIGH);
+            MotorControl::SpinLeft();
             Serial.println("Left");
         }
         else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
         {
-            // turn right
-            analogWrite(ENA_PWM, 215);
-            analogWrite(ENB_PWM, 215);
-            digitalWrite(IN1, LOW);
-            digitalWrite(IN2, HIGH);
-            digitalWrite(IN3, HIGH);
-            digitalWrite(IN4, LOW);
+            MotorControl::SpinRight();
             Serial.println("Right");
         }
         else
         {
-            MotorControl::drive_fwd();
+            MotorControl::MoveForward();
         }
     }
 
@@ -94,9 +79,9 @@ namespace Navigation
 
         if (!done_init)
         {
-            MotorControl::set_command(Command_t::DRIVE, 120);
-            MotorControl::set_command(Command_t::TURN, 90);
-            MotorControl::set_command(Command_t::DRIVE, 90);
+            // MotorControl::set_command(Command_t::DRIVE, 120, Mode::SPEED);
+            // MotorControl::set_command(Command_t::TURN, 90, Mode::SPEED);
+            // MotorControl::set_command(Command_t::DRIVE, 90, Mode::SPEED);
             done_init = true;
         }
     }

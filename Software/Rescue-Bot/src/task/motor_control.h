@@ -1,20 +1,18 @@
 #ifndef MOTOR_CONTROL_H
 #define MOTOR_CONTROL_H
 
+#define MIN_SPEED 155
+#define MAX_SPEED 215
+
+#define FWD_SPEED 170
+#define TURNING_SPEED 215
+
 #include <Arduino.h>
-
 #include "actuators/motors.h"
-
 #include "navigation.h"
 #include "config.h"
 
-#define MOTOR_P_CONTSTANT 2 // TBD
-#define MOTOR_I_CONTSTANT 2 // TBD
-#define MOTOR_D_CONTSTANT 2 // TBD
-
 extern Motors motors;
-
-extern uint16_t correction;
 
 enum class Command_t : uint8_t
 {
@@ -23,6 +21,7 @@ enum class Command_t : uint8_t
     STOP,
     NONE
 };
+
 // Motor Control Mode
 enum class Mode : uint8_t
 {
@@ -41,21 +40,17 @@ namespace MotorControl
         Mode mode;
     };
 
-    extern Command current_command;
+    // extern Command current_command;
+    void init();
 
-    void stopMotors();
     void runMotors();
-    void test_motors();
-    void drive_fwd();
-    void spin_right();
-    void spin_left();
-
-    void setCorrection(int16_t);
-
-    void init_motor_control();
-    void motor_control();
-
-    void set_command(Command_t, int16_t);
+    void run_for_duration(int mspeed, float delayAmount);
+    void write_speed(int left, int right);
+    void MoveForward(); // public interface
+    void MoveReverse(); // public interface
+    void SpinRight();   // public interface
+    void SpinLeft();    // public interface
+    void StopMotors(); // public interface
 };
 
 #endif
