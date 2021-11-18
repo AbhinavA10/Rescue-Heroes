@@ -25,11 +25,17 @@ namespace Navigation
         DROP_LEGO_MAN,
         FOUND_SAFE_ZONE,
         RETURN_TO_START,
+        // States for testing functionality
         TEST_MOVE,
-
-        MILESTONE4_MOVE_TILL_GREEN,
-        MILESTONE5_FOLLOW_RED,
         TEST_MOVE_DIST,
+        TEST_MOVE_SERVO,
+        TEST_MOVE_TILL_GREEN,
+        TEST_IMU_PT1,
+        TEST_IMU_PT2,
+        TEST_IMU_PT3,
+        TEST_IMU_PT4,
+        TEST_IMU_PT5,
+        TEST_FOLLOW_RED,
     };
 
     extern State_t state;
@@ -38,9 +44,16 @@ namespace Navigation
     void run();
 
     void do_follow_red_line();
+
     void do_test_move();
     void do_test_move_dist();
-    void do_milestone4_move_till_green();
-    void do_milestone5_follow_red();
+    void do_test_move_servo();
+    void do_test_move_till_green();
+    void do_test_follow_red();
+    void do_test_imu_pt1();
+    void do_test_imu_pt2();
+    void do_test_imu_pt3();
+    void do_test_imu_pt4();
+    void do_test_imu_pt5();
 };
 #endif

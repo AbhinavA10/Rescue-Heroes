@@ -2,7 +2,6 @@
 #define READ_SENSORS_H
 
 #include "task/motor_control.h"
-#include "actuators/motors.h"
 
 #include "sensors/imu.h"
 #include "sensors/colorsensor.h"

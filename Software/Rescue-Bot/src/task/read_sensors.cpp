@@ -67,11 +67,6 @@ namespace Sensors
     // Main method for reading sensors
     void read_sensors()
     {
-        // if (MotorControl::current_command.type == Command_t::TURN)
-        // {
-        // TODO: only run if we're still turning?
-        // imu.readData();
-        // }
         for (int i = 0; i < NUM_COLOR_SENSORS; i++)
         {
             chooseBus(i);
@@ -79,8 +74,7 @@ namespace Sensors
             // Serial.print(i);
             color_sensors[i].readColor();
         }
-        // update encoder distance if needed
-        // motors.left->readDistance();
-        // motors.right->readDistance();
+        //TODO: only read from IMU if we need it?
+        imu.readData();
     }
 }
