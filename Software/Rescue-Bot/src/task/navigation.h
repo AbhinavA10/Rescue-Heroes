@@ -46,7 +46,7 @@ namespace Navigation
     void do_follow_red_line();
     void do_find_lego_man();
     void do_finding_safe_zone();
-    void do_pick_up_lego_man();  
+    void do_pick_up_lego_man();
     void do_dropoff_lego_man();
     void do_test_move();
     void do_test_move_dist();

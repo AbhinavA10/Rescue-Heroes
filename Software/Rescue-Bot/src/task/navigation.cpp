@@ -135,7 +135,7 @@ namespace Navigation
         lowerScoopServo();
         //Motors going backwards measured time/ distance (PID here?)
         static int old_yaw = imu.getYaw();
-        if(imu.getYaw() == old_yaw+180)
+        if (imu.getYaw() == old_yaw + 180)
         {
             MotorControl::MoveForward();
             state = State_t::FINDING_SAFE_ZONE;
@@ -153,13 +153,13 @@ namespace Navigation
 
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
         {
-            if(imu.getYaw() == curr_yaw-90)
+            if (imu.getYaw() == curr_yaw - 90)
             {
                 //May need to drive forward a bit?
                 MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward we will need to drive backwards same amount
-                if(imu.getYaw() == curr_yaw)
+                if (imu.getYaw() == curr_yaw)
                 {
                     MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
@@ -176,13 +176,13 @@ namespace Navigation
         }
         else
         {
-            if(imu.getYaw() == curr_yaw+90)
+            if (imu.getYaw() == curr_yaw + 90)
             {
                 //May need to drive forward
                 MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward will need to drive backward same amount
-                if(imu.getYaw() == curr_yaw)
+                if (imu.getYaw() == curr_yaw)
                 {
                     MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;

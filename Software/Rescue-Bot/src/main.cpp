@@ -22,23 +22,23 @@ IMU imu = IMU();
 
 void setup()
 {
-  playStartupSound();
-  Serial.begin(115200);
-  Display::init_display();
-  Sensors::init_sensors();
-  MotorControl::init();
-  Navigation::init();
-  // Test if display works
-  // Display::test_display();
+    playStartupSound();
+    Serial.begin(115200);
+    Display::init_display();
+    Sensors::init_sensors();
+    MotorControl::init();
+    Navigation::init();
+    // Test if display works
+    // Display::test_display();
 }
 
 void loop()
 {
-  Sensors::read_sensors();
-  Navigation::run();
-  // MotorControl::run();
-  // delay(1); 
-  // From Logic analyzer, reading of 3 color sensors
-  // takes ~6ms > 3ms integration time of sensor
-  // we need minimal delay above
+    Sensors::read_sensors();
+    Navigation::run();
+    // MotorControl::run();
+    // delay(1);
+    // From Logic analyzer, reading of 3 color sensors
+    // takes ~6ms > 3ms integration time of sensor
+    // we need minimal delay above
 }
