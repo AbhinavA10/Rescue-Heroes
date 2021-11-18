@@ -10,7 +10,7 @@
 /*
     Configuration Values
 */
-#define STARTING_STATE State_t::MILESTONE5_FOLLOW_RED
+#define STARTING_STATE State_t::TEST_MOVE_DIST
 
 /*
     Macros

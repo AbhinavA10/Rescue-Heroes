@@ -29,6 +29,9 @@ namespace Navigation
         case State_t::MILESTONE5_FOLLOW_RED:
             do_milestone5_follow_red();
             break;
+        case State_t::TEST_MOVE_DIST:
+            do_test_move_dist();
+            break;
         default:
             PRINT_DEBUG("UNKNOWN STATE!")
             break;
@@ -83,10 +86,19 @@ namespace Navigation
 
         if (!done_init)
         {
-            // MotorControl::set_command(Command_t::DRIVE, 120, Mode::SPEED);
-            // MotorControl::set_command(Command_t::TURN, 90, Mode::SPEED);
-            // MotorControl::set_command(Command_t::DRIVE, 90, Mode::SPEED);
             done_init = true;
+        }
+    }
+    void do_test_move_dist()
+    {
+        static bool done_test_move_dist = false;
+
+        if (!done_test_move_dist)
+        {
+            MotorControl::MoveForward_Distance(20);
+            delay(1000);
+            // MotorControl::MoveReverse_Distance(10);
+            done_test_move_dist = true;
         }
     }
 };

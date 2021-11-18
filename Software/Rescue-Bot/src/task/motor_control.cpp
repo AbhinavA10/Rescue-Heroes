@@ -8,14 +8,19 @@ namespace MotorControl
 
     void init()
     {
-        // current_command.type = Command_t::NONE;
         motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
     }
 
-    // Set Motor speed
-    // parameters: left_speed, right_speed
-    void write_speed(int left, int right)
+    //Resets both tick counters to 0.
+    void reset_ticks()
+    {
+        motors.left->ticks_ = 0;
+        motors.right->ticks_ = 0;
+    }
+
+    // Set left motor speed
+    void write_left_speed(int left)
     {
         /*
         255 is the max speed a motor can normally handle
@@ -24,9 +29,56 @@ namespace MotorControl
         So 9/10.6 = x/255 ==> x = 215 = max speed of blue motors
         */
         left = constrain(left, 0, MAX_SPEED);
-        right = constrain(right, 0, MAX_SPEED);
         analogWrite(ENA_PWM, left);
+    }
+
+    // Set right motor speed
+    void write_right_speed(int right)
+    {
+        right = constrain(right, 0, MAX_SPEED);
         analogWrite(ENB_PWM, right);
+    }
+
+    // Set Motor speed
+    // parameters: left_speed, right_speed
+    void write_speed(int left, int right)
+    {
+        write_left_speed(left);
+        write_right_speed(right);
+    }
+
+    // Runs the motors for specified distance
+    // Note: is blocking
+    void move_till_dist(float cm)
+    {
+        int ticks_setpoint = Motors::cmToTicks(cm);
+        reset_ticks(); // Reset all tick counters
+        // move forward till both motors reach setpoint
+
+        while (ticks_setpoint > abs(motors.left->ticks_) && ticks_setpoint > abs(motors.right->ticks_))
+        {
+            if (ticks_setpoint > abs(motors.left->ticks_))
+            {
+                write_left_speed(FWD_SPEED);
+            }
+            else
+            {
+                write_left_speed(0);
+            }
+            if (ticks_setpoint > abs(motors.right->ticks_))
+            {
+                write_right_speed(FWD_SPEED);
+            }
+            else
+            {
+                write_right_speed(0);
+            }
+            Motors::printTicks(); // debugging
+        }
+        PRINT_DEBUG(ticks_setpoint)
+        Motors::printTicks();
+        StopMotors();  // Stop when done
+        reset_ticks(); // Reset all tick counters
     }
 
     // Function to Move Forward
@@ -42,6 +94,12 @@ namespace MotorControl
         write_speed(FWD_SPEED, FWD_SPEED);
     }
 
+    void MoveForward_Distance(float cm)
+    {
+        MoveForward();
+        move_till_dist(cm);
+    }
+
     // Move backwards
     void MoveReverse()
     {
@@ -55,6 +113,12 @@ namespace MotorControl
         write_speed(FWD_SPEED, FWD_SPEED);
         // Run the motors at the specified speed, and amount of time
         // e.g.: run_motors_for_duration(FWD_SPEED, delayAmount);
+    }
+
+    void MoveReverse_Distance(float cm)
+    {
+        MoveReverse();
+        move_till_dist(cm);
     }
 
     // Spin Right

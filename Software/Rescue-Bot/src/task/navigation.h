@@ -13,10 +13,12 @@
 extern ColorSensor color_sensors[4];
 extern IMU imu;
 
+// State management and control flow
 namespace Navigation
 {
-    
-    enum class State_t: uint8_t {
+
+    enum class State_t : uint8_t
+    {
         NONE = 0,
         FOLLOW_RED_LINE = 1,
         FOUND_BULLSEYE,
@@ -27,6 +29,7 @@ namespace Navigation
 
         MILESTONE4_MOVE_TILL_GREEN,
         MILESTONE5_FOLLOW_RED,
+        TEST_MOVE_DIST,
         // TODO: add proper states
     };
 
@@ -37,6 +40,7 @@ namespace Navigation
 
     void do_follow_red_line();
     void do_test_move();
+    void do_test_move_dist();
     void do_milestone4_move_till_green();
     void do_milestone5_follow_red();
 };

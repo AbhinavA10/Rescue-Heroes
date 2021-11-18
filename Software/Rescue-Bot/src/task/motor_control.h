@@ -14,44 +14,28 @@
 
 extern Motors motors;
 
-enum class Command_t : uint8_t
-{
-    DRIVE,
-    TURN,
-    STOP,
-    NONE
-};
-
-// Motor Control Mode
-enum class Mode : uint8_t
-{
-    SPEED,
-    DISTANCE,
-};
-
-//PID Controller for Motor Speed and Distance modes
+// Controller for Motor Speed and Distance modes
 namespace MotorControl
 {
 
-    struct Command
-    {
-        Command_t type;
-        int16_t value;
-        Mode mode;
-    };
-
-    // extern Command current_command;
     void init();
     void run();
 
+    void reset_ticks();                    // private
+    void write_left_speed(int left);       // private
+    void write_right_speed(int right);     // private
     void write_speed(int left, int right); // private
-    void MoveForward();                    // public interface
-    void MoveReverse();                    // public interface
-    void SpinRight();                      // public interface
-    void SpinRight_Timed(int amt);         // public interface
-    void SpinLeft();                       // public interface
-    void SpinLeft_Timed(int amt);          // public interface
-    void StopMotors();                     // public interface
+    void move_till_dist(float cm);         // private
+
+    void MoveForward();                  // public interface
+    void MoveForward_Distance(float cm); // public interface
+    void MoveReverse();                  // public interface
+    void MoveReverse_Distance(float cm); // public interface
+    void SpinRight();                    // public interface
+    void SpinRight_Timed(int amt);       // public interface
+    void SpinLeft();                     // public interface
+    void SpinLeft_Timed(int amt);        // public interface
+    void StopMotors();                   // public interface
 };
 
 #endif

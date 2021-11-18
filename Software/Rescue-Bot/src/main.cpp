@@ -27,7 +27,7 @@ void setup()
   Serial.begin(115200);
   Display::init_display();
   initScoopServo();
-  init_sensors();
+  // init_sensors();
   MotorControl::init();
   Navigation::init();
   // Test if display works
@@ -73,8 +73,8 @@ void setup()
 void loop()
 {
 
-  read_sensors();
+  // read_sensors();
   Navigation::run();
-  MotorControl::run();
+  // MotorControl::run();
   delay(3); // integration time of color sensors
 }
