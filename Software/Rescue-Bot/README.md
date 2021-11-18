@@ -1,7 +1,6 @@
 
 ## Tool Description
 -	Arduino Library
--	TaskScheduler library
 -	PlatformIO
 
 We’ll be using the STM32 Nucleo-F401RE board. We will use PlatformIO with Arduino libraries
@@ -16,11 +15,9 @@ It:
 
 The PlatformIO ide provides the build, flash, and serial monitor in the bottom toolbar. The board settings are in the `platformio.ini` file.
 
-## Tasks
+## Structure
 
-Elements of the robot's functionality are broken down into tasks which are run using a cooperative, non-preemptive scheduler (https://github.com/arkhipenko/TaskScheduler).
-
-Tasks are setup in `main.cpp`, and each task has it's own files in the `src/task` folder.
+Elements of the robot's functionality are broken down into 'tasks'. Each task has it's own files in the `src/task` folder.
 
 Interrupts will be avoided except for setting flags. Exception is motor encoder interrupts.
 

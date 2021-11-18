@@ -2,7 +2,6 @@
 #define NAVIGATION_H
 
 #include <Arduino.h>
-#include <TaskSchedulerDeclarations.h>
 
 #include "config.h"
 #include "motor_control.h"
@@ -14,21 +13,29 @@
 extern ColorSensor color_sensors[4];
 extern IMU imu;
 
-extern Task t_navigation;
-
+// State management and control flow
 namespace Navigation
 {
-    extern int8_t orientation;
-    
-    enum class State_t: uint8_t {
+
+    enum class State_t : uint8_t
+    {
         NONE = 0,
         FINDING_LEGO_MAN = 1,
         FOUND_LEGO_MAN,
         FINDING_SAFE_ZONE,
         FOUND_SAFE_ZONE,
         RETURN_TO_START,
+        // States for testing functionality
         TEST_MOVE,
-        // TODO: add proper states
+        TEST_MOVE_DIST,
+        TEST_MOVE_SERVO,
+        TEST_MOVE_TILL_GREEN,
+        TEST_IMU_PT1,
+        TEST_IMU_PT2,
+        TEST_IMU_PT3,
+        TEST_IMU_PT4,
+        TEST_IMU_PT5,
+        TEST_FOLLOW_RED,
     };
 
     extern State_t state;
@@ -39,8 +46,17 @@ namespace Navigation
     void do_follow_red_line();
     void do_find_lego_man();
     void do_finding_safe_zone();
-    void do_pick_up_lego_man();  
+    void do_pick_up_lego_man();
     void do_dropoff_lego_man();
     void do_test_move();
+    void do_test_move_dist();
+    void do_test_move_servo();
+    void do_test_move_till_green();
+    void do_test_follow_red();
+    void do_test_imu_pt1();
+    void do_test_imu_pt2();
+    void do_test_imu_pt3();
+    void do_test_imu_pt4();
+    void do_test_imu_pt5();
 };
 #endif

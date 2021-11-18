@@ -1,6 +1,5 @@
 #include "display.h"
 
-// this task = t_display
 namespace Display
 {
     Adafruit_SSD1306 display = Adafruit_SSD1306(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -54,6 +53,7 @@ namespace Display
         // Show initial display buffer contents on the screen --
         // the library initializes this with an Adafruit splash screen.
         display.display();
+        delay(100); // show splashscreen for a bit, to show I2C interface works
     }
 
     // Redraw display with data from array
@@ -69,9 +69,18 @@ namespace Display
         }
         display.display();
     }
+    void refresh_display_big(int val)
+    {
+        display.clearDisplay();
+        display.setTextSize(4);
+        display.setTextColor(SSD1306_WHITE); // Draw white text
+        display.setCursor(0, 0);             // Start at top-left corner
+        display.println(val);
+        display.display();
+    }
     void test_display()
     {
-        testdrawchar(); // Draw characters of the default font
+        testdrawchar();   // Draw characters of the default font
         testdrawstyles(); // Draw 'stylized' characters
     }
 };

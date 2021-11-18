@@ -1,188 +1,179 @@
 #include "motor_control.h"
 #include "pin_assignment.h"
+#include "actuators/servos.h"
 
-// this task = t_motorControl
 namespace MotorControl
 {
 
-    Command current_command;
-
     static bool done = false;
 
-    void init_motor_control()
+    void init()
     {
-        // current_command.type = Command_t::NONE;
-
         motors.left->init(ENA_PWM, IN1, IN2, ENC2_A, ENC2_B);
         motors.right->init(ENB_PWM, IN3, IN4, ENC1_A, ENC1_B);
-        // t_motorControl.setCallback(&motor_control);
+        initScoopServo();
     }
 
-    void stopMotors()
+    //Resets both tick counters to 0.
+    void reset_ticks()
     {
-        current_command.type = Command_t::STOP;
-        done = false;
+        motors.left->ticks_ = 0;
+        motors.right->ticks_ = 0;
     }
 
-    void runMotors(int mspeed, float delayAmount)
+    // Set left motor speed
+    void write_left_speed(int left)
     {
-        // ****Motor Movement****
         /*
-    255 is the max speed a motor can handle
-    Blue motors can run at max 9V. 
-    Battery pack I am using is a 8 pack AA pack, meaning it gives 12V (1.5V x 8), 
-    Motor driver takes 1.4V about, meaning 10.6V is left for the motors.
-    So 9/10.6 = x/255, therefore x = 215
-    Therefore speeds that these blue motors can run at: Min = 140, Max = 215, (140-215)
+        255 is the max speed a motor can normally handle
+        Blue motors can run at max 9V. Battery pack we're 8xAA ==> gives 12V (1.5V x 8), 
+        L298N Motor driver takes 1.4V about, meaning 10.6V is left for the motors.
+        So 9/10.6 = x/255 ==> x = 215 = max speed of blue motors
         */
-        // Run all the motors for a certain amount of time
-        analogWrite(ENA_PWM, mspeed);
-        analogWrite(ENB_PWM, mspeed);
-        delay(delayAmount);
+        left = constrain(left, 0, MAX_SPEED);
+        analogWrite(ENA_PWM, left);
+    }
 
-        // Stop when done
-        analogWrite(ENA_PWM, 0);
-        analogWrite(ENB_PWM, 0);
+    // Set right motor speed
+    void write_right_speed(int right)
+    {
+        right = constrain(right, 0, MAX_SPEED);
+        analogWrite(ENB_PWM, right);
+    }
+
+    // Set Motor speed
+    // parameters: left_speed, right_speed
+    void write_speed(int left, int right)
+    {
+        write_left_speed(left);
+        write_right_speed(right);
+    }
+
+    // Runs the motors for specified distance
+    // Note: is blocking
+    void move_till_dist(float cm)
+    {
+        int ticks_setpoint = Motors::cmToTicks(cm);
+        reset_ticks(); // Reset all tick counters
+        // move forward till one of motors reach setpoint
+        while (ticks_setpoint > abs(motors.left->ticks_) && ticks_setpoint > abs(motors.right->ticks_))
+        {
+            if (ticks_setpoint > abs(motors.left->ticks_))
+            {
+                write_left_speed(FWD_SPEED);
+            }
+            else
+            {
+                write_left_speed(0);
+            }
+            if (ticks_setpoint > abs(motors.right->ticks_))
+            {
+                write_right_speed(FWD_SPEED);
+            }
+            else
+            {
+                write_right_speed(0);
+            }
+            Motors::printTicks(); // debugging
+        }
+        PRINT_DEBUG(ticks_setpoint)
+        Motors::printTicks();
+        StopMotors();  // Stop when done
+        reset_ticks(); // Reset all tick counters
     }
 
     // Function to Move Forward
-    void MoveForward(int mspeed, float delayAmount)
+    void MoveForward()
     {
         // Set Motor A forward
         digitalWrite(IN1, HIGH);
         digitalWrite(IN2, LOW);
-
         // Set Motor B forward
         digitalWrite(IN3, HIGH);
         digitalWrite(IN4, LOW);
 
-        // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
+        write_speed(FWD_SPEED, FWD_SPEED);
     }
-    // Function to Move Reverse
-    void MoveReverse(int mspeed, float delayAmount)
+
+    void MoveForward_Distance(float cm)
+    {
+        MoveForward();
+        move_till_dist(cm);
+    }
+
+    // Move backwards
+    void MoveReverse()
     {
         // Set Motor A reverse
         digitalWrite(IN1, LOW);
         digitalWrite(IN2, HIGH);
-
         // Set Motor B reverse
         digitalWrite(IN3, LOW);
         digitalWrite(IN4, HIGH);
 
+        write_speed(FWD_SPEED, FWD_SPEED);
         // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
+        // e.g.: run_motors_for_duration(FWD_SPEED, delayAmount);
     }
 
-    // Function to Spin Right
-    void SpinRight(int mspeed, float delayAmount)
+    void MoveReverse_Distance(float cm)
+    {
+        MoveReverse();
+        move_till_dist(cm);
+    }
+
+    // Spin Right
+    void SpinRight()
     {
         // Set Motor A reverse
         digitalWrite(IN1, LOW);
         digitalWrite(IN2, HIGH);
-
         // Set Motor B forward
         digitalWrite(IN3, HIGH);
         digitalWrite(IN4, LOW);
 
-        // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
+        write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
-    // Function to Spin Left
-    void SpinLeft(int mspeed, float delayAmount)
+    // Spin Right for a fixed amount of time in ms.
+    // Note: is blocking.
+    void SpinRight_Timed(int amt)
+    {
+        SpinRight();
+        delay(amt);   // Run motors for a set time
+        StopMotors(); // stop when done
+    }
+
+    // Spin Left
+    void SpinLeft()
     {
         // Set Motor A forward
         digitalWrite(IN1, HIGH);
         digitalWrite(IN2, LOW);
-
         // Set Motor B reverse
         digitalWrite(IN3, LOW);
         digitalWrite(IN4, HIGH);
 
-        // Run the motors at the specified speed, and amount of time
-        runMotors(mspeed, delayAmount);
-    }
-    void setCorrection()
-    {
-        //use PID for correction?
+        write_speed(TURNING_SPEED, TURNING_SPEED);
     }
 
-    void run_drive_command()
+    // Spin Left for a fixed amount of time in ms.
+    // Note: is blocking.
+    void SpinLeft_Timed(int amt)
     {
-        // TODO
-        motors.setSpeed(0, 0);
+        SpinLeft();
+        delay(amt);   // Run motors for a set time
+        StopMotors(); // stop when done
     }
 
-    void run_turn_command()
+    // Stop both motors
+    void StopMotors()
     {
-        //TODO
+        write_speed(0, 0);
     }
 
-    void run_stop_command()
+    void run()
     {
-        motors.stop();
-        // motors.left->resetDistance();
-        // motors.right->resetDistance();
-        done = true;
+        // Motors::printTicks();
     }
-
-    void run_command()
-    {
-        switch (current_command.type)
-        {
-        case Command_t::DRIVE:
-            run_drive_command();
-            break;
-        case Command_t::TURN:
-            run_turn_command();
-            break;
-        case Command_t::STOP:
-            run_stop_command();
-            break;
-        default:
-            break;
-        };
-    }
-    void test_motors()
-    {
-        // motors.checkMotors(); // TODO integrate Motor encoders
-        MoveForward(215, 1000); // Ex: Forward at 215 speed for 1000 ms
-        delay(500);
-        MoveReverse(215, 1000); // Ex: Forward at 215 speed for 1000 ms
-        delay(500);
-        SpinRight(140, 1000);
-        delay(500);
-        SpinLeft(200, 1000);
-        delay(500);
-    }
-
-    void drive_fwd()
-    {
-        // milestone4
-        MoveForward(190, 150); // Ex: Forward at 190 speed for 150ms
-    }
-
-    void spin_right()
-    { // milestone4 imu
-        SpinRight(215, 100);
-    }
-
-    void spin_left()
-    { // milestone4 imu
-        SpinLeft(215, 100);
-    }
-    void motor_control()
-    {
-        run_command();
-        motors.left->adjustSpeed();
-        motors.right->adjustSpeed();
-    }
-
-    void set_command(Command_t type, int16_t value)
-    {
-        done = false; // we have a new command to do
-        current_command = Command{type, value};
-    }
-
 };
