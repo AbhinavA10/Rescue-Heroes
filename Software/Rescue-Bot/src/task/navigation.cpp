@@ -149,17 +149,17 @@ namespace Navigation
     void do_dropoff_lego_man()
     {
         //May need to drive forward a bit before starting
-        static int curr_yaw = imu.getYaw();
+        static int old_yaw_2 = imu.getYaw();
 
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
         {
-            if (imu.getYaw() == curr_yaw - 90)
+            if (imu.getYaw() == old_yaw_2 - 90)
             {
                 //May need to drive forward a bit?
                 MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward we will need to drive backwards same amount
-                if (imu.getYaw() == curr_yaw)
+                if (imu.getYaw() == old_yaw_2)
                 {
                     MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
@@ -176,13 +176,13 @@ namespace Navigation
         }
         else
         {
-            if (imu.getYaw() == curr_yaw + 90)
+            if (imu.getYaw() == old_yaw_2 + 90)
             {
                 //May need to drive forward
                 MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward will need to drive backward same amount
-                if (imu.getYaw() == curr_yaw)
+                if (imu.getYaw() == old_yaw_2)
                 {
                     MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
@@ -296,6 +296,7 @@ namespace Navigation
         PRINT_DEBUG(original_yaw)
         delay(10000); // wait 10 seconds for robot to be moved and let DMP stabilize
         // beep
+        imu.readData(); // Hack: force reading of IMU data
         PRINT_DEBUG(imu.getYaw())
         pinMode(BUZZER, OUTPUT);
         tone(BUZZER, NOTE_F4, 1000 / 8);

@@ -11,7 +11,6 @@ bool IMU::init()
     yaw_offset_ = 0;
     data_ready_ = false;
 
-    orientation = Orientation{};
     mpu_ = MPU6050();
 
     mpu_.initialize();
@@ -36,7 +35,7 @@ VectorFloat gravity; // [x, y, z]            gravity vector
 float ypr[3];        // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 
 // Initialize IMU Hardware
-void IMU::run()
+void IMU::init_hardware()
 {
 
     // verify connection
@@ -64,7 +63,7 @@ void IMU::run()
         // turn on the DMP, now that it's ready
         Serial.println(F("Enabling DMP..."));
         mpu_.setDMPEnabled(true);
-        pinMode(IMU_INT, INPUT); // IMU Interrupt is not used.
+        // pinMode(IMU_INT, INPUT); // IMU Interrupt is not used.
         // enable Arduino interrupt detection
         // Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
         // Serial.print(digitalPinToInterrupt(IMU_INT));
@@ -94,10 +93,10 @@ void IMU::run()
 
 // Interrupt that tells us the IMU has new data
 // Note: interrupt is not actually used...
-void IMU::onDataReady()
-{
-    mpuInterrupt = true;
-}
+// void IMU::onDataReady()
+// {
+//     mpuInterrupt = true;
+// }
 
 // Get latest data from IMU
 void IMU::readData()
@@ -111,32 +110,24 @@ void IMU::readData()
         mpu_.dmpGetQuaternion(&q, fifoBuffer);
         mpu_.dmpGetGravity(&gravity, &q);
         mpu_.dmpGetYawPitchRoll(ypr, &q, &gravity);
-        orientation.yaw = ypr[0] * 180 / PI;
-        orientation.pitch = ypr[1] * 180 / PI;
-        orientation.roll = ypr[2] * 180 / PI;
+        // float yaw = ypr[0] * 180 / PI;
+        // float pitch = ypr[1] * 180 / PI;
+        // float roll = ypr[2] * 180 / PI;
         // Serial.print("ypr\t");
-        // Serial.print(orientation.yaw);
+        // Serial.print(yaw);
         // Serial.print("\t");
-        // Serial.print(orientation.pitch);
+        // Serial.print(pitch);
         // Serial.print("\t");
-        // Serial.println(orientation.roll);
+        // Serial.println(roll);
         yaw_ = round(ypr[0] * 180 / PI);
         mpu_.resetFIFO();
     }
-    // Try exponential filter to reduce noise if needed, see https://en.wikipedia.org/wiki/Exponential_smoothing
 }
 
 // Set yaw value to 0
 void IMU::zero_yaw()
 {
     yaw_offset_ = yaw_;
-}
-
-// Return Yaw, Pitch, Roll of IMU
-Orientation IMU::getYPR()
-{
-    //TODO: filter
-    return orientation;
 }
 
 // Return Yaw

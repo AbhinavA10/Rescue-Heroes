@@ -74,10 +74,10 @@ namespace MotorControl
             {
                 write_right_speed(0);
             }
-            Motors::printTicks(); // debugging
+            // Motors::printTicks(); // debugging
         }
-        PRINT_DEBUG(ticks_setpoint)
-        Motors::printTicks();
+        // PRINT_DEBUG(ticks_setpoint)
+        // Motors::printTicks();
         StopMotors();  // Stop when done
         reset_ticks(); // Reset all tick counters
     }

@@ -15,7 +15,7 @@ namespace Sensors
         Display::refresh_display();
 #ifdef USE_IMU
         imu.init();
-        imu.run();
+        imu.init_hardware();
 #endif
         if (all_sensors_init)
         {
