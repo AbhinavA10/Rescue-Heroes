@@ -17,6 +17,7 @@ public:
     void readData();
 
     int getYaw();
+    int getNormalizedYaw();
     void zero_yaw();
     // void onDataReady();
 

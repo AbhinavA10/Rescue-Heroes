@@ -135,3 +135,9 @@ int IMU::getYaw()
 {
     return yaw_;
 }
+// Return Normalized Yaw
+int IMU::getNormalizedYaw()
+{
+    // normalize yaw from -180 -> 180 to 0->360
+    return yaw_ + 180;
+}

@@ -105,23 +105,36 @@ namespace Navigation
         }
     }
 
-    // Calculate required yaw if making a 180 degree turn.
-    int calculate_yaw_180()
+    // Calculate required yaw if making a right turn.
+    // Assumes you're only turning right!
+    int calculate_required_yaw_right_turn(int right_turn_angle)
     {
-        int old_yaw = imu.getYaw();
-        int required_yaw = 0;
-        // Calculate required yaw. (IMU yaw ranges from -180 to 180)
-        if (old_yaw >= 0)
+        int old_yaw = imu.getNormalizedYaw();
+        int required_yaw = old_yaw + right_turn_angle;
+        // Calculate required yaw.
+        if (required_yaw > 360)
         {
-            // old_yaw is in range 0 -> 180. Adding +180 will overflow into negative yaw
-            // adding 180 needs to become a negative yaw
-            required_yaw = -(180 - old_yaw);
+            // old_yaw is in range (360-right_turn_angle) -> 360.
+            // Adding +right_turn_angle will overflow into "negative yaw"
+            // adding right_turn_angle needs to become value closer to 0 instead
+            required_yaw = required_yaw - 360;
         }
-        else
+        return required_yaw;
+    }
+
+    // Calculate required yaw if making a left turn.
+    // Assumes you're only turning left!
+    int calculate_required_yaw_left_turn(int left_turn_angle)
+    {
+        int old_yaw = imu.getNormalizedYaw();
+        int required_yaw = old_yaw - left_turn_angle;
+        // Calculate required yaw.
+        if (required_yaw < 0)
         {
-            // old_yaw is in range -180 -> 0. Adding 180 won't overflow past +180
-            // adding 180 needs to become a negative yaw
-            required_yaw = old_yaw + 180;
+            // old_yaw is in range 0 -> left_turn_angle.
+            // Subtracting -left_turn_angle will overflow into near 360 deg
+            // Subtracting left_turn_angle needs to become value closer to 360 instead
+            required_yaw = required_yaw + 360;
         }
         return required_yaw;
     }
@@ -133,7 +146,7 @@ namespace Navigation
         static int required_yaw = 0;
         if (!done_moving)
         {
-            required_yaw = calculate_yaw_180();
+            required_yaw = calculate_required_yaw_right_turn(180);
             // blocking section
             MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
             lowerScoopServo();
@@ -141,7 +154,7 @@ namespace Navigation
             done_moving = true;                    // only move once, when this function is called
         }
 
-        int yaw = imu.getYaw();
+        int yaw = imu.getNormalizedYaw();
         if (abs(yaw - required_yaw) > 3)
         {
             // spin right till our current yaw is close enough to
