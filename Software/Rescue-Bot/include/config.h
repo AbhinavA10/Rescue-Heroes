@@ -10,7 +10,7 @@
 /*
     Configuration Values
 */
-#define STARTING_STATE State_t::TEST_FOLLOW_RED // FINDING_LEGO_MAN
+#define STARTING_STATE State_t::FINDING_LEGO_MAN
 
 /*
     Macros

@@ -20,11 +20,11 @@ namespace Navigation
     enum class State_t : uint8_t
     {
         NONE = 0,
-        FINDING_LEGO_MAN = 1,
-        FOUND_LEGO_MAN,
-        FINDING_SAFE_ZONE,
-        FOUND_SAFE_ZONE,
-        RETURN_TO_START,
+        FINDING_LEGO_MAN,  // follow red line till blue
+        FOUND_LEGO_MAN,    // reached blue, pickup lego man
+        FINDING_SAFE_ZONE, // follow red line till green
+        FOUND_SAFE_ZONE,   // reached green, drop off lego man
+        RETURN_TO_START,   // follow red line
         // States for testing functionality
         TEST_MOVE,
         TEST_MOVE_DIST,
@@ -45,9 +45,10 @@ namespace Navigation
 
     void do_follow_red_line();
     void do_find_lego_man();
-    void do_finding_safe_zone();
     void do_pick_up_lego_man();
+    void do_finding_safe_zone();
     void do_dropoff_lego_man();
+
     void do_test_move();
     void do_test_move_dist();
     void do_test_move_servo();
