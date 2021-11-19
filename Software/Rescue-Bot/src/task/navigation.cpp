@@ -26,7 +26,8 @@ namespace Navigation
             do_find_lego_man(); // verified
             break;
         case State_t::FOUND_LEGO_MAN:
-            do_pick_up_lego_man();
+            // do_pick_up_lego_man(); // 180 degree turn
+            do_pick_up_lego_man_90_turn();
             break;
         case State_t::FINDING_SAFE_ZONE:
             do_finding_safe_zone();
@@ -166,6 +167,51 @@ namespace Navigation
             MotorControl::StopMotors();
             // state = State_t::FINDING_SAFE_ZONE;
             state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
+        }
+    }
+
+    // Reached blue, pickup lego man
+    // by doing a 90 degree right turn, then turning till we see red on left sensor
+    void do_pick_up_lego_man_90_turn()
+    {
+        static bool done_moving = false;
+        static bool done_imu_turn = false;
+        static int required_yaw = 0;
+        if (!done_moving)
+        {
+            required_yaw = calculate_required_yaw_right_turn(90);
+            // blocking section
+            MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
+            lowerScoopServo();
+            MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
+            done_moving = true;                    // only move once, when this function is called
+        }
+
+        // Turn right 90 degrees
+        if (!done_imu_turn)
+        {
+            int yaw = imu.getNormalizedYaw();
+            if (abs(yaw - required_yaw) > 3)
+            {
+                // spin right till our current yaw is close enough to
+                MotorControl::SpinRight();
+                //Note: to account for sign change, only spin in one direction
+            }
+            else
+            {
+                done_imu_turn = true;
+            }
+        }
+        else
+        {
+            // IMU turning done. Now turn till we see red on the left sensor.
+            MotorControl::SpinRight();
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
+            {
+                MotorControl::StopMotors();
+                // state = State_t::FINDING_SAFE_ZONE;
+                state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
+            }
         }
     }
 

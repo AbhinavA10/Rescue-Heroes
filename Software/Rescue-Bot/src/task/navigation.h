@@ -46,8 +46,12 @@ namespace Navigation
     void do_follow_red_line();
     void do_find_lego_man();
     void do_pick_up_lego_man();
+    void do_pick_up_lego_man_90_turn();
     void do_finding_safe_zone();
     void do_dropoff_lego_man();
+
+    int calculate_required_yaw_right_turn(int right_turn_angle);
+    int calculate_required_yaw_left_turn(int right_turn_angle);
 
     void do_test_move();
     void do_test_move_dist();
