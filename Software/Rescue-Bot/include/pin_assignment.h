@@ -6,30 +6,30 @@
 /*
     Pin Assignments  
 */
-// #define SCL         D15 // already defined in Arduino.h
-// #define SDA         D14 // already defined in Arduino.h
+// #define SCL         D15 // Blue. already defined in Arduino.h
+// #define SDA         D14 // Yellow. already defined in Arduino.h
 
 // Motor A (left)
-#define ENA_PWM     D12
-#define IN1         D11
-#define IN2         D10
+#define ENA_PWM     D12 // Band - Orange
+#define IN1         D11 // Band - Yellow
+#define IN2         D10 // Band - Green
 // Motor B (right)
-#define IN3         D9
-#define IN4         D8
-#define ENB_PWM     D7
+#define IN3         D9 // Band - Blue
+#define IN4         D8 // Band - Purple
+#define ENB_PWM     D7 // Band - White
 
-#define SERVO_PWM   D6
+#define SERVO_PWM   D6 // Single - orange
 
 // Motor B (right)
-#define ENC1_A      D5
-#define ENC1_B      D4
+#define ENC1_A      D5 // Pair - orange
+#define ENC1_B      D4 // Pair - red
 
 // Motor A (left)
-#define ENC2_A      D3
-#define ENC2_B      D2
+#define ENC2_A      D3 // Pair - red with black
+#define ENC2_B      D2 // Pair - orange with black
 
-#define IMU_INT     A0
-#define BUZZER      A1
+#define IMU_INT     A0 // Single - Green Hookup wire
+#define BUZZER      A1 // Single - Yellow Hookup wire
 #define TOGGLE_PIN  A2 // general pin that can be used for toggling/debugging
 
 // Indicies in ColorSensors array

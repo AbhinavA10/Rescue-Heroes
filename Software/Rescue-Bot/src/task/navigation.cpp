@@ -23,10 +23,11 @@ namespace Navigation
             // do nothing
             break;
         case State_t::FINDING_LEGO_MAN:
-            do_find_lego_man();
+            do_find_lego_man(); // verified
             break;
         case State_t::FOUND_LEGO_MAN:
-            do_pick_up_lego_man();
+            // do_pick_up_lego_man(); // 180 degree turn
+            do_pick_up_lego_man_90_turn();
             break;
         case State_t::FINDING_SAFE_ZONE:
             do_finding_safe_zone();
@@ -35,7 +36,7 @@ namespace Navigation
             do_dropoff_lego_man();
             break;
         case State_t::RETURN_TO_START:
-            do_follow_red_line();
+            do_follow_red_line(); // verified
             break;
         // states for testing functionality
         case State_t::TEST_MOVE:
@@ -74,40 +75,30 @@ namespace Navigation
         };
     }
 
+    // Follow red line
     void do_follow_red_line()
     {
-        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::NO_COLOR && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::NO_COLOR)
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
         {
-            MotorControl::MoveForward();
-            return;
+            MotorControl::SpinLeft();
+        }
+        else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+        {
+            MotorControl::SpinRight();
         }
         else
         {
-            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
-            {
-                MotorControl::SpinRight();
-                return;
-            }
-            else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
-            {
-                MotorControl::SpinLeft();
-                return;
-            }
-            else
-            {
-                MotorControl::MoveForward();
-                return;
-            }
+            MotorControl::MoveForward();
         }
-        return;
     }
 
+    // Follow red line till blue
     void do_find_lego_man()
     {
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::BLUE)
         {
             state = State_t::FOUND_LEGO_MAN;
-            return;
+            MotorControl::StopMotors();
         }
         else
         {
@@ -115,12 +106,122 @@ namespace Navigation
         }
     }
 
+    // Calculate required yaw if making a right turn.
+    // Assumes you're only turning right!
+    int calculate_required_yaw_right_turn(int right_turn_angle)
+    {
+        int old_yaw = imu.getNormalizedYaw();
+        int required_yaw = old_yaw + right_turn_angle;
+        // Calculate required yaw.
+        if (required_yaw > 360)
+        {
+            // old_yaw is in range (360-right_turn_angle) -> 360.
+            // Adding +right_turn_angle will overflow into "negative yaw"
+            // adding right_turn_angle needs to become value closer to 0 instead
+            required_yaw = required_yaw - 360;
+        }
+        return required_yaw;
+    }
+
+    // Calculate required yaw if making a left turn.
+    // Assumes you're only turning left!
+    int calculate_required_yaw_left_turn(int left_turn_angle)
+    {
+        int old_yaw = imu.getNormalizedYaw();
+        int required_yaw = old_yaw - left_turn_angle;
+        // Calculate required yaw.
+        if (required_yaw < 0)
+        {
+            // old_yaw is in range 0 -> left_turn_angle.
+            // Subtracting -left_turn_angle will overflow into near 360 deg
+            // Subtracting left_turn_angle needs to become value closer to 360 instead
+            required_yaw = required_yaw + 360;
+        }
+        return required_yaw;
+    }
+
+    // Reached blue, pickup lego man
+    void do_pick_up_lego_man()
+    {
+        static bool done_moving = false;
+        static int required_yaw = 0;
+        if (!done_moving)
+        {
+            required_yaw = calculate_required_yaw_right_turn(180);
+            // blocking section
+            MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
+            lowerScoopServo();
+            MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
+            done_moving = true;                    // only move once, when this function is called
+        }
+
+        int yaw = imu.getNormalizedYaw();
+        if (abs(yaw - required_yaw) > 3)
+        {
+            // spin right till our current yaw is close enough to
+            MotorControl::SpinRight();
+            //Note: to account for sign change, only spin in one direction
+        }
+        else
+        {
+            MotorControl::StopMotors();
+            // state = State_t::FINDING_SAFE_ZONE;
+            state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
+        }
+    }
+
+    // Reached blue, pickup lego man
+    // by doing a 90 degree right turn, then turning till we see red on left sensor
+    void do_pick_up_lego_man_90_turn()
+    {
+        static bool done_moving = false;
+        static bool done_imu_turn = false;
+        static int required_yaw = 0;
+        if (!done_moving)
+        {
+            required_yaw = calculate_required_yaw_right_turn(90);
+            // blocking section
+            MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
+            lowerScoopServo();
+            MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
+            done_moving = true;                    // only move once, when this function is called
+        }
+
+        // Turn right 90 degrees
+        if (!done_imu_turn)
+        {
+            int yaw = imu.getNormalizedYaw();
+            if (abs(yaw - required_yaw) > 3)
+            {
+                // spin right till our current yaw is close enough to
+                MotorControl::SpinRight();
+                //Note: to account for sign change, only spin in one direction
+            }
+            else
+            {
+                done_imu_turn = true;
+            }
+        }
+        else
+        {
+            // IMU turning done. Now turn till we see red on the left sensor.
+            MotorControl::SpinRight();
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
+            {
+                MotorControl::StopMotors();
+                // state = State_t::FINDING_SAFE_ZONE;
+                state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
+            }
+        }
+    }
+
+    // Follow red line till green
     void do_finding_safe_zone()
     {
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
         {
             state = State_t::FOUND_SAFE_ZONE;
-            return;
+            MotorControl::StopMotors();
         }
         else
         {
@@ -128,38 +229,22 @@ namespace Navigation
         }
     }
 
-    void do_pick_up_lego_man()
-    {
-        //Drive forward measured time/ distance (PID here?)
-        MotorControl::StopMotors();
-        lowerScoopServo();
-        //Motors going backwards measured time/ distance (PID here?)
-        static int old_yaw = imu.getYaw();
-        if (imu.getYaw() == old_yaw + 180)
-        {
-            MotorControl::MoveForward();
-            state = State_t::FINDING_SAFE_ZONE;
-        }
-        else
-        {
-            MotorControl::SpinRight();
-        }
-    }
-
+    // Reached green, drop off lego man
     void do_dropoff_lego_man()
     {
+        //TODO: read through and test. IMU stuff might need to change
         //May need to drive forward a bit before starting
-        static int curr_yaw = imu.getYaw();
+        static int old_yaw = imu.getYaw();
 
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
         {
-            if (imu.getYaw() == curr_yaw - 90)
+            if (imu.getYaw() == old_yaw - 90)
             {
                 //May need to drive forward a bit?
                 MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward we will need to drive backwards same amount
-                if (imu.getYaw() == curr_yaw)
+                if (imu.getYaw() == old_yaw)
                 {
                     MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
@@ -176,13 +261,13 @@ namespace Navigation
         }
         else
         {
-            if (imu.getYaw() == curr_yaw + 90)
+            if (imu.getYaw() == old_yaw + 90)
             {
                 //May need to drive forward
                 MotorControl::StopMotors();
                 raiseScoopServo();
                 //If we drive forward will need to drive backward same amount
-                if (imu.getYaw() == curr_yaw)
+                if (imu.getYaw() == old_yaw)
                 {
                     MotorControl::MoveForward();
                     state = State_t::RETURN_TO_START;
@@ -217,7 +302,7 @@ namespace Navigation
     // Milestone5: Follow red line till blue
     void do_test_follow_red()
     {
-        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE)
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::BLUE)
         {
             MotorControl::StopMotors();
         }
@@ -296,6 +381,7 @@ namespace Navigation
         PRINT_DEBUG(original_yaw)
         delay(10000); // wait 10 seconds for robot to be moved and let DMP stabilize
         // beep
+        imu.readData(); // Hack: force reading of IMU data
         PRINT_DEBUG(imu.getYaw())
         pinMode(BUZZER, OUTPUT);
         tone(BUZZER, NOTE_F4, 1000 / 8);
