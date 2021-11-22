@@ -401,6 +401,8 @@ namespace Navigation
         {
             state = State_t::NONE;
             MotorControl::StopMotors_PID();
+            MotorControl::StopMotors();
+            MotorControl::disablePID = true;
         }
         else
         {
