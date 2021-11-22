@@ -30,10 +30,12 @@ namespace Navigation
             do_pick_up_lego_man_90_turn();
             break;
         case State_t::FINDING_SAFE_ZONE:
-            do_finding_safe_zone_to_right();
+            // do_finding_safe_zone_to_right();
+            do_finding_safe_zone_to_left();
             break;
         case State_t::FOUND_SAFE_ZONE:
-            do_dropoff_lego_man_to_right();
+            // do_dropoff_lego_man_to_right();
+            do_dropoff_lego_man_to_left();
             break;
         case State_t::RETURN_TO_START:
             do_follow_red_line(); // verified
@@ -156,9 +158,9 @@ namespace Navigation
             required_yaw = imu.calculate_required_yaw_right_turn(90);
             // blocking section
             MotorControl::disablePID = true;
-            MotorControl::MoveForward_Distance(4); // Blocking. Also calls StopMotors()
+            MotorControl::MoveForward_Distance(5); // Blocking. Also calls StopMotors()
             lowerScoopServo();
-            MotorControl::MoveReverse_Distance(4); // Blocking. Also calls StopMotors()
+            MotorControl::MoveReverse_Distance(5); // Blocking. Also calls StopMotors()
             MotorControl::disablePID = false;
             done_moving = true; // only move once, when this function is called
         }
@@ -276,11 +278,113 @@ namespace Navigation
                 done_all = true;
             }
         }
-        // IMU undo-turning done. Now turn till we see red on the left sensor.
+        // IMU undo-turning done. Now turn till we see red on the right sensor.
         if (done_all)
         {
             MotorControl::SpinLeft();
             if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+            {
+                MotorControl::StopMotors_PID();
+                state = State_t::RETURN_TO_START;
+            }
+        }
+    }
+
+    
+    // Follow red line till green
+    void do_finding_safe_zone_to_left()
+    {
+        // maybe use front sensor if needed
+        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN)
+        {
+            // Sense only safe zone on the left!
+            state = State_t::FOUND_SAFE_ZONE;
+            MotorControl::StopMotors_PID();
+        }
+        else
+        {
+            do_follow_red_line();
+        }
+    }
+
+    // Reached green, drop off lego man. Only on left
+    void do_dropoff_lego_man_to_left()
+    {
+        // 'states' within this function
+        static bool done_moving_fwd = false;
+        static bool done_imu_turn_green = true;
+        static int required_yaw = 0;
+        static bool done_moving_legoman = true;
+        static bool done_imu_turn_undo = true;
+        static int required_yaw_undo = 0;
+        static bool done_all = false;
+
+        // Move forwards a little
+        if (!done_moving_fwd)
+        {
+            // blocking section
+            MotorControl::disablePID = true;
+            MotorControl::MoveForward_Distance(15); // Blocking. Also calls StopMotors()
+            required_yaw = imu.calculate_required_yaw_left_turn(140);
+            MotorControl::disablePID = false;
+            done_moving_fwd = true; // only move once, when this function is called
+            done_imu_turn_green = false;
+        }
+
+        // Turn left towards green
+        if (!done_imu_turn_green)
+        {
+            int yaw = imu.getNormalizedYaw();
+            if (abs(yaw - required_yaw) > 3)
+            {
+                // spin left till our current yaw is close enough to
+                MotorControl::SpinLeft_PID();
+                //Note: to account for sign change, only spin in one direction
+            }
+            else
+            {
+                MotorControl::StopMotors_PID();
+                done_imu_turn_green = true;
+                done_moving_legoman = false;
+            }
+        }
+        // Move into greenzone, drop off, and reverse
+        if (!done_moving_legoman)
+        {
+            // blocking section
+            MotorControl::disablePID = true;
+            MotorControl::MoveForward_Distance(7); // Blocking. Also calls StopMotors()
+            raiseScoopServo();
+            MotorControl::MoveReverse_Distance(7); // Blocking. Also calls StopMotors()
+            imu.readData(); // hack: force reading of imu
+            required_yaw_undo = imu.calculate_required_yaw_right_turn(90);
+            MotorControl::disablePID = false;
+            done_moving_legoman = true; // only move once, when this function is called
+            done_imu_turn_undo = false;
+            return; // force undo-turn at next iteration
+        }
+
+        // Turn left 90 degrees to undo the original turn
+        if (!done_imu_turn_undo)
+        {
+            int yaw = imu.getNormalizedYaw();
+            if (abs(yaw - required_yaw) > 3)
+            {
+                // spin left till our current yaw is close enough to
+                MotorControl::SpinRight_PID();
+                //Note: to account for sign change, only spin in one direction
+            }
+            else
+            {
+                done_imu_turn_undo = true;
+                done_all = true;
+            }
+        }
+        // IMU undo-turning done. Now turn till we see red on the left sensor.
+        if (done_all)
+        {
+            MotorControl::SpinRight();
+            if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
                 MotorControl::StopMotors_PID();
                 state = State_t::RETURN_TO_START;
