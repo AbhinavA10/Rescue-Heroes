@@ -72,6 +72,16 @@ namespace Sensors
             // Serial.print(i);
             color_sensors[i].readColor();
         }
-        imu.readData();
+        if (Navigation::state == Navigation::State_t::TEST_IMU_PT1 ||
+            Navigation::state == Navigation::State_t::TEST_IMU_PT2 ||
+            Navigation::state == Navigation::State_t::TEST_IMU_PT3 ||
+            Navigation::state == Navigation::State_t::TEST_IMU_PT4 ||
+            Navigation::state == Navigation::State_t::TEST_IMU_PT5 ||
+            Navigation::state == Navigation::State_t::FOUND_LEGO_MAN ||
+            Navigation::state == Navigation::State_t::FOUND_SAFE_ZONE)
+        {
+            // only read from IMU when needed
+            imu.readData();
+        }
     }
 }

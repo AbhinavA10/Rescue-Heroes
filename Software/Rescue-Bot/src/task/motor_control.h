@@ -7,9 +7,9 @@
 #define FWD_SPEED 180
 #define TURNING_SPEED 215
 
-#define SPEED_M_S 30 // speed in m/s
+#define SPEED_M_S 15 // speed in m/s
 // motors will actually take robot slower than this, but with the PID parameters,
-// this value works well
+// this value works well and follows red line
 #define MAX_SPEED_M_S 30 // max found empirically accounting for robot weight
 
 #include <Arduino.h>

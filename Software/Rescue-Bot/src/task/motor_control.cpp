@@ -229,25 +229,25 @@ namespace MotorControl
     {
         vt[LEFT_MOTOR] = SPEED_M_S;
         vt[RIGHT_MOTOR] = SPEED_M_S;
-        Serial.println("Forward");
+        // Serial.println("Forward");
     }
     void MoveReverse_PID()
     {
         vt[LEFT_MOTOR] = -SPEED_M_S;
         vt[RIGHT_MOTOR] = -SPEED_M_S;
-        Serial.println("Back");
+        // Serial.println("Back");
     }
     void SpinLeft_PID()
     {
         vt[LEFT_MOTOR] = -SPEED_M_S;
         vt[RIGHT_MOTOR] = SPEED_M_S;
-        Serial.println("Left");
+        // Serial.println("Left");
     }
     void SpinRight_PID()
     {
         vt[LEFT_MOTOR] = SPEED_M_S;
         vt[RIGHT_MOTOR] = -SPEED_M_S;
-        Serial.println("Right");
+        // Serial.println("Right");
     }
     void StopMotors_PID()
     {
@@ -292,11 +292,11 @@ namespace MotorControl
         }
         for (int i = 0; i < 2; i++)
         {
-            Serial.print(vt[i]);
-            Serial.print(" ");
-            Serial.print(vel_rpm_filtered[i]);
-            Serial.print(" ");
+            // Serial.print(vt[i]);
+            // Serial.print(" ");
+            // Serial.print(vel_rpm_filtered[i]);
+            // Serial.print(" ");
         }
-        Serial.println();
+        // Serial.println();
     }
 };
