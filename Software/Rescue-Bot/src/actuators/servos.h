@@ -1,9 +1,8 @@
 #ifndef SERVOS_H
 #define SERVOS_H
 
-#define SCOOP_CLOSED_POSITION 1250 // us
-#define SCOOP_OPEN_POSITION 1600  // us
-// Lego man slips out at 1300. 1200 hits floor
+#define SCOOP_CLOSED_POSITION_ANGLE 110 // degrees
+#define SCOOP_OPEN_POSITION_ANGLE 145   // degrees
 
 void initScoopServo();
 void raiseScoopServo();

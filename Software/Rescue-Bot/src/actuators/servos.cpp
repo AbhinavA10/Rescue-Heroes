@@ -13,12 +13,12 @@ void initScoopServo()
 
 void raiseScoopServo()
 {
-    scoopServo.writeMicroseconds(SCOOP_OPEN_POSITION);
+    scoopServo.write(SCOOP_OPEN_POSITION_ANGLE);
     delay(1000); // wait for servo to get there
 }
 
 void lowerScoopServo()
 {
-    scoopServo.writeMicroseconds(SCOOP_CLOSED_POSITION);
+    scoopServo.write(SCOOP_CLOSED_POSITION_ANGLE);
     delay(1000); // wait for servo to get there
 }

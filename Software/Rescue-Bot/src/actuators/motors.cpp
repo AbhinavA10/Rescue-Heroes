@@ -81,8 +81,8 @@ void Motors::rightMotorInterrupt()
 
 void Motors::printTicks()
 {
-    Serial.print(left->ticks_);
-    Serial.print(" ");
-    Serial.print(right->ticks_);
-    Serial.print("\r\n");
+    // Serial.print(left->ticks_);
+    // Serial.print(" ");
+    // Serial.print(right->ticks_);
+    // Serial.print("\r\n");
 }
