@@ -1,24 +1,36 @@
 #include "actuators/servos.h"
-#include <Servo.h>
 #include "pin_assignment.h"
+#include <Wire.h>
 
-Servo scoopServo;
+// Servo position is set through dedicated servo driver (Arduino nano)
+// Dedicated servo driver enables jitter-free PWM
+// Arduino nano is an I2C receiver on I2C Addr NANO_ADDR
 
 void initScoopServo()
 {
-    pinMode(SERVO_PWM, OUTPUT);
-    scoopServo.attach(SERVO_PWM);
     raiseScoopServo();
 }
 
+// Raise servo
 void raiseScoopServo()
 {
-    scoopServo.write(SCOOP_OPEN_POSITION_ANGLE);
+    byte servo_angle = SCOOP_OPEN_POSITION_ANGLE;
+    sendServoAngle(servo_angle);
+    delay(1000); // wait servo to get there
+}
+
+// Lower servo
+void lowerScoopServo()
+{
+    byte servo_angle = SCOOP_CLOSED_POSITION_ANGLE;
+    sendServoAngle(servo_angle);
     delay(1000); // wait for servo to get there
 }
 
-void lowerScoopServo()
+// Send required servo angle to Servo driver
+void sendServoAngle(byte angle)
 {
-    scoopServo.write(SCOOP_CLOSED_POSITION_ANGLE);
-    delay(1000); // wait for servo to get there
+    Wire.beginTransmission(NANO_ADDR); // transmit to device #4
+    Wire.write(angle);                 // sends one byte
+    Wire.endTransmission();            // stop transmitting
 }

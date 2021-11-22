@@ -18,7 +18,7 @@
 #define IN4         D8 // Band - Purple
 #define ENB_PWM     D7 // Band - White
 
-#define SERVO_PWM   D6 // Single - orange
+// #define SERVO_PWM   D6 // Single - orange
 
 // Motor B (right)
 #define ENC1_A      D5 // Pair - red
