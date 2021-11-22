@@ -15,7 +15,7 @@ void Motor::init(uint8_t pwm_pin, uint8_t in_pin_1, uint8_t in_pin_2, uint8_t se
     dir_pin_2_ = in_pin_2;
     enc1_pin_ = sensor1_pin;
     enc2_pin_ = sensor2_pin;
-    ticks_ = 0;
+    ticks = 0;
 
     pinMode(pwm_pin_, OUTPUT);
     pinMode(dir_pin_1_, OUTPUT);
@@ -57,11 +57,11 @@ void Motors::leftMotorInterrupt()
     // Depending on which way you are rotating the wheels, it increases or decreases the count
     if (left->b_temp > 0)
     {
-        left->ticks_++;
+        left->ticks++;
     }
     else
     {
-        left->ticks_--;
+        left->ticks--;
     }
 }
 
@@ -71,18 +71,18 @@ void Motors::rightMotorInterrupt()
     right->b_temp = digitalRead(ENC1_B);
     if (right->b_temp > 0)
     {
-        right->ticks_++;
+        right->ticks--; // Right motor is mounted backwards
     }
     else
     {
-        right->ticks_--;
+        right->ticks++;
     }
 }
 
 void Motors::printTicks()
 {
-    Serial.print(left->ticks_);
-    Serial.print(" ");
-    Serial.print(right->ticks_);
-    Serial.print("\r\n");
+    // Serial.print(left->ticks);
+    // Serial.print(" ");
+    // Serial.print(right->ticks);
+    // Serial.print("\r\n");
 }

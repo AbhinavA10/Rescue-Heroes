@@ -18,11 +18,11 @@
 #define IN4         D8 // Band - Purple
 #define ENB_PWM     D7 // Band - White
 
-#define SERVO_PWM   D6 // Single - orange
+// #define SERVO_PWM   D6 // Single - orange
 
 // Motor B (right)
-#define ENC1_A      D5 // Pair - orange
-#define ENC1_B      D4 // Pair - red
+#define ENC1_A      D5 // Pair - red
+#define ENC1_B      D4 // Pair - orange
 
 // Motor A (left)
 #define ENC2_A      D3 // Pair - red with black

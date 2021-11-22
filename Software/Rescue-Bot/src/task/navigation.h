@@ -36,6 +36,7 @@ namespace Navigation
         TEST_IMU_PT4,
         TEST_IMU_PT5,
         TEST_FOLLOW_RED,
+        TEST_MOVE_PID, // the only test with PID
     };
 
     extern State_t state;
@@ -47,8 +48,10 @@ namespace Navigation
     void do_find_lego_man();
     void do_pick_up_lego_man();
     void do_pick_up_lego_man_90_turn();
-    void do_finding_safe_zone();
-    void do_dropoff_lego_man();
+    void do_finding_safe_zone_to_right();
+    void do_dropoff_lego_man_to_right();
+    void do_finding_safe_zone_to_left();
+    void do_dropoff_lego_man_to_left();
 
     int calculate_required_yaw_right_turn(int right_turn_angle);
     int calculate_required_yaw_left_turn(int right_turn_angle);
@@ -63,5 +66,6 @@ namespace Navigation
     void do_test_imu_pt3();
     void do_test_imu_pt4();
     void do_test_imu_pt5();
+    void do_test_move_pid();
 };
 #endif

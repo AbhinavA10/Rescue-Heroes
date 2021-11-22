@@ -1,11 +1,15 @@
 #ifndef SERVOS_H
 #define SERVOS_H
+#include <Arduino.h>
 
-#define SCOOP_CLOSED_POSITION 900 // us
-#define SCOOP_OPEN_POSITION 2140  // us
+#define SCOOP_CLOSED_POSITION_ANGLE 110 // degrees
+#define SCOOP_OPEN_POSITION_ANGLE 145   // degrees
+#define NANO_ADDR 8
 
-void initScoopServo();
-void lowerScoopServo();
-void raiseScoopServo();
+void initScoopServo();  // public
+void raiseScoopServo(); // public
+void lowerScoopServo(); // public
+
+void sendServoAngle(byte angle); // private
 
 #endif

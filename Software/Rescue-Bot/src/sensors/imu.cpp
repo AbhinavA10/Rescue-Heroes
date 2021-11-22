@@ -141,3 +141,37 @@ int IMU::getNormalizedYaw()
     // normalize yaw from -180 -> 180 to 0->360
     return yaw_ + 180;
 }
+
+// Calculate required yaw if making a right turn.
+// Assumes you're only turning right!
+int IMU::calculate_required_yaw_right_turn(int right_turn_angle)
+{
+    int old_yaw = getNormalizedYaw();
+    int required_yaw = old_yaw + right_turn_angle;
+    // Calculate required yaw.
+    if (required_yaw > 360)
+    {
+        // old_yaw is in range (360-right_turn_angle) -> 360.
+        // Adding +right_turn_angle will overflow into "negative yaw"
+        // adding right_turn_angle needs to become value closer to 0 instead
+        required_yaw = required_yaw - 360;
+    }
+    return required_yaw;
+}
+
+// Calculate required yaw if making a left turn.
+// Assumes you're only turning left!
+int IMU::calculate_required_yaw_left_turn(int left_turn_angle)
+{
+    int old_yaw = getNormalizedYaw();
+    int required_yaw = old_yaw - left_turn_angle;
+    // Calculate required yaw.
+    if (required_yaw < 0)
+    {
+        // old_yaw is in range 0 -> left_turn_angle.
+        // Subtracting -left_turn_angle will overflow into near 360 deg
+        // Subtracting left_turn_angle needs to become value closer to 360 instead
+        required_yaw = required_yaw + 360;
+    }
+    return required_yaw;
+}
