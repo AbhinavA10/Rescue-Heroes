@@ -38,7 +38,7 @@ namespace Navigation
             do_dropoff_lego_man_to_left();
             break;
         case State_t::RETURN_TO_START:
-            do_follow_red_line(); // verified
+            do_return_to_start();
             break;
         // states for testing functionality
         case State_t::TEST_MOVE:
@@ -391,6 +391,21 @@ namespace Navigation
             }
         }
     }
+
+    
+    void do_return_to_start()
+    {
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+        {
+            state = State_t::NONE;
+            MotorControl::StopMotors_PID();
+        }
+        else
+        {
+            do_follow_red_line();
+        }
+    }
+
 
     // Milestone4: Driving till green:
     void do_test_move_till_green()
