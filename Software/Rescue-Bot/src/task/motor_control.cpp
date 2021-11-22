@@ -86,11 +86,11 @@ namespace MotorControl
     void MoveForward()
     {
         // Set Motor A forward
-        digitalWrite(IN1, HIGH);
-        digitalWrite(IN2, LOW);
+        digitalWrite(IN1, LOW);
+        digitalWrite(IN2, HIGH);
         // Set Motor B forward
-        digitalWrite(IN3, HIGH);
-        digitalWrite(IN4, LOW);
+        digitalWrite(IN3, LOW);
+        digitalWrite(IN4, HIGH);
 
         write_speed(FWD_SPEED, FWD_SPEED);
     }
@@ -105,11 +105,11 @@ namespace MotorControl
     void MoveReverse()
     {
         // Set Motor A reverse
-        digitalWrite(IN1, LOW);
-        digitalWrite(IN2, HIGH);
+        digitalWrite(IN1, HIGH);
+        digitalWrite(IN2, LOW);
         // Set Motor B reverse
-        digitalWrite(IN3, LOW);
-        digitalWrite(IN4, HIGH);
+        digitalWrite(IN3, HIGH);
+        digitalWrite(IN4, LOW);
 
         write_speed(FWD_SPEED, FWD_SPEED);
         // Run the motors at the specified speed, and amount of time

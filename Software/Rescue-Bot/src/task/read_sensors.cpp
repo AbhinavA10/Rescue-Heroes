@@ -9,8 +9,6 @@ namespace Sensors
     // Setup sensors
     void init_sensors()
     {
-        // Start I2C bus
-        Wire.begin();
         setupColorSensors();
         Display::refresh_display();
 #ifdef USE_IMU

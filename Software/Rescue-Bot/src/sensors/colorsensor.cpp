@@ -71,18 +71,22 @@ void ColorSensor::classifyColor()
     if (RedDist < RED_MAX_DIST)
     {
         currentColor_ = ColorClass::RED;
+        // Serial.println("RED");
     }
     else if (GreenDist < GREEN_MAX_DIST)
     {
         currentColor_ = ColorClass::GREEN;
+        // Serial.println("GREEN");
     }
     else if (BlueDist < BLUE_MAX_DIST)
     {
         currentColor_ = ColorClass::BLUE;
+        // Serial.println("BLUE");
     }
     else
     {
         currentColor_ = ColorClass::NO_COLOR;
+        // Serial.println("NO_COLOR");
     }
 }
 

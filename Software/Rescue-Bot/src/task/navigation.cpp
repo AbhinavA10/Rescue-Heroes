@@ -329,13 +329,13 @@ namespace Navigation
         if (!done_init)
         {
             MotorControl::MoveForward();
-            delay(500);
+            delay(1000);
             MotorControl::MoveReverse();
-            delay(500);
+            delay(1000);
             MotorControl::SpinLeft();
-            delay(500);
+            delay(1000);
             MotorControl::SpinRight();
-            delay(500);
+            delay(1000);
             MotorControl::StopMotors();
             done_init = true;
         }
