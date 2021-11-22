@@ -266,7 +266,7 @@ namespace Navigation
         if (!done_imu_turn_undo)
         {
             int yaw = imu.getNormalizedYaw();
-            if (abs(yaw - required_yaw) > 3)
+            if (abs(yaw - required_yaw_undo) > 3)
             {
                 // spin left till our current yaw is close enough to
                 MotorControl::SpinLeft_PID();
@@ -281,7 +281,7 @@ namespace Navigation
         // IMU undo-turning done. Now turn till we see red on the right sensor.
         if (done_all)
         {
-            MotorControl::SpinLeft();
+            MotorControl::SpinLeft_PID();
             if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
             {
                 MotorControl::StopMotors_PID();
@@ -355,9 +355,9 @@ namespace Navigation
             MotorControl::disablePID = true;
             MotorControl::MoveForward_Distance(7); // Blocking. Also calls StopMotors()
             raiseScoopServo();
-            MotorControl::MoveReverse_Distance(7); // Blocking. Also calls StopMotors()
+            MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
             imu.readData(); // hack: force reading of imu
-            required_yaw_undo = imu.calculate_required_yaw_right_turn(90);
+            required_yaw_undo = imu.calculate_required_yaw_right_turn(110);
             MotorControl::disablePID = false;
             done_moving_legoman = true; // only move once, when this function is called
             done_imu_turn_undo = false;
@@ -368,7 +368,7 @@ namespace Navigation
         if (!done_imu_turn_undo)
         {
             int yaw = imu.getNormalizedYaw();
-            if (abs(yaw - required_yaw) > 3)
+            if (abs(yaw - required_yaw_undo) > 3)
             {
                 // spin left till our current yaw is close enough to
                 MotorControl::SpinRight_PID();
@@ -383,7 +383,7 @@ namespace Navigation
         // IMU undo-turning done. Now turn till we see red on the left sensor.
         if (done_all)
         {
-            MotorControl::SpinRight();
+            MotorControl::SpinRight_PID();
             if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
                 MotorControl::StopMotors_PID();
