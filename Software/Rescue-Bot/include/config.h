@@ -10,7 +10,7 @@
 /*
     Configuration Values
 */
-#define STARTING_STATE State_t::TEST_MOVE_PID
+#define STARTING_STATE State_t::FINDING_LEGO_MAN
 
 /*
     Macros

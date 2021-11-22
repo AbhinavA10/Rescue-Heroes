@@ -45,15 +45,16 @@ namespace MotorControl
     void StopMotors();                   // public interface
 
     extern long prev_time;
+    extern bool disablePID;
     void setMotor(int dir, int pwmVal, int pwm, int in1, int in2);
 
     extern SimplePID pid[2];  // Independant PIDs for each motor
     extern float vt[2];       // target velocity
-    void forward_pid();       // public interface
-    void backward_pid();      // public interface
-    void left_pid();          // public interface
-    void right_pid();         // public interface
-    void stop_pid();          // public interface
+    void MoveForward_PID();   // public interface
+    void MoveReverse_PID();   // public interface
+    void SpinLeft_PID();      // public interface
+    void SpinRight_PID();     // public interface
+    void StopMotors_PID();    // public interface
     void update_motors_pid(); // public interface
 };
 

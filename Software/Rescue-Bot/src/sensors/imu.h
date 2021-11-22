@@ -19,6 +19,8 @@ public:
     int getYaw();
     int getNormalizedYaw();
     void zero_yaw();
+    int calculate_required_yaw_right_turn(int right_turn_angle);
+    int calculate_required_yaw_left_turn(int left_turn_angle);
     // void onDataReady();
 
 private:

@@ -36,7 +36,7 @@ namespace Navigation
         TEST_IMU_PT4,
         TEST_IMU_PT5,
         TEST_FOLLOW_RED,
-        TEST_MOVE_PID,
+        TEST_MOVE_PID, // the only test with PID
     };
 
     extern State_t state;

@@ -10,7 +10,7 @@ namespace MotorControl
 {
 
     long prev_time = 0;
-
+    bool disablePID = false;
     SimplePID pid[2]; // Independant PIDs for each motor
     float vt[2] = {0, 0};
 
@@ -195,7 +195,10 @@ namespace MotorControl
     void run()
     {
         // Motors::printTicks();
-        update_motors_pid();
+        if (!disablePID)
+        {
+            update_motors_pid();
+        }
     }
 
     void setMotorPID(int dir, int pwmVal, int pwm, int in1, int in2)
@@ -222,31 +225,31 @@ namespace MotorControl
     }
 
     // Set speed for PID Control
-    void forward_pid()
+    void MoveForward_PID()
     {
         vt[LEFT_MOTOR] = SPEED_M_S;
         vt[RIGHT_MOTOR] = SPEED_M_S;
         Serial.println("Forward");
     }
-    void backward_pid()
+    void MoveReverse_PID()
     {
         vt[LEFT_MOTOR] = -SPEED_M_S;
         vt[RIGHT_MOTOR] = -SPEED_M_S;
         Serial.println("Back");
     }
-    void left_pid()
+    void SpinLeft_PID()
     {
         vt[LEFT_MOTOR] = -SPEED_M_S;
         vt[RIGHT_MOTOR] = SPEED_M_S;
         Serial.println("Left");
     }
-    void right_pid()
+    void SpinRight_PID()
     {
         vt[LEFT_MOTOR] = SPEED_M_S;
         vt[RIGHT_MOTOR] = -SPEED_M_S;
         Serial.println("Right");
     }
-    void stop_pid()
+    void StopMotors_PID()
     {
         vt[LEFT_MOTOR] = 0;
         vt[RIGHT_MOTOR] = 0;

@@ -25,8 +25,8 @@ void setup()
     playStartupSound();
     Serial.begin(115200);
     Wire.begin(); // Start and join I2C bus
-    // Display::init_display();
-    // Sensors::init_sensors();
+    Display::init_display();
+    Sensors::init_sensors();
     MotorControl::init();
     Navigation::init();
     // Test if display works
@@ -35,7 +35,7 @@ void setup()
 
 void loop()
 {
-    // Sensors::read_sensors();
+    Sensors::read_sensors();
     Navigation::run();
     MotorControl::run();
     // delay(1);

@@ -83,15 +83,15 @@ namespace Navigation
     {
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
         {
-            MotorControl::SpinLeft();
+            MotorControl::SpinLeft_PID();
         }
         else if (color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
         {
-            MotorControl::SpinRight();
+            MotorControl::SpinRight_PID();
         }
         else
         {
-            MotorControl::MoveForward();
+            MotorControl::MoveForward_PID();
         }
     }
 
@@ -101,46 +101,12 @@ namespace Navigation
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::BLUE)
         {
             state = State_t::FOUND_LEGO_MAN;
-            MotorControl::StopMotors();
+            MotorControl::StopMotors_PID();
         }
         else
         {
             do_follow_red_line();
         }
-    }
-
-    // Calculate required yaw if making a right turn.
-    // Assumes you're only turning right!
-    int calculate_required_yaw_right_turn(int right_turn_angle)
-    {
-        int old_yaw = imu.getNormalizedYaw();
-        int required_yaw = old_yaw + right_turn_angle;
-        // Calculate required yaw.
-        if (required_yaw > 360)
-        {
-            // old_yaw is in range (360-right_turn_angle) -> 360.
-            // Adding +right_turn_angle will overflow into "negative yaw"
-            // adding right_turn_angle needs to become value closer to 0 instead
-            required_yaw = required_yaw - 360;
-        }
-        return required_yaw;
-    }
-
-    // Calculate required yaw if making a left turn.
-    // Assumes you're only turning left!
-    int calculate_required_yaw_left_turn(int left_turn_angle)
-    {
-        int old_yaw = imu.getNormalizedYaw();
-        int required_yaw = old_yaw - left_turn_angle;
-        // Calculate required yaw.
-        if (required_yaw < 0)
-        {
-            // old_yaw is in range 0 -> left_turn_angle.
-            // Subtracting -left_turn_angle will overflow into near 360 deg
-            // Subtracting left_turn_angle needs to become value closer to 360 instead
-            required_yaw = required_yaw + 360;
-        }
-        return required_yaw;
     }
 
     // Reached blue, pickup lego man
@@ -150,26 +116,28 @@ namespace Navigation
         static int required_yaw = 0;
         if (!done_moving)
         {
-            required_yaw = calculate_required_yaw_right_turn(180);
+            required_yaw = imu.calculate_required_yaw_right_turn(180);
             // blocking section
+            MotorControl::disablePID = true;
             MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
             lowerScoopServo();
             MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
-            done_moving = true;                    // only move once, when this function is called
+            MotorControl::disablePID = false;
+            done_moving = true; // only move once, when this function is called
         }
 
         int yaw = imu.getNormalizedYaw();
         if (abs(yaw - required_yaw) > 3)
         {
             // spin right till our current yaw is close enough to
-            MotorControl::SpinRight();
+            MotorControl::SpinRight_PID();
             //Note: to account for sign change, only spin in one direction
         }
         else
         {
-            MotorControl::StopMotors();
+            MotorControl::StopMotors_PID();
             // state = State_t::FINDING_SAFE_ZONE;
-            state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
+            state = State_t::RETURN_TO_START; // TODO: remove this line
         }
     }
 
@@ -182,12 +150,14 @@ namespace Navigation
         static int required_yaw = 0;
         if (!done_moving)
         {
-            required_yaw = calculate_required_yaw_right_turn(90);
+            required_yaw = imu.calculate_required_yaw_right_turn(90);
             // blocking section
+            MotorControl::disablePID = true;
             MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
             lowerScoopServo();
             MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
-            done_moving = true;                    // only move once, when this function is called
+            MotorControl::disablePID = false;
+            done_moving = true; // only move once, when this function is called
         }
 
         // Turn right 90 degrees
@@ -197,7 +167,7 @@ namespace Navigation
             if (abs(yaw - required_yaw) > 3)
             {
                 // spin right till our current yaw is close enough to
-                MotorControl::SpinRight();
+                MotorControl::SpinRight_PID();
                 //Note: to account for sign change, only spin in one direction
             }
             else
@@ -211,7 +181,7 @@ namespace Navigation
             MotorControl::SpinRight();
             if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
-                MotorControl::StopMotors();
+                MotorControl::StopMotors_PID();
                 // state = State_t::FINDING_SAFE_ZONE;
                 state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
             }
@@ -224,7 +194,7 @@ namespace Navigation
         if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
         {
             state = State_t::FOUND_SAFE_ZONE;
-            MotorControl::StopMotors();
+            MotorControl::StopMotors_PID();
         }
         else
         {
@@ -244,22 +214,22 @@ namespace Navigation
             if (imu.getYaw() == old_yaw - 90)
             {
                 //May need to drive forward a bit?
-                MotorControl::StopMotors();
+                MotorControl::StopMotors_PID();
                 raiseScoopServo();
                 //If we drive forward we will need to drive backwards same amount
                 if (imu.getYaw() == old_yaw)
                 {
-                    MotorControl::MoveForward();
+                    MotorControl::MoveForward_PID();
                     state = State_t::RETURN_TO_START;
                 }
                 else
                 {
-                    MotorControl::SpinRight();
+                    MotorControl::SpinRight_PID();
                 }
             }
             else
             {
-                MotorControl::SpinLeft();
+                MotorControl::SpinLeft_PID();
             }
         }
         else
@@ -267,22 +237,22 @@ namespace Navigation
             if (imu.getYaw() == old_yaw + 90)
             {
                 //May need to drive forward
-                MotorControl::StopMotors();
+                MotorControl::StopMotors_PID();
                 raiseScoopServo();
                 //If we drive forward will need to drive backward same amount
                 if (imu.getYaw() == old_yaw)
                 {
-                    MotorControl::MoveForward();
+                    MotorControl::MoveForward_PID();
                     state = State_t::RETURN_TO_START;
                 }
                 else
                 {
-                    MotorControl::SpinLeft();
+                    MotorControl::SpinLeft_PID();
                 }
             }
             else
             {
-                MotorControl::SpinRight();
+                MotorControl::SpinRight_PID();
             }
         }
     }
@@ -351,35 +321,35 @@ namespace Navigation
         t = t % 16;
         if (t < 2)
         {
-            MotorControl::forward_pid();
+            MotorControl::MoveForward_PID();
         }
         else if (t < 4)
         {
-            MotorControl::stop_pid();
+            MotorControl::StopMotors_PID();
         }
         else if (t < 6)
         {
-            MotorControl::backward_pid();
+            MotorControl::MoveReverse_PID();
         }
         else if (t < 8)
         {
-            MotorControl::stop_pid();
+            MotorControl::StopMotors_PID();
         }
         else if (t < 10)
         {
-            MotorControl::left_pid();
+            MotorControl::SpinLeft_PID();
         }
         else if (t < 12)
         {
-            MotorControl::stop_pid();
+            MotorControl::StopMotors_PID();
         }
         else if (t < 14)
         {
-            MotorControl::right_pid();
+            MotorControl::SpinRight_PID();
         }
         else
         {
-            MotorControl::stop_pid();
+            MotorControl::StopMotors_PID();
         }
     }
 
