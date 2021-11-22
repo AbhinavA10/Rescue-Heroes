@@ -260,6 +260,7 @@ namespace Navigation
     // Milestone4: Driving till green:
     void do_test_move_till_green()
     {
+        MotorControl::disablePID=true;
         static bool done_test = false;
         if (!done_test)
         {
@@ -275,6 +276,7 @@ namespace Navigation
     // Milestone5: Follow red line till blue
     void do_test_follow_red()
     {
+        MotorControl::disablePID=true;
         if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::BLUE || color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::BLUE)
         {
             MotorControl::StopMotors();
@@ -298,6 +300,7 @@ namespace Navigation
     void do_test_move()
     {
         static bool done_init = false;
+        MotorControl::disablePID=true;
 
         if (!done_init)
         {
@@ -355,6 +358,7 @@ namespace Navigation
 
     void do_test_move_dist()
     {
+        MotorControl::disablePID=true;
         MotorControl::MoveForward_Distance(5);
         delay(1000); // pause
         MotorControl::MoveReverse_Distance(5);
@@ -363,6 +367,7 @@ namespace Navigation
 
     void do_test_move_servo()
     {
+        MotorControl::disablePID=true;
         lowerScoopServo();
         raiseScoopServo();
         lowerScoopServo();
@@ -373,6 +378,7 @@ namespace Navigation
     // Milestone4: IMU: Manually rotate robot, then let robot rotate back to start position
     void do_test_imu_pt1()
     {
+        MotorControl::disablePID=true;
         delay(1000); // wait 10 seconds for IMU to stabilize
         state = State_t::TEST_IMU_PT2;
     }

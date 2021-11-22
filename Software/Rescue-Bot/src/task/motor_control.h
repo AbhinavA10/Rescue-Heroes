@@ -4,7 +4,7 @@
 #define MIN_SPEED 155 // PWM
 #define MAX_SPEED 215 // PWM
 
-#define FWD_SPEED 160
+#define FWD_SPEED 180
 #define TURNING_SPEED 215
 
 #define SPEED_M_S 30 // speed in m/s
