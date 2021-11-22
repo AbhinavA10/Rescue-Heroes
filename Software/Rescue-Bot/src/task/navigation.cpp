@@ -156,9 +156,9 @@ namespace Navigation
             required_yaw = imu.calculate_required_yaw_right_turn(90);
             // blocking section
             MotorControl::disablePID = true;
-            MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
+            MotorControl::MoveForward_Distance(4); // Blocking. Also calls StopMotors()
             lowerScoopServo();
-            MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
+            MotorControl::MoveReverse_Distance(4); // Blocking. Also calls StopMotors()
             MotorControl::disablePID = false;
             done_moving = true; // only move once, when this function is called
         }
@@ -185,8 +185,7 @@ namespace Navigation
             if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED)
             {
                 MotorControl::StopMotors_PID();
-                // state = State_t::FINDING_SAFE_ZONE;
-                state = State_t::RETURN_TO_START; // For now, focus on returning to start with lego man.
+                state = State_t::FINDING_SAFE_ZONE;
             }
         }
     }
@@ -194,8 +193,9 @@ namespace Navigation
     // Follow red line till green
     void do_finding_safe_zone()
     {
-        if (color_sensors[COLORSENSOR_L].getCurrentColor() == ColorClass::GREEN || color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
+        if (color_sensors[COLORSENSOR_R].getCurrentColor() == ColorClass::GREEN)
         {
+            // Sense only safe zone on the right!
             state = State_t::FOUND_SAFE_ZONE;
             MotorControl::StopMotors_PID();
         }
@@ -205,7 +205,7 @@ namespace Navigation
         }
     }
 
-    // Reached green, drop off lego man
+    // Reached green, drop off lego man. Only on right
     void do_dropoff_lego_man()
     {
         //TODO: read through and test. IMU stuff might need to change
