@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 #define SCOOP_CLOSED_POSITION_ANGLE 110 // degrees
-#define SCOOP_OPEN_POSITION_ANGLE 145   // degrees
+#define SCOOP_OPEN_POSITION_ANGLE 137   // degrees
 #define NANO_ADDR 8
 
 void initScoopServo();  // public
