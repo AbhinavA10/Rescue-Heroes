@@ -13,7 +13,7 @@ public:
     double pos_current;  // Current distance motor has travelled
     double pos_setpoint; // setpoint distance
 
-    volatile int ticks_;
+    volatile long ticks; // accumulated encoder count
     volatile int b_temp; // temp value used in interrupts
 
 private:

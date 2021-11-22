@@ -36,6 +36,7 @@ namespace Navigation
         TEST_IMU_PT4,
         TEST_IMU_PT5,
         TEST_FOLLOW_RED,
+        TEST_MOVE_PID,
     };
 
     extern State_t state;
@@ -63,5 +64,6 @@ namespace Navigation
     void do_test_imu_pt3();
     void do_test_imu_pt4();
     void do_test_imu_pt5();
+    void do_test_move_pid();
 };
 #endif

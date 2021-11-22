@@ -25,9 +25,9 @@ void setup()
     playStartupSound();
     Serial.begin(115200);
     Wire.begin(); // Start and join I2C bus
+    // Display::init_display();
+    // Sensors::init_sensors();
     MotorControl::init();
-    Display::init_display();
-    Sensors::init_sensors();
     Navigation::init();
     // Test if display works
     // Display::test_display();
@@ -35,9 +35,9 @@ void setup()
 
 void loop()
 {
-    Sensors::read_sensors();
+    // Sensors::read_sensors();
     Navigation::run();
-    // MotorControl::run();
+    MotorControl::run();
     // delay(1);
     // From Logic analyzer, reading of 3 color sensors
     // takes ~6ms > 3ms integration time of sensor

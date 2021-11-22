@@ -69,6 +69,9 @@ namespace Navigation
         case State_t::TEST_MOVE_SERVO:
             do_test_move_servo();
             break;
+        case State_t::TEST_MOVE_PID:
+            do_test_move_pid();
+            break;
         default:
             PRINT_DEBUG("UNKNOWN STATE!")
             break;
@@ -338,6 +341,45 @@ namespace Navigation
             delay(1000);
             MotorControl::StopMotors();
             done_init = true;
+        }
+    }
+
+    void do_test_move_pid()
+    {
+        // Repeating target waveform:
+        int t = micros() / 1e6;
+        t = t % 16;
+        if (t < 2)
+        {
+            MotorControl::forward_pid();
+        }
+        else if (t < 4)
+        {
+            MotorControl::stop_pid();
+        }
+        else if (t < 6)
+        {
+            MotorControl::backward_pid();
+        }
+        else if (t < 8)
+        {
+            MotorControl::stop_pid();
+        }
+        else if (t < 10)
+        {
+            MotorControl::left_pid();
+        }
+        else if (t < 12)
+        {
+            MotorControl::stop_pid();
+        }
+        else if (t < 14)
+        {
+            MotorControl::right_pid();
+        }
+        else
+        {
+            MotorControl::stop_pid();
         }
     }
 
