@@ -38,7 +38,7 @@ namespace Navigation
             do_dropoff_lego_man_to_left();
             break;
         case State_t::RETURN_TO_START:
-            do_follow_red_line(); // verified
+            do_return_to_start();
             break;
         // states for testing functionality
         case State_t::TEST_MOVE:
@@ -178,6 +178,10 @@ namespace Navigation
             else
             {
                 done_imu_turn = true;
+                // blocking section
+                MotorControl::disablePID = true;
+                MotorControl::MoveForward_Distance(3); // Blocking. Also calls StopMotors()
+                MotorControl::disablePID = false;
             }
         }
         else
@@ -290,7 +294,6 @@ namespace Navigation
         }
     }
 
-    
     // Follow red line till green
     void do_finding_safe_zone_to_left()
     {
@@ -356,7 +359,7 @@ namespace Navigation
             MotorControl::MoveForward_Distance(7); // Blocking. Also calls StopMotors()
             raiseScoopServo();
             MotorControl::MoveReverse_Distance(3); // Blocking. Also calls StopMotors()
-            imu.readData(); // hack: force reading of imu
+            imu.readData();                        // hack: force reading of imu
             required_yaw_undo = imu.calculate_required_yaw_right_turn(110);
             MotorControl::disablePID = false;
             done_moving_legoman = true; // only move once, when this function is called
@@ -389,6 +392,21 @@ namespace Navigation
                 MotorControl::StopMotors_PID();
                 state = State_t::RETURN_TO_START;
             }
+        }
+    }
+
+    void do_return_to_start()
+    {
+        if (color_sensors[COLORSENSOR_FL].getCurrentColor() == ColorClass::RED && color_sensors[COLORSENSOR_FR].getCurrentColor() == ColorClass::RED)
+        {
+            state = State_t::NONE;
+            MotorControl::StopMotors_PID();
+            MotorControl::StopMotors();
+            MotorControl::disablePID = true;
+        }
+        else
+        {
+            do_follow_red_line();
         }
     }
 
