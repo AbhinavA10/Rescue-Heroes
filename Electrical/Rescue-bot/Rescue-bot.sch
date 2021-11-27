@@ -1,0 +1,519 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr USLetter 11000 8500
+encoding utf-8
+Sheet 1 1
+Title "Rescue Bot Schematic"
+Date "2021-11-25"
+Rev "3"
+Comp "Team 6 - Rescue Heroes"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 "By: Abhinav Agrahari"
+$EndDescr
+$Comp
+L AA_Custom_Components:SN74HCT245N IC?
+U 1 1 61A19FEA
+P 4550 3600
+F 0 "IC?" H 5050 3865 50  0000 C CNN
+F 1 "SN74HCT245N" H 5050 3774 50  0000 C CNN
+F 2 "DIP794W53P254L2692H508Q20N" H 5400 3700 50  0001 L CNN
+F 3 "http://www.ti.com/lit/gpn/sn74hct245" H 5400 3600 50  0001 L CNN
+F 4 "Octal Bus Transceivers With 3-State Outputs" H 5400 3500 50  0001 L CNN "Description"
+F 5 "5.08" H 5400 3400 50  0001 L CNN "Height"
+F 6 "Texas Instruments" H 5400 3300 50  0001 L CNN "Manufacturer_Name"
+F 7 "SN74HCT245N" H 5400 3200 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "595-SN74HCT245N" H 5400 3100 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/SN74HCT245N?qs=8Pd2FuFSoMHJnLBOn%252BIc0A%3D%3D" H 5400 3000 50  0001 L CNN "Mouser Price/Stock"
+F 10 "SN74HCT245N" H 5400 2900 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/sn74hct245n/texas-instruments?region=nac" H 5400 2800 50  0001 L CNN "Arrow Price/Stock"
+	1    4550 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A1A24D
+P 4550 3350
+F 0 "#PWR?" H 4550 3200 50  0001 C CNN
+F 1 "+5V" H 4565 3523 50  0000 C CNN
+F 2 "" H 4550 3350 50  0001 C CNN
+F 3 "" H 4550 3350 50  0001 C CNN
+	1    4550 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A1A780
+P 5550 3350
+F 0 "#PWR?" H 5550 3200 50  0001 C CNN
+F 1 "+5V" H 5565 3523 50  0000 C CNN
+F 2 "" H 5550 3350 50  0001 C CNN
+F 3 "" H 5550 3350 50  0001 C CNN
+	1    5550 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A1C0EA
+P 6250 3700
+F 0 "#GND?" H 6300 3650 45  0001 L BNN
+F 1 "GND2" H 6250 3470 45  0000 C CNN
+F 2 "" H 6250 3375 60  0000 C CNN
+F 3 "" H 6250 3600 60  0001 C CNN
+	1    6250 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 3700 6250 3700
+Wire Wire Line
+	5550 3600 5550 3350
+Wire Wire Line
+	4550 3600 4550 3350
+Wire Wire Line
+	4550 4400 4550 4500
+Connection ~ 4550 4500
+Wire Wire Line
+	4550 4300 4550 4400
+Connection ~ 4550 4400
+Wire Wire Line
+	5550 4400 5550 4500
+Wire Wire Line
+	5550 4500 5550 4700
+Connection ~ 5550 4500
+Connection ~ 4550 4700
+Wire Wire Line
+	4550 4700 4550 4800
+Wire Wire Line
+	5550 4700 4550 4700
+$Comp
+L AA_Custom_Components:SSD1306_OLED J?
+U 1 1 61A38B01
+P 3350 1900
+F 0 "J?" H 3308 2404 45  0000 C CNN
+F 1 "SSD1306_OLED" H 3308 2320 45  0000 C CNN
+F 2 "" H 3350 2350 20  0001 C CNN
+F 3 "" H 3350 1900 50  0001 C CNN
+	1    3350 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J?
+U 1 1 61A3910C
+P 6600 1150
+F 0 "J?" H 6608 1654 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR" H 6608 1570 45  0000 C CNN
+F 2 "" H 6600 1600 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 6600 1150 50  0001 C CNN
+	1    6600 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:L298N_BREAKOUT U?
+U 1 1 61A45021
+P 1600 6500
+F 0 "U?" H 1615 5541 50  0000 C CNN
+F 1 "L298N_BREAKOUT" H 1615 5450 50  0000 C CNN
+F 2 "" H 1650 6100 50  0001 L CNN
+F 3 "" H 1750 6750 50  0001 C CNN
+	1    1600 6500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Buzzer BZ?
+U 1 1 61A45BFE
+P 850 3150
+F 0 "BZ?" H 1002 3179 50  0000 L CNN
+F 1 "Buzzer" H 1002 3088 50  0000 L CNN
+F 2 "" V 825 3250 50  0001 C CNN
+F 3 "~" V 825 3250 50  0001 C CNN
+	1    850  3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:CP C1
+U 1 1 61A466B8
+P 3550 7750
+F 0 "C1" H 3668 7796 50  0000 L CNN
+F 1 "470uF" H 3668 7705 50  0000 L CNN
+F 2 "" H 3588 7600 50  0001 C CNN
+F 3 "~" H 3550 7750 50  0001 C CNN
+	1    3550 7750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Motor:Motor_Servo M
+U 1 1 61A48242
+P 4000 7550
+F 0 "M" H 4332 7615 50  0000 L CNN
+F 1 "Servo" H 4332 7524 50  0000 L CNN
+F 2 "" H 4000 7360 50  0001 C CNN
+F 3 "http://forums.parallax.com/uploads/attachments/46831/74481.png" H 4000 7360 50  0001 C CNN
+	1    4000 7550
+	1    0    0    -1  
+$EndComp
+$Comp
+L MCU_Module:Arduino_Nano_v2.x A?
+U 1 1 61A4F618
+P 7750 3600
+F 0 "A?" H 7750 2511 50  0000 C CNN
+F 1 "Arduino_Nano_v2.x" H 7750 2420 50  0000 C CNN
+F 2 "Module:Arduino_Nano" H 7750 3600 50  0001 C CIN
+F 3 "https://www.arduino.cc/en/uploads/Main/ArduinoNanoManual23.pdf" H 7750 3600 50  0001 C CNN
+	1    7750 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+9V #PWR?
+U 1 1 61A50F4B
+P 750 1600
+F 0 "#PWR?" H 750 1450 50  0001 C CNN
+F 1 "+9V" H 765 1773 50  0000 C CNN
+F 2 "" H 750 1600 50  0001 C CNN
+F 3 "" H 750 1600 50  0001 C CNN
+	1    750  1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR?
+U 1 1 61A51827
+P 1700 5900
+F 0 "#PWR?" H 1700 5750 50  0001 C CNN
+F 1 "+12V" H 1715 6073 50  0000 C CNN
+F 2 "" H 1700 5900 50  0001 C CNN
+F 3 "" H 1700 5900 50  0001 C CNN
+	1    1700 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A522B8
+P 1150 1350
+F 0 "#PWR?" H 1150 1200 50  0001 C CNN
+F 1 "+3.3V" H 1165 1523 50  0000 C CNN
+F 2 "" H 1150 1350 50  0001 C CNN
+F 3 "" H 1150 1350 50  0001 C CNN
+	1    1150 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Boards:SPARKFUN_LOGIC_LEVEL_CONVERTER B?
+U 1 1 61A5CC24
+P 9250 3900
+F 0 "B?" H 9250 4560 45  0000 C CNN
+F 1 "SPARKFUN_LOGIC_LEVEL_CONVERTER" H 9250 4476 45  0000 C CNN
+F 2 "SPARKFUN_LOGIC_LEVEL_CONVERTER" H 9250 4350 20  0001 C CNN
+F 3 "" H 9250 3900 50  0001 C CNN
+F 4 "XXX-00000" H 9250 4381 60  0000 C CNN "Field4"
+	1    9250 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:DG01D_E_HOBBY_MOTOR M?
+U 1 1 61A5D4EB
+P 3100 6200
+F 0 "M?" H 3083 6704 45  0000 C CNN
+F 1 "DG01D_E_HOBBY_MOTOR" H 3083 6620 45  0000 C CNN
+F 2 "" H 3100 6650 20  0001 C CNN
+F 3 "https://cdn.sparkfun.com/assets/8/3/b/e/4/DS-16413-DG01D-E_Motor_with_Encoder.pdf" H 3100 6200 50  0001 C CNN
+	1    3100 6200
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:MPU6050_IMU J?
+U 1 1 61A5DE7A
+P 3350 2900
+F 0 "J?" H 3358 3404 45  0000 C CNN
+F 1 "MPU6050_IMU" H 3358 3320 45  0000 C CNN
+F 2 "" H 3350 3350 20  0001 C CNN
+F 3 "" H 3350 2900 50  0001 C CNN
+	1    3350 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCA9548A_I2C_MUX J?
+U 1 1 61A5E8A5
+P 5150 1450
+F 0 "J?" H 5150 1954 45  0000 C CNN
+F 1 "TCA9548A_I2C_MUX" H 5150 1870 45  0000 C CNN
+F 2 "" H 5200 1900 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout.pdf" H 5150 1450 50  0001 C CNN
+	1    5150 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:LM2596_ADJ_BUCK U?
+U 1 1 61A5F62D
+P 3050 7550
+F 0 "U?" H 2925 7917 50  0000 C CNN
+F 1 "LM2596_ADJ_BUCK" H 2925 7826 50  0000 C CNN
+F 2 "" H 3100 7300 50  0001 L CIN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2596.pdf" H 3050 7550 50  0001 C CNN
+	1    3050 7550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A629D9
+P 950 1450
+F 0 "#PWR?" H 950 1300 50  0001 C CNN
+F 1 "+5V" H 965 1623 50  0000 C CNN
+F 2 "" H 950 1450 50  0001 C CNN
+F 3 "" H 950 1450 50  0001 C CNN
+	1    950  1450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	950  1450 950  1550
+Wire Wire Line
+	950  1550 1350 1550
+Wire Wire Line
+	1150 1350 1150 1450
+Wire Wire Line
+	1150 1450 1350 1450
+Wire Wire Line
+	750  1600 750  1850
+Wire Wire Line
+	750  1850 1350 1850
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A64686
+P 1100 2100
+F 0 "#GND?" H 1150 2050 45  0001 L BNN
+F 1 "GND2" H 1100 1870 45  0000 C CNN
+F 2 "" H 1100 1775 60  0000 C CNN
+F 3 "" H 1100 2000 60  0001 C CNN
+	1    1100 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 1650 1350 1650
+Wire Wire Line
+	1100 1650 1100 2100
+$Comp
+L AA_Custom_Components:DG01D_E_HOBBY_MOTOR M?
+U 1 1 61A65693
+P 3750 6350
+F 0 "M?" H 3733 6854 45  0000 C CNN
+F 1 "DG01D_E_HOBBY_MOTOR" H 3733 6770 45  0000 C CNN
+F 2 "" H 3750 6800 20  0001 C CNN
+F 3 "https://cdn.sparkfun.com/assets/8/3/b/e/4/DS-16413-DG01D-E_Motor_with_Encoder.pdf" H 3750 6350 50  0001 C CNN
+	1    3750 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J?
+U 1 1 61A68AE2
+P 8400 1800
+F 0 "J?" H 8408 2304 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR" H 8408 2220 45  0000 C CNN
+F 2 "" H 8400 2250 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 8400 1800 50  0001 C CNN
+	1    8400 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J?
+U 1 1 61A69357
+P 7400 1850
+F 0 "J?" H 7408 2354 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR" H 7408 2270 45  0000 C CNN
+F 2 "" H 7400 2300 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 7400 1850 50  0001 C CNN
+	1    7400 1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1700 5900 1700 6000
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A6E62A
+P 1700 4150
+F 0 "#GND?" H 1750 4100 45  0001 L BNN
+F 1 "GND2" H 1700 3920 45  0000 C CNN
+F 2 "" H 1700 3825 60  0000 C CNN
+F 3 "" H 1700 4050 60  0001 C CNN
+	1    1700 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A6F065
+P 1500 5900
+F 0 "#PWR?" H 1500 5750 50  0001 C CNN
+F 1 "+5V" H 1515 6073 50  0000 C CNN
+F 2 "" H 1500 5900 50  0001 C CNN
+F 3 "" H 1500 5900 50  0001 C CNN
+	1    1500 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A73063
+P 3450 1900
+F 0 "#GND?" H 3500 1850 45  0001 L BNN
+F 1 "GND2" H 3450 1670 45  0000 C CNN
+F 2 "" H 3450 1575 60  0000 C CNN
+F 3 "" H 3450 1800 60  0001 C CNN
+	1    3450 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4550 4500 4550 4700
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A1B44E
+P 4550 4800
+F 0 "#GND?" H 4600 4750 45  0001 L BNN
+F 1 "GND2" H 4550 4570 45  0000 C CNN
+F 2 "" H 4550 4475 60  0000 C CNN
+F 3 "" H 4550 4700 60  0001 C CNN
+	1    4550 4800
+	1    0    0    -1  
+$EndComp
+Text Notes 4150 5300 0    50   ~ 0
+Note: Unused inputs and outputs connected to GND
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J?
+U 1 1 61A69A4A
+P 6350 2200
+F 0 "J?" H 6358 2704 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR" H 6358 2620 45  0000 C CNN
+F 2 "" H 6350 2650 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 6350 2200 50  0001 C CNN
+	1    6350 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Battery_Cell BT1
+U 1 1 61A7D1D9
+P 750 4050
+F 0 "BT1" H 868 4146 50  0000 L CNN
+F 1 "9V Battery Pack" H 868 4055 50  0000 L CNN
+F 2 "" V 750 4110 50  0001 C CNN
+F 3 "~" V 750 4110 50  0001 C CNN
+	1    750  4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Battery_Cell BT2
+U 1 1 61A7E0BB
+P 1700 4050
+F 0 "BT2" H 1818 4146 50  0000 L CNN
+F 1 "12V Battery Pack (8xAA)" H 1818 4055 50  0000 L CNN
+F 2 "" V 1700 4110 50  0001 C CNN
+F 3 "~" V 1700 4110 50  0001 C CNN
+	1    1700 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+9V #PWR?
+U 1 1 61A7EF62
+P 750 3850
+F 0 "#PWR?" H 750 3700 50  0001 C CNN
+F 1 "+9V" H 765 4023 50  0000 C CNN
+F 2 "" H 750 3850 50  0001 C CNN
+F 3 "" H 750 3850 50  0001 C CNN
+	1    750  3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A80717
+P 750 4150
+F 0 "#GND?" H 800 4100 45  0001 L BNN
+F 1 "GND2" H 750 3920 45  0000 C CNN
+F 2 "" H 750 3825 60  0000 C CNN
+F 3 "" H 750 4050 60  0001 C CNN
+	1    750  4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR?
+U 1 1 61A81544
+P 1700 3850
+F 0 "#PWR?" H 1700 3700 50  0001 C CNN
+F 1 "+12V" H 1715 4023 50  0000 C CNN
+F 2 "" H 1700 3850 50  0001 C CNN
+F 3 "" H 1700 3850 50  0001 C CNN
+	1    1700 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:NUCLEO64_ARDUINO_UNO_HEADERS B
+U 1 1 61A34B19
+P 1800 1900
+F 0 "B" H 2442 3054 45  0000 C CNN
+F 1 "NUCLEO64_ARDUINO_UNO_HEADERS" H 2442 2970 45  0000 C CNN
+F 2 "" H 1800 2850 20  0001 C CNN
+F 3 "" H 1800 1950 50  0001 C CNN
+	1    1800 1900
+	1    0    0    -1  
+$EndComp
+Text GLabel 2300 1150 2    50   Input ~ 0
+SCL
+Text GLabel 2300 1250 2    50   Input ~ 0
+SDA
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A9091B
+P 4600 1150
+F 0 "#PWR?" H 4600 1000 50  0001 C CNN
+F 1 "+3.3V" H 4615 1323 50  0000 C CNN
+F 2 "" H 4600 1150 50  0001 C CNN
+F 3 "" H 4600 1150 50  0001 C CNN
+	1    4600 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A910C8
+P 4350 1150
+F 0 "#GND?" H 4400 1100 45  0001 L BNN
+F 1 "GND2" H 4350 920 45  0000 C CNN
+F 2 "" H 4350 825 60  0000 C CNN
+F 3 "" H 4350 1050 60  0001 C CNN
+	1    4350 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A918B5
+P 4600 1900
+F 0 "#GND?" H 4650 1850 45  0001 L BNN
+F 1 "GND2" H 4600 1670 45  0000 C CNN
+F 2 "" H 4600 1575 60  0000 C CNN
+F 3 "" H 4600 1800 60  0001 C CNN
+	1    4600 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4800 1700 4600 1700
+Wire Wire Line
+	4600 1700 4600 1800
+Wire Wire Line
+	4800 1800 4600 1800
+Connection ~ 4600 1800
+Wire Wire Line
+	4600 1800 4600 1900
+Wire Wire Line
+	4800 1900 4600 1900
+Connection ~ 4600 1900
+Wire Wire Line
+	4350 1100 4350 1150
+Wire Wire Line
+	4800 1200 4600 1200
+Wire Wire Line
+	4600 1200 4600 1150
+Wire Wire Line
+	4350 1100 4500 1100
+Wire Wire Line
+	4500 1100 4500 1300
+Wire Wire Line
+	4500 1300 4800 1300
+Text GLabel 4800 1500 0    50   Input ~ 0
+SCL
+Text GLabel 4800 1400 0    50   Input ~ 0
+SDA
+$EndSCHEMATC
