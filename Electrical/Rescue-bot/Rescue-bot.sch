@@ -1,0 +1,1200 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr USLetter 11000 8500
+encoding utf-8
+Sheet 1 1
+Title "Rescue Bot Schematic"
+Date "2021-11-25"
+Rev "3"
+Comp "Team 6 - Rescue Heroes"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 "By: Abhinav Agrahari"
+$EndDescr
+$Comp
+L AA_Custom_Components:SN74HCT245N IC
+U 1 1 61A19FEA
+P 1100 6050
+F 0 "IC" H 1600 6315 50  0000 C CNN
+F 1 "SN74HCT245N" H 1600 6224 50  0000 C CNN
+F 2 "DIP794W53P254L2692H508Q20N" H 1950 6150 50  0001 L CNN
+F 3 "http://www.ti.com/lit/gpn/sn74hct245" H 1950 6050 50  0001 L CNN
+F 4 "Octal Bus Transceivers With 3-State Outputs" H 1950 5950 50  0001 L CNN "Description"
+F 5 "5.08" H 1950 5850 50  0001 L CNN "Height"
+F 6 "Texas Instruments" H 1950 5750 50  0001 L CNN "Manufacturer_Name"
+F 7 "SN74HCT245N" H 1950 5650 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "595-SN74HCT245N" H 1950 5550 50  0001 L CNN "Mouser Part Number"
+F 9 "https://www.mouser.co.uk/ProductDetail/Texas-Instruments/SN74HCT245N?qs=8Pd2FuFSoMHJnLBOn%252BIc0A%3D%3D" H 1950 5450 50  0001 L CNN "Mouser Price/Stock"
+F 10 "SN74HCT245N" H 1950 5350 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/sn74hct245n/texas-instruments?region=nac" H 1950 5250 50  0001 L CNN "Arrow Price/Stock"
+	1    1100 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A1A24D
+P 1100 5800
+F 0 "#PWR?" H 1100 5650 50  0001 C CNN
+F 1 "+5V" H 1115 5973 50  0000 C CNN
+F 2 "" H 1100 5800 50  0001 C CNN
+F 3 "" H 1100 5800 50  0001 C CNN
+	1    1100 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A1A780
+P 2100 5800
+F 0 "#PWR?" H 2100 5650 50  0001 C CNN
+F 1 "+5V" H 2115 5973 50  0000 C CNN
+F 2 "" H 2100 5800 50  0001 C CNN
+F 3 "" H 2100 5800 50  0001 C CNN
+	1    2100 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A1C0EA
+P 2650 5850
+F 0 "#GND?" H 2700 5800 45  0001 L BNN
+F 1 "GND2" H 2650 5620 45  0000 C CNN
+F 2 "" H 2650 5525 60  0000 C CNN
+F 3 "" H 2650 5750 60  0001 C CNN
+	1    2650 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 6050 2100 5800
+Wire Wire Line
+	1100 6050 1100 5800
+Wire Wire Line
+	1100 6850 1100 6950
+Connection ~ 1100 6950
+Wire Wire Line
+	1100 6750 1100 6850
+Connection ~ 1100 6850
+Wire Wire Line
+	2100 6850 2100 6950
+Wire Wire Line
+	2100 6950 2100 7150
+Connection ~ 2100 6950
+Connection ~ 1100 7150
+Wire Wire Line
+	1100 7150 1100 7250
+Wire Wire Line
+	2100 7150 1100 7150
+$Comp
+L AA_Custom_Components:SSD1306_OLED J
+U 1 1 61A38B01
+P 5700 3100
+F 0 "J" H 5658 3604 45  0000 C CNN
+F 1 "SSD1306_OLED" H 5658 3520 45  0000 C CNN
+F 2 "" H 5700 3550 20  0001 C CNN
+F 3 "" H 5700 3100 50  0001 C CNN
+	1    5700 3100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J
+U 1 1 61A3910C
+P 9750 2600
+F 0 "J" H 9758 3104 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR Front Right" H 9758 3020 45  0000 C CNN
+F 2 "" H 9750 3050 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 9750 2600 50  0001 C CNN
+	1    9750 2600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:L298N_BREAKOUT U
+U 1 1 61A45021
+P 3900 6500
+F 0 "U" H 3500 6950 50  0000 C CNN
+F 1 "L298N_BREAKOUT" H 3900 6050 50  0000 C CNN
+F 2 "" H 3950 6100 50  0001 L CNN
+F 3 "" H 4050 6750 50  0001 C CNN
+	1    3900 6500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Buzzer BZ
+U 1 1 61A45BFE
+P 2700 4700
+F 0 "BZ" H 2852 4729 50  0000 L CNN
+F 1 "Buzzer" H 2852 4638 50  0000 L CNN
+F 2 "" V 2675 4800 50  0001 C CNN
+F 3 "~" V 2675 4800 50  0001 C CNN
+	1    2700 4700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:CP C1
+U 1 1 61A466B8
+P 9100 6400
+F 0 "C1" H 9218 6446 50  0000 L CNN
+F 1 "470uF" H 9218 6355 50  0000 L CNN
+F 2 "" H 9138 6250 50  0001 C CNN
+F 3 "~" H 9100 6400 50  0001 C CNN
+	1    9100 6400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Motor:Motor_Servo M
+U 1 1 61A48242
+P 9850 6350
+F 0 "M" H 10182 6415 50  0000 L CNN
+F 1 "Servo" H 10182 6324 50  0000 L CNN
+F 2 "" H 9850 6160 50  0001 C CNN
+F 3 "http://forums.parallax.com/uploads/attachments/46831/74481.png" H 9850 6160 50  0001 C CNN
+	1    9850 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L MCU_Module:Arduino_Nano_v2.x U
+U 1 1 61A4F618
+P 7650 4900
+F 0 "U" H 7300 5850 50  0000 C CNN
+F 1 "Arduino_Nano_v2.x" H 7250 3900 50  0000 C CNN
+F 2 "Module:Arduino_Nano" H 7650 4900 50  0001 C CIN
+F 3 "https://www.arduino.cc/en/uploads/Main/ArduinoNanoManual23.pdf" H 7650 4900 50  0001 C CNN
+	1    7650 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+9V #PWR?
+U 1 1 61A50F4B
+P 2450 3150
+F 0 "#PWR?" H 2450 3000 50  0001 C CNN
+F 1 "+9V" H 2465 3323 50  0000 C CNN
+F 2 "" H 2450 3150 50  0001 C CNN
+F 3 "" H 2450 3150 50  0001 C CNN
+	1    2450 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+12V #PWR?
+U 1 1 61A51827
+P 4000 5900
+F 0 "#PWR?" H 4000 5750 50  0001 C CNN
+F 1 "+12V" H 4015 6073 50  0000 C CNN
+F 2 "" H 4000 5900 50  0001 C CNN
+F 3 "" H 4000 5900 50  0001 C CNN
+	1    4000 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A522B8
+P 2850 2900
+F 0 "#PWR?" H 2850 2750 50  0001 C CNN
+F 1 "+3.3V" H 2865 3073 50  0000 C CNN
+F 2 "" H 2850 2900 50  0001 C CNN
+F 3 "" H 2850 2900 50  0001 C CNN
+	1    2850 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Boards:SPARKFUN_LOGIC_LEVEL_CONVERTER B
+U 1 1 61A5CC24
+P 9150 5200
+F 0 "B" H 9150 5860 45  0000 C CNN
+F 1 "SPARKFUN_LOGIC_LEVEL_CONVERTER" H 9150 5776 45  0000 C CNN
+F 2 "SPARKFUN_LOGIC_LEVEL_CONVERTER" H 9150 5650 20  0001 C CNN
+F 3 "" H 9150 5200 50  0001 C CNN
+F 4 "" H 9150 5681 60  0000 C CNN "Field4"
+	1    9150 5200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:DG01D_E_HOBBY_MOTOR M
+U 1 1 61A5D4EB
+P 5400 6200
+F 0 "M" H 5383 6704 45  0000 C CNN
+F 1 "DG01D_E_HOBBY_MOTOR LEFT" H 5383 6620 45  0000 C CNN
+F 2 "" H 5400 6650 20  0001 C CNN
+F 3 "https://cdn.sparkfun.com/assets/8/3/b/e/4/DS-16413-DG01D-E_Motor_with_Encoder.pdf" H 5400 6200 50  0001 C CNN
+	1    5400 6200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:MPU6050_IMU J
+U 1 1 61A5DE7A
+P 5750 4400
+F 0 "J" H 5758 4904 45  0000 C CNN
+F 1 "MPU6050_IMU" H 5758 4820 45  0000 C CNN
+F 2 "" H 5750 4850 20  0001 C CNN
+F 3 "" H 5750 4400 50  0001 C CNN
+	1    5750 4400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCA9548A_I2C_MUX J
+U 1 1 61A5E8A5
+P 7400 1550
+F 0 "J" H 7400 2054 45  0000 C CNN
+F 1 "TCA9548A_I2C_MUX" H 7400 1970 45  0000 C CNN
+F 2 "" H 7450 2000 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-tca9548a-1-to-8-i2c-multiplexer-breakout.pdf" H 7400 1550 50  0001 C CNN
+	1    7400 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:LM2596_ADJ_BUCK U
+U 1 1 61A5F62D
+P 8550 6350
+F 0 "U" H 8425 6717 50  0000 C CNN
+F 1 "LM2596_ADJ_BUCK" H 8425 6626 50  0000 C CNN
+F 2 "" H 8600 6100 50  0001 L CIN
+F 3 "http://www.ti.com/lit/ds/symlink/lm2596.pdf" H 8550 6350 50  0001 C CNN
+	1    8550 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 61A629D9
+P 2650 3000
+F 0 "#PWR?" H 2650 2850 50  0001 C CNN
+F 1 "+5V" H 2665 3173 50  0000 C CNN
+F 2 "" H 2650 3000 50  0001 C CNN
+F 3 "" H 2650 3000 50  0001 C CNN
+	1    2650 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 3000 2650 3100
+Wire Wire Line
+	2650 3100 3050 3100
+Wire Wire Line
+	2850 2900 2850 3000
+Wire Wire Line
+	2850 3000 3050 3000
+Wire Wire Line
+	2450 3150 2450 3400
+Wire Wire Line
+	2450 3400 3050 3400
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A64686
+P 2800 3650
+F 0 "#GND?" H 2850 3600 45  0001 L BNN
+F 1 "GND2" H 2800 3420 45  0000 C CNN
+F 2 "" H 2800 3325 60  0000 C CNN
+F 3 "" H 2800 3550 60  0001 C CNN
+	1    2800 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 3200 3050 3200
+Wire Wire Line
+	2800 3200 2800 3650
+$Comp
+L AA_Custom_Components:DG01D_E_HOBBY_MOTOR M
+U 1 1 61A65693
+P 5400 7450
+F 0 "M" H 5383 7954 45  0000 C CNN
+F 1 "DG01D_E_HOBBY_MOTOR RIGHT" H 5383 7870 45  0000 C CNN
+F 2 "" H 5400 7900 20  0001 C CNN
+F 3 "https://cdn.sparkfun.com/assets/8/3/b/e/4/DS-16413-DG01D-E_Motor_with_Encoder.pdf" H 5400 7450 50  0001 C CNN
+	1    5400 7450
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J
+U 1 1 61A68AE2
+P 9750 1550
+F 0 "J" H 9758 2054 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR Left" H 9758 1970 45  0000 C CNN
+F 2 "" H 9750 2000 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 9750 1550 50  0001 C CNN
+	1    9750 1550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J
+U 1 1 61A69357
+P 8700 1200
+F 0 "J" H 8708 1704 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR Right" H 8708 1620 45  0000 C CNN
+F 2 "" H 8700 1650 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 8700 1200 50  0001 C CNN
+	1    8700 1200
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 5900 4000 6000
+$Comp
+L power:+5V #PWR?
+U 1 1 61A6F065
+P 3800 5900
+F 0 "#PWR?" H 3800 5750 50  0001 C CNN
+F 1 "+5V" H 3815 6073 50  0000 C CNN
+F 2 "" H 3800 5900 50  0001 C CNN
+F 3 "" H 3800 5900 50  0001 C CNN
+	1    3800 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A73063
+P 5550 3100
+F 0 "#GND?" H 5600 3050 45  0001 L BNN
+F 1 "GND2" H 5550 2870 45  0000 C CNN
+F 2 "" H 5550 2775 60  0000 C CNN
+F 3 "" H 5550 3000 60  0001 C CNN
+	1    5550 3100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1100 6950 1100 7150
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A1B44E
+P 1100 7250
+F 0 "#GND?" H 1150 7200 45  0001 L BNN
+F 1 "GND2" H 1100 7020 45  0000 C CNN
+F 2 "" H 1100 6925 60  0000 C CNN
+F 3 "" H 1100 7150 60  0001 C CNN
+	1    1100 7250
+	1    0    0    -1  
+$EndComp
+Text Notes 750  7700 0    50   ~ 0
+Note: Unused inputs and outputs connected to GND
+$Comp
+L AA_Custom_Components:TCS34725_COLOR_SENSOR J
+U 1 1 61A69A4A
+P 8650 3100
+F 0 "J" H 8658 3604 45  0000 C CNN
+F 1 "TCS34725_COLOR_SENSOR Front Left" H 8658 3520 45  0000 C CNN
+F 2 "" H 8650 3550 20  0001 C CNN
+F 3 "https://cdn-learn.adafruit.com/downloads/pdf/adafruit-color-sensors.pdf" H 8650 3100 50  0001 C CNN
+	1    8650 3100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L AA_Custom_Components:NUCLEO64_ARDUINO_UNO_HEADERS U
+U 1 1 61A34B19
+P 3500 3450
+F 0 "U" H 3500 4450 45  0000 C CNN
+F 1 "NUCLEO64_ARDUINO_UNO_HEADERS" H 3550 4350 45  0000 C CNN
+F 2 "" H 3500 4400 20  0001 C CNN
+F 3 "" H 3500 3500 50  0001 C CNN
+	1    3500 3450
+	1    0    0    -1  
+$EndComp
+Text GLabel 4000 2700 2    50   Input ~ 0
+SCL
+Text GLabel 4000 2800 2    50   Input ~ 0
+SDA
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A9091B
+P 6850 1250
+F 0 "#PWR?" H 6850 1100 50  0001 C CNN
+F 1 "+3.3V" H 6865 1423 50  0000 C CNN
+F 2 "" H 6850 1250 50  0001 C CNN
+F 3 "" H 6850 1250 50  0001 C CNN
+	1    6850 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A910C8
+P 6600 1250
+F 0 "#GND?" H 6650 1200 45  0001 L BNN
+F 1 "GND2" H 6600 1020 45  0000 C CNN
+F 2 "" H 6600 925 60  0000 C CNN
+F 3 "" H 6600 1150 60  0001 C CNN
+	1    6600 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A918B5
+P 6850 2000
+F 0 "#GND?" H 6900 1950 45  0001 L BNN
+F 1 "GND2" H 6850 1770 45  0000 C CNN
+F 2 "" H 6850 1675 60  0000 C CNN
+F 3 "" H 6850 1900 60  0001 C CNN
+	1    6850 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 1800 6850 1800
+Wire Wire Line
+	6850 1800 6850 1900
+Wire Wire Line
+	7050 1900 6850 1900
+Connection ~ 6850 1900
+Wire Wire Line
+	6850 1900 6850 2000
+Wire Wire Line
+	7050 2000 6850 2000
+Connection ~ 6850 2000
+Wire Wire Line
+	6600 1200 6600 1250
+Wire Wire Line
+	7050 1300 6850 1300
+Wire Wire Line
+	6850 1300 6850 1250
+Wire Wire Line
+	6600 1200 6750 1200
+Wire Wire Line
+	6750 1200 6750 1400
+Wire Wire Line
+	6750 1400 7050 1400
+Text GLabel 7050 1600 0    50   Input ~ 0
+SCL
+Text GLabel 7050 1500 0    50   Input ~ 0
+SDA
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A340D0
+P 10300 5100
+F 0 "#PWR?" H 10300 4950 50  0001 C CNN
+F 1 "+3.3V" H 10315 5273 50  0000 C CNN
+F 2 "" H 10300 5100 50  0001 C CNN
+F 3 "" H 10300 5100 50  0001 C CNN
+	1    10300 5100
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A346A3
+P 10050 5250
+F 0 "#GND?" H 10100 5200 45  0001 L BNN
+F 1 "GND2" H 10050 5020 45  0000 C CNN
+F 2 "" H 10050 4925 60  0000 C CNN
+F 3 "" H 10050 5150 60  0001 C CNN
+	1    10050 5250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9800 5200 10050 5200
+Wire Wire Line
+	10050 5200 10050 5250
+Wire Wire Line
+	7850 3900 8350 3900
+Wire Wire Line
+	8350 3900 8350 5100
+Wire Wire Line
+	8350 5100 8500 5100
+Wire Wire Line
+	7750 5900 8350 5900
+Wire Wire Line
+	8350 5900 8350 5200
+Wire Wire Line
+	8350 5200 8500 5200
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A375CD
+P 2900 4850
+F 0 "#GND?" H 2950 4800 45  0001 L BNN
+F 1 "GND2" H 2900 4620 45  0000 C CNN
+F 2 "" H 2900 4525 60  0000 C CNN
+F 3 "" H 2900 4750 60  0001 C CNN
+	1    2900 4850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 4800 2900 4800
+Wire Wire Line
+	2900 4800 2900 4850
+Wire Wire Line
+	8800 6250 9100 6250
+Connection ~ 9100 6250
+Wire Wire Line
+	8800 6450 8800 6550
+Wire Wire Line
+	8800 6550 9100 6550
+Connection ~ 9100 6550
+Wire Wire Line
+	9550 6550 9550 6450
+Wire Wire Line
+	9450 6250 9450 6350
+Wire Wire Line
+	9450 6350 9550 6350
+Text GLabel 9500 6050 0    50   Input ~ 0
+SERVO_PWM
+Wire Wire Line
+	9500 6050 9500 6250
+Wire Wire Line
+	9500 6250 9550 6250
+Wire Wire Line
+	9100 6250 9450 6250
+Wire Wire Line
+	9100 6550 9550 6550
+$Comp
+L power:+12V #PWR?
+U 1 1 61A4C72B
+P 7700 6250
+F 0 "#PWR?" H 7700 6100 50  0001 C CNN
+F 1 "+12V" H 7715 6423 50  0000 C CNN
+F 2 "" H 7700 6250 50  0001 C CNN
+F 3 "" H 7700 6250 50  0001 C CNN
+	1    7700 6250
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A4CD06
+P 7500 6350
+F 0 "#GND?" H 7550 6300 45  0001 L BNN
+F 1 "GND2" H 7500 6120 45  0000 C CNN
+F 2 "" H 7500 6025 60  0000 C CNN
+F 3 "" H 7500 6250 60  0001 C CNN
+	1    7500 6350
+	1    0    0    -1  
+$EndComp
+Text GLabel 7000 5200 0    50   Output ~ 0
+SERVO_PWM
+Wire Wire Line
+	7000 5200 7150 5200
+Text GLabel 5500 4400 0    50   Input ~ 0
+SDA
+Text GLabel 5500 4300 0    50   Input ~ 0
+SCL
+Wire Wire Line
+	5500 4300 5600 4300
+Wire Wire Line
+	5500 4400 5600 4400
+Text GLabel 5500 2900 0    50   Input ~ 0
+SDA
+Text GLabel 5500 2800 0    50   Input ~ 0
+SCL
+Wire Wire Line
+	5500 2900 5600 2900
+Wire Wire Line
+	5550 3100 5600 3100
+Wire Wire Line
+	5500 2800 5600 2800
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A6586A
+P 5150 3000
+F 0 "#PWR?" H 5150 2850 50  0001 C CNN
+F 1 "+3.3V" H 5165 3173 50  0000 C CNN
+F 2 "" H 5150 3000 50  0001 C CNN
+F 3 "" H 5150 3000 50  0001 C CNN
+	1    5150 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61A65CB4
+P 5350 4050
+F 0 "#PWR?" H 5350 3900 50  0001 C CNN
+F 1 "+3.3V" H 5365 4223 50  0000 C CNN
+F 2 "" H 5350 4050 50  0001 C CNN
+F 3 "" H 5350 4050 50  0001 C CNN
+	1    5350 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A66181
+P 5150 4700
+F 0 "#GND?" H 5200 4650 45  0001 L BNN
+F 1 "GND2" H 5150 4470 45  0000 C CNN
+F 2 "" H 5150 4375 60  0000 C CNN
+F 3 "" H 5150 4600 60  0001 C CNN
+	1    5150 4700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 4200 5600 4200
+Wire Wire Line
+	5350 4050 5350 4100
+Wire Wire Line
+	5350 4100 5600 4100
+Wire Wire Line
+	5150 3000 5600 3000
+Text GLabel 3150 6250 0    50   Input ~ 0
+ENA_5V
+Text GLabel 3150 6350 0    50   Input ~ 0
+IN1_5V
+Text GLabel 3150 6450 0    50   Input ~ 0
+IN2_5V
+Text GLabel 3150 6750 0    50   Input ~ 0
+ENB_5V
+Text GLabel 3150 6550 0    50   Input ~ 0
+IN3_5V
+Text GLabel 3150 6650 0    50   Input ~ 0
+IN4_5V
+Wire Wire Line
+	3150 6250 3300 6250
+Wire Wire Line
+	3150 6350 3300 6350
+Wire Wire Line
+	3150 6450 3300 6450
+Wire Wire Line
+	3150 6550 3300 6550
+Wire Wire Line
+	3150 6650 3300 6650
+Wire Wire Line
+	3150 6750 3300 6750
+Wire Wire Line
+	3800 5900 3800 6000
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A82F8A
+P 4350 5800
+F 0 "#GND?" H 4400 5750 45  0001 L BNN
+F 1 "GND2" H 4350 5570 45  0000 C CNN
+F 2 "" H 4350 5475 60  0000 C CNN
+F 3 "" H 4350 5700 60  0001 C CNN
+	1    4350 5800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 6000 3900 5600
+Wire Wire Line
+	3900 5600 4350 5600
+Wire Wire Line
+	4350 5600 4350 5800
+Text Notes 3350 7100 0    50   ~ 0
+Note: 5V Jumpers disconnected
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A88F98
+P 5150 6450
+F 0 "#GND?" H 5200 6400 45  0001 L BNN
+F 1 "GND2" H 5150 6220 45  0000 C CNN
+F 2 "" H 5150 6125 60  0000 C CNN
+F 3 "" H 5150 6350 60  0001 C CNN
+	1    5150 6450
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A89426
+P 5100 7650
+F 0 "#GND?" H 5150 7600 45  0001 L BNN
+F 1 "GND2" H 5100 7420 45  0000 C CNN
+F 2 "" H 5100 7325 60  0000 C CNN
+F 3 "" H 5100 7550 60  0001 C CNN
+	1    5100 7650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 6450 5150 6400
+Wire Wire Line
+	5150 6400 5250 6400
+Wire Wire Line
+	5100 7650 5250 7650
+Wire Wire Line
+	8150 5300 8250 5300
+Wire Wire Line
+	8250 5300 8250 4900
+Wire Wire Line
+	8250 4900 8500 4900
+Wire Wire Line
+	8150 5400 8300 5400
+Wire Wire Line
+	8300 5400 8300 5000
+Wire Wire Line
+	8300 5000 8500 5000
+Text GLabel 9900 4900 2    50   Input ~ 0
+SDA
+Wire Wire Line
+	9800 5100 10300 5100
+Text GLabel 9900 5000 2    50   Input ~ 0
+SCL
+Wire Wire Line
+	9900 5000 9800 5000
+Wire Wire Line
+	9800 4900 9900 4900
+Wire Notes Line
+	10450 3700 6450 3700
+Text GLabel 4150 3400 2    50   Output ~ 0
+ENA
+Text GLabel 4150 3500 2    50   Output ~ 0
+IN1
+Text GLabel 4150 3600 2    50   Output ~ 0
+IN2
+Text GLabel 4150 3700 2    50   Output ~ 0
+IN3
+Text GLabel 4150 3800 2    50   Output ~ 0
+IN4
+Text GLabel 4150 3900 2    50   Output ~ 0
+ENB
+Text GLabel 4150 4100 2    50   Input ~ 0
+ENC1_A
+Wire Wire Line
+	4000 3400 4150 3400
+Wire Wire Line
+	4000 3500 4150 3500
+Wire Wire Line
+	4000 3600 4150 3600
+Wire Wire Line
+	4000 3700 4150 3700
+Wire Wire Line
+	4000 3800 4150 3800
+Wire Wire Line
+	4000 3900 4150 3900
+Wire Wire Line
+	4150 4100 4000 4100
+Text GLabel 4150 4200 2    50   Input ~ 0
+ENC1_B
+Text GLabel 4150 4300 2    50   Input ~ 0
+ENC2_A
+Text GLabel 4150 4400 2    50   Input ~ 0
+ENC2_B
+Wire Wire Line
+	4150 4200 4000 4200
+Wire Wire Line
+	4000 4300 4150 4300
+Wire Wire Line
+	4000 4400 4150 4400
+Wire Wire Line
+	3050 4350 2800 4350
+Wire Wire Line
+	2800 4350 2800 4600
+Wire Wire Line
+	7800 2300 7750 2300
+Wire Wire Line
+	7750 3200 8500 3200
+Wire Wire Line
+	7750 2400 7750 3200
+Wire Wire Line
+	7800 3100 8500 3100
+Wire Wire Line
+	7800 2300 7800 3100
+Wire Wire Line
+	7750 2200 9050 2200
+Wire Wire Line
+	9050 2200 9050 2600
+Wire Wire Line
+	9050 2600 9400 2600
+Wire Wire Line
+	9400 2600 9400 2700
+Wire Wire Line
+	9400 2700 9600 2700
+Wire Wire Line
+	7750 2100 9100 2100
+Wire Wire Line
+	9100 2100 9100 2550
+Wire Wire Line
+	9100 2550 9450 2550
+Wire Wire Line
+	9450 2550 9450 2600
+Wire Wire Line
+	9450 2600 9600 2600
+Wire Wire Line
+	7750 2000 9400 2000
+Wire Wire Line
+	9400 2000 9400 1650
+Wire Wire Line
+	9400 1650 9600 1650
+Wire Wire Line
+	7750 1900 9300 1900
+Wire Wire Line
+	9300 1900 9300 1550
+Wire Wire Line
+	9300 1550 9600 1550
+Wire Wire Line
+	7750 1800 8350 1800
+Wire Wire Line
+	8350 1800 8350 1300
+Wire Wire Line
+	8350 1300 8550 1300
+Wire Wire Line
+	7750 1700 8250 1700
+Wire Wire Line
+	8250 1700 8250 1200
+Wire Wire Line
+	8250 1200 8550 1200
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61B1F05E
+P 8050 750
+F 0 "#PWR?" H 8050 600 50  0001 C CNN
+F 1 "+3.3V" H 8050 900 50  0000 C CNN
+F 2 "" H 8050 750 50  0001 C CNN
+F 3 "" H 8050 750 50  0001 C CNN
+	1    8050 750 
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61B1F7F8
+P 9450 1000
+F 0 "#PWR?" H 9450 850 50  0001 C CNN
+F 1 "+3.3V" H 9465 1173 50  0000 C CNN
+F 2 "" H 9450 1000 50  0001 C CNN
+F 3 "" H 9450 1000 50  0001 C CNN
+	1    9450 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61B20022
+P 8350 2600
+F 0 "#PWR?" H 8350 2450 50  0001 C CNN
+F 1 "+3.3V" H 8365 2773 50  0000 C CNN
+F 2 "" H 8350 2600 50  0001 C CNN
+F 3 "" H 8350 2600 50  0001 C CNN
+	1    8350 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61B2069F
+P 9500 2100
+F 0 "#PWR?" H 9500 1950 50  0001 C CNN
+F 1 "+3.3V" H 9515 2273 50  0000 C CNN
+F 2 "" H 9500 2100 50  0001 C CNN
+F 3 "" H 9500 2100 50  0001 C CNN
+	1    9500 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8050 750  8050 900 
+Wire Wire Line
+	8050 900  8550 900 
+Wire Wire Line
+	9450 1000 9450 1250
+Wire Wire Line
+	9450 1250 9600 1250
+Wire Wire Line
+	9500 2100 9500 2300
+Wire Wire Line
+	9500 2300 9600 2300
+Wire Wire Line
+	8350 2600 8350 2800
+Wire Wire Line
+	8350 2800 8500 2800
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61B3462F
+P 8100 1000
+F 0 "#GND?" H 8150 950 45  0001 L BNN
+F 1 "GND2" H 8100 770 45  0000 C CNN
+F 2 "" H 8100 675 60  0000 C CNN
+F 3 "" H 8100 900 60  0001 C CNN
+	1    8100 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61B349BD
+P 9200 1350
+F 0 "#GND?" H 9250 1300 45  0001 L BNN
+F 1 "GND2" H 9200 1120 45  0000 C CNN
+F 2 "" H 9200 1025 60  0000 C CNN
+F 3 "" H 9200 1250 60  0001 C CNN
+	1    9200 1350
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61B35934
+P 8250 2850
+F 0 "#GND?" H 8300 2800 45  0001 L BNN
+F 1 "GND2" H 8250 2620 45  0000 C CNN
+F 2 "" H 8250 2525 60  0000 C CNN
+F 3 "" H 8250 2750 60  0001 C CNN
+	1    8250 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61B35D89
+P 9350 2300
+F 0 "#GND?" H 9400 2250 45  0001 L BNN
+F 1 "GND2" H 9350 2070 45  0000 C CNN
+F 2 "" H 9350 1975 60  0000 C CNN
+F 3 "" H 9350 2200 60  0001 C CNN
+	1    9350 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9350 2300 9450 2300
+Wire Wire Line
+	9450 2300 9450 2400
+Wire Wire Line
+	9450 2400 9600 2400
+Wire Wire Line
+	8250 2850 8500 2850
+Wire Wire Line
+	8500 2850 8500 2900
+Wire Wire Line
+	8100 1000 8550 1000
+Wire Wire Line
+	9200 1350 9600 1350
+Text Notes 7550 3600 0    50   ~ 0
+Note: All SDA wires are yellow. SCL is blue/orange
+Text GLabel 5100 7550 0    50   Output ~ 0
+ENC1_A
+Text GLabel 5100 7450 0    50   Output ~ 0
+ENC1_B
+Wire Wire Line
+	5100 7450 5250 7450
+Wire Wire Line
+	5100 7550 5250 7550
+Text GLabel 5150 6200 0    50   Output ~ 0
+ENC2_B
+Text GLabel 5150 6300 0    50   Output ~ 0
+ENC2_A
+Wire Wire Line
+	5150 6200 5250 6200
+Wire Wire Line
+	5150 6300 5250 6300
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61B75557
+P 4650 7350
+F 0 "#PWR?" H 4650 7200 50  0001 C CNN
+F 1 "+3.3V" H 4500 7450 50  0000 C CNN
+F 2 "" H 4650 7350 50  0001 C CNN
+F 3 "" H 4650 7350 50  0001 C CNN
+	1    4650 7350
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR?
+U 1 1 61B76ACF
+P 4750 5700
+F 0 "#PWR?" H 4750 5550 50  0001 C CNN
+F 1 "+3.3V" H 4765 5873 50  0000 C CNN
+F 2 "" H 4750 5700 50  0001 C CNN
+F 3 "" H 4750 5700 50  0001 C CNN
+	1    4750 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 5700 4750 6100
+Wire Wire Line
+	4750 6100 5250 6100
+Wire Wire Line
+	4650 7350 5250 7350
+Wire Notes Line
+	6450 3650 10450 3650
+Wire Notes Line
+	10450 3650 10450 550 
+Wire Notes Line
+	10500 550  6500 550 
+Wire Notes Line
+	6450 550  6450 3650
+Text Notes 6600 750  0    50   ~ 10
+COLOR SENSORS
+Text Notes 6600 4050 0    50   ~ 10
+SERVO AND \nSERVO DRIVER
+Wire Notes Line
+	6450 6650 10450 6650
+Wire Wire Line
+	7500 6350 7650 6350
+$Comp
+L power:+9V #PWR?
+U 1 1 61BE9F3A
+P 7550 3900
+F 0 "#PWR?" H 7550 3750 50  0001 C CNN
+F 1 "+9V" H 7600 4050 50  0000 C CNN
+F 2 "" H 7550 3900 50  0001 C CNN
+F 3 "" H 7550 3900 50  0001 C CNN
+	1    7550 3900
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	10450 3700 10450 6650
+Wire Notes Line
+	6450 3700 6450 6650
+Wire Wire Line
+	5150 4200 5150 4700
+Wire Wire Line
+	5600 4700 5150 4700
+Connection ~ 5150 4700
+Wire Wire Line
+	7700 6250 8050 6250
+Wire Wire Line
+	7650 6350 7650 6450
+Wire Wire Line
+	7650 6450 8050 6450
+Text Notes 5650 7300 0    50   ~ 0
+Blue Wire
+Text Notes 5650 7200 0    50   ~ 0
+Green Wire
+Wire Wire Line
+	5250 7250 4700 7250
+Wire Wire Line
+	4700 7250 4700 6700
+Wire Wire Line
+	4700 6700 4500 6700
+Wire Wire Line
+	5250 7150 4800 7150
+Wire Wire Line
+	4800 7150 4800 6600
+Wire Wire Line
+	4800 6600 4500 6600
+Text Notes 5650 6050 0    50   ~ 0
+Green Wire
+Text Notes 5650 5950 0    50   ~ 0
+Blue Wire
+Wire Wire Line
+	5250 5900 4500 5900
+Wire Wire Line
+	4500 5900 4500 6300
+Wire Wire Line
+	5250 6000 4600 6000
+Wire Wire Line
+	4600 6000 4600 6400
+Wire Wire Line
+	4600 6400 4500 6400
+Text GLabel 1000 6150 0    50   Input ~ 0
+ENB
+Wire Wire Line
+	1000 6150 1100 6150
+Text GLabel 1000 6250 0    50   Input ~ 0
+IN4
+Text GLabel 1000 6350 0    50   Input ~ 0
+IN3
+Text GLabel 1000 6450 0    50   Input ~ 0
+IN2
+Text GLabel 1000 6550 0    50   Input ~ 0
+IN1
+Text GLabel 1000 6650 0    50   Input ~ 0
+ENA
+Wire Wire Line
+	1000 6250 1100 6250
+Wire Wire Line
+	1000 6350 1100 6350
+Wire Wire Line
+	1000 6450 1100 6450
+Wire Wire Line
+	1000 6550 1100 6550
+Wire Wire Line
+	1000 6650 1100 6650
+Text GLabel 2200 6650 2    50   Output ~ 0
+IN1_5V
+Text GLabel 2200 6550 2    50   Output ~ 0
+IN2_5V
+Text GLabel 2200 6250 2    50   Output ~ 0
+ENB_5V
+Text GLabel 2200 6450 2    50   Output ~ 0
+IN3_5V
+Text GLabel 2200 6350 2    50   Output ~ 0
+IN4_5V
+Text GLabel 2200 6750 2    50   Output ~ 0
+ENA_5V
+Wire Wire Line
+	2100 6250 2200 6250
+Wire Wire Line
+	2100 6350 2200 6350
+Wire Wire Line
+	2100 6450 2200 6450
+Wire Wire Line
+	2100 6550 2200 6550
+Wire Wire Line
+	2100 6650 2200 6650
+Wire Wire Line
+	2100 6750 2200 6750
+Wire Wire Line
+	2100 6150 2400 6150
+Wire Wire Line
+	2400 6150 2400 5850
+Wire Wire Line
+	2400 5850 2650 5850
+Wire Notes Line
+	6200 7950 6200 5250
+Wire Notes Line
+	6200 5250 600  5250
+Wire Notes Line
+	600  5250 600  7950
+Wire Notes Line
+	600  7950 6200 7950
+Text Notes 750  5450 0    50   ~ 10
+MOTORS, MOTOR DRIVER, AND LEVEL SHIFTING
+Text Notes 1400 1750 0    394  Italic 79
+RESCUE-BOT
+Text Notes 700  3100 0    50   ~ 10
+BATTERIES
+Text Notes 2350 2400 0    50   ~ 10
+NUCLEO64, IMU, OLED
+Text Notes 3200 4950 0    50   ~ 0
+Nucleo-F401RE
+Text Notes 5100 3500 0    50   ~ 0
+128x64 Monochrome OLED
+Wire Notes Line
+	2200 5150 6200 5150
+Wire Notes Line
+	6200 5150 6200 2200
+Wire Notes Line
+	6200 2200 2200 2200
+Wire Notes Line
+	2200 2200 2200 5150
+$Comp
+L power:+12V #PWR?
+U 1 1 61A81544
+P 950 3450
+F 0 "#PWR?" H 950 3300 50  0001 C CNN
+F 1 "+12V" H 965 3623 50  0000 C CNN
+F 2 "" H 950 3450 50  0001 C CNN
+F 3 "" H 950 3450 50  0001 C CNN
+	1    950  3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A80717
+P 950 4750
+F 0 "#GND?" H 1000 4700 45  0001 L BNN
+F 1 "GND2" H 950 4520 45  0000 C CNN
+F 2 "" H 950 4425 60  0000 C CNN
+F 3 "" H 950 4650 60  0001 C CNN
+	1    950  4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+9V #PWR?
+U 1 1 61A7EF62
+P 950 4450
+F 0 "#PWR?" H 950 4300 50  0001 C CNN
+F 1 "+9V" H 965 4623 50  0000 C CNN
+F 2 "" H 950 4450 50  0001 C CNN
+F 3 "" H 950 4450 50  0001 C CNN
+	1    950  4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Battery_Cell BT2
+U 1 1 61A7E0BB
+P 950 3650
+F 0 "BT2" H 1068 3746 50  0000 L CNN
+F 1 "12V Battery Pack (8xAA)" H 1068 3655 50  0000 L CNN
+F 2 "" V 950 3710 50  0001 C CNN
+F 3 "~" V 950 3710 50  0001 C CNN
+	1    950  3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Battery_Cell BT1
+U 1 1 61A7D1D9
+P 950 4650
+F 0 "BT1" H 1068 4746 50  0000 L CNN
+F 1 "9V Battery Pack" H 1068 4655 50  0000 L CNN
+F 2 "" V 950 4710 50  0001 C CNN
+F 3 "~" V 950 4710 50  0001 C CNN
+	1    950  4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-PowerSymbols:GND2 #GND?
+U 1 1 61A6E62A
+P 950 3750
+F 0 "#GND?" H 1000 3700 45  0001 L BNN
+F 1 "GND2" H 950 3520 45  0000 C CNN
+F 2 "" H 950 3425 60  0000 C CNN
+F 3 "" H 950 3650 60  0001 C CNN
+	1    950  3750
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	600  5150 2050 5150
+Wire Notes Line
+	2050 5150 2050 2950
+Wire Notes Line
+	2050 2950 600  2950
+Wire Notes Line
+	600  2950 600  5150
+$EndSCHEMATC
