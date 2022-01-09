@@ -1,9 +1,19 @@
 # Rescue-Bot
-MTE 380 Rescue-Bot the Fall 2021 [MTE 380](http://www.ucalendar.uwaterloo.ca/1819/COURSE/course-MTE.html#MTE380) Mechatronics Engineering Design Workshop course. The project was to build an autonomous robot that could navigate through a search & rescue course (shown in gif below), avoiding traps and hazards, to locate, retrieve, and bring a Lego person to safety (green zones).
+MTE 380 Rescue-Bot for the Fall 2021 [MTE 380](http://www.ucalendar.uwaterloo.ca/1819/COURSE/course-MTE.html#MTE380) Mechatronics Engineering Design Workshop course. 
+The project was to build an autonomous robot that could navigate through a search & rescue course (shown in gif below), avoiding traps and hazards, to locate, retrieve, and bring a Lego person to safety (green zones).
 
 > [Click here](https://youtu.be/ztVF_HEkW2k) for full Youtube video of our robot completing the search and rescue course!
 
 [![](./images/Animation.gif)](https://youtu.be/ztVF_HEkW2k)
+
+# Team Members
+
+| Team Member      	| Role                         	|
+|------------------	|------------------------------	|
+| Abhinav Agrahari 	| Electrical and Firmware Lead 	|
+| Kyle Tam         	| Mechanical Lead              	|
+| Daniel Leung     	| Project Manager              	|
+| Liam Clark       	| Software Developer           	|
 
 # Renders
 
