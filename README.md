@@ -46,9 +46,11 @@ Schematic made using KiCad
 
 # Software
 
-The firmware structure is based on 'state machines' and 'tasks'. Firmware for our robot was written using PlatformIO, enabling use of the Arduino framework for SMT32 Nucleo board.
+Bare-metal firmware using C++.
 
-Firmware for STM32 Nucleo board is located [here](./Software/Rescue-Bot). See it's README for more info about the STM32 project.
+The firmware structure is based on 'state machines' and co-operative 'tasks'. Firmware for our robot was written using PlatformIO, enabling use of the Arduino framework for SMT32 Nucleo board.
+
+The firmware for STM32 Nucleo board is located [here](./Software/Rescue-Bot). See it's README for more info about the STM32 project.
 
 ## Testing
 Color data from various parts of the Search and Rescue course were collected with all color sensors, then plotted in 3D RGB space. Our color classification uses a Euclidean distance thresholding algorithim.
