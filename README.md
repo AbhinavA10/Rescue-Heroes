@@ -20,6 +20,9 @@ The project was to build an autonomous robot that could navigate through a searc
 ![](./images/render2.jpg)
 ![](./images/render3.jpg)
 
+# Build
+![](./images/robot_angles.png)
+
 # Electrical Diagrams
 
 - datasheets, high-level block diagram, KiCAD schematics
